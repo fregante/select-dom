@@ -4,7 +4,7 @@
   "description": "DOM Selector Library With Fallback Support",
   "main": "index.js",
   "scripts": {
-    "test": "node test"
+    "test": "node test -b"
   },
   "dependencies": {
     "qwery": "3.4.x"
