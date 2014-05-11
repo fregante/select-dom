@@ -1,0 +1,25 @@
+{
+  "name": "dom-select",
+  "version": "0.0.0",
+  "description": "DOM Selector Library With Fallback Support",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test"
+  },
+  "dependencies": {
+    "qwery": "3.4.x"
+  },
+  "devDependencies": {
+    "prova": "*"
+  },
+  "keywords": [
+    "dom",
+    "selector"
+  ],
+  "repository": {
+    "url": "git@github.com:npm-dom/dom-select.git",
+    "type": "git"
+  },
+  "author": "Azer Koçulu <azer@kodfabrik.com>",
+  "license": "BSD"
+}
