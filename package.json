@@ -1,13 +1,9 @@
 {
   "name": "dom-select",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "DOM Selector Library With Fallback Support",
-  "main": "index.js",
   "scripts": {
     "test": "node test -b"
-  },
-  "dependencies": {
-    "qwery": "3.4.x"
   },
   "devDependencies": {
     "prova": "*"
