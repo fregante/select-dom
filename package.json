@@ -2,6 +2,15 @@
   "name": "select-dom",
   "version": "1.0.1",
   "description": "DOM Selector Library",
+  "main": "index.js",
+  "scripts": {
+    "test": "browserify test.js | tape-run"
+  },
+  "devDependencies": {
+    "browserify": "13.0.0",
+    "tape": "4.5.1",
+    "tape-run": "2.1.3"
+  },
   "keywords": [
     "dom",
     "querySelector",
