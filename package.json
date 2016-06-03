@@ -1,7 +1,7 @@
 {
-  "name": "dom-select",
+  "name": "select-dom",
   "version": "1.0.0",
-  "description": "DOM Selector Library With Fallback Support",
+  "description": "DOM Selector Library",
   "scripts": {
     "test": "node test -b"
   },
@@ -10,10 +10,12 @@
   },
   "keywords": [
     "dom",
+    "querySelector",
+    "querySelectorAll",
     "selector"
   ],
   "repository": {
-    "url": "git@github.com:npm-dom/dom-select.git",
+    "url": "git@github.com:bfred-it/select-dom.git",
     "type": "git"
   },
   "author": "Azer Koçulu <azer@kodfabrik.com>",

@@ -1,4 +1,4 @@
-## dom-select
+## select-dom
 
 DOM Selector Library for IE9+
 
@@ -18,5 +18,5 @@ select.all('.foo a[href=bar]', parentElement)
 ## Install
 
 ```bash
-$ npm install dom-select
+$ npm install select-dom --save
 ```
