@@ -2,12 +2,6 @@
   "name": "select-dom",
   "version": "1.0.0",
   "description": "DOM Selector Library",
-  "scripts": {
-    "test": "node test -b"
-  },
-  "devDependencies": {
-    "prova": "*"
-  },
   "keywords": [
     "dom",
     "querySelector",
