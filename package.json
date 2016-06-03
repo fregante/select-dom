@@ -1,6 +1,6 @@
 {
   "name": "select-dom",
-  "version": "1.0.1",
+  "version": "3.0.0",
   "description": "DOM Selector Library",
   "main": "index.js",
   "scripts": {
@@ -17,10 +17,7 @@
     "querySelectorAll",
     "selector"
   ],
-  "repository": {
-    "url": "git@github.com:bfred-it/select-dom.git",
-    "type": "git"
-  },
-  "author": "Azer Koçulu <azer@kodfabrik.com>",
-  "license": "BSD"
+  "license": "MIT",
+  "repository": "bfred-it/select-dom",
+  "author": "Federico Brigante <bfred-it@users.noreply.github.com> (twitter.com/bfred_it)"
 }
