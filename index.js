@@ -8,7 +8,7 @@ function getElementsArray (elements) {
 	if (elements instanceof HTMLElement || elements === document) {
 		return [elements];
 	}
-	if (elements.forEach) {
+	if (Array.isArray(elements)) {
 		return elements;
 	}
 	if (Array.from) {
