@@ -7,7 +7,7 @@ module.exports = function (selector, parent) {
 module.exports.all = function (selector, parent) {
 	// select.all('selector')
 	if (!parent) {
-		return Array.apply(document.querySelectorAll(selector));
+		return Array.apply(null, document.querySelectorAll(selector));
 	}
 	
 	// select.all('selector', singleElementOrDocument)
