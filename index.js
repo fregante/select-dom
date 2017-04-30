@@ -11,10 +11,10 @@ module.exports.all = function (selector, parent) {
 	}
 	
 	var all = [];
-	var current, i, l, ii, ll;
-	for (i = 0, l = parent.length; i < l; i++) {
+	var current, i, ii;
+	for (i = 0; i < parent.length; i++) {
 		current = parent[i].querySelectorAll(selector);
-		for (ii = 0, ll = current.length; ii < ll; ii++) {
+		for (ii = 0; ii < current.length; ii++) {
 			if (all.indexOf(current[ii]) < 0) {
 				all.push(current[ii]);
 			}
