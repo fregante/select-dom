@@ -5,14 +5,9 @@ module.exports = function (selector, parent) {
 };
 
 module.exports.all = function (selector, parent) {
-	// select.all('selector')
-	if (!parent) {
-		return Array.apply(null, document.querySelectorAll(selector));
-	}
-	
-	// select.all('selector', singleElementOrDocument)
-	if (typeof parent.querySelectorAll === 'function') {
-		parent = [parent];
+	// select.all('selector') or select.all('selector', singleElementOrDocument)
+	if (!parent || typeof parent.querySelectorAll === 'function') {
+		return Array.apply(null, (parent || document).querySelectorAll(selector));
 	}
 	
 	var all = [];
