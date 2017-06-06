@@ -52,5 +52,8 @@ Maps to `parents.querySelectorAll(selector)` plus:
 Essentially now you can do something like:
 
 ```js
-select.all('.foo a[href=bar]', select.all('.parents'));
+const parents = select.all('.parents');
+if(checkSomething(parents)) {
+    select.all('.foo a[href=bar]', parents);
+}
 ```
