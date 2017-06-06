@@ -12,7 +12,7 @@
 ## Install
 
 ```bash
-$ npm install select-dom --save
+$ npm install select-dom
 ```
 
 ## Examples
