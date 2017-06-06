@@ -1,6 +1,6 @@
 {
   "name": "select-dom",
-  "version": "3.0.2",
+  "version": "4.0.0",
   "description": "DOM Selector Library",
   "main": "index.js",
   "scripts": {
