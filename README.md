@@ -1,6 +1,5 @@
 # select-dom [![gzipped size][badge-gzip]](#no-link) [![Travis build status][badge-travis]][link-travis] [![npm version][badge-version]][link-npm] [![npm downloads][badge-downloads]][link-npm]
 
-DOM Selector Library for IE9+
   [badge-gzip]: https://badges.herokuapp.com/size/github/bfred-it/select-dom/master/dist/select-dom.min.js?gzip=true&label=gzipped%20size
   [badge-travis]: https://api.travis-ci.org/bfred-it/select-dom.svg
   [badge-version]: https://img.shields.io/npm/v/select-dom.svg
@@ -8,6 +7,7 @@ DOM Selector Library for IE9+
   [link-travis]: https://travis-ci.org/bfred-it/select-dom
   [link-npm]: https://www.npmjs.com/package/select-dom
 
+> Lightweight `querySelector`/`All` wrapper that outputs an Array
 
 ## Install
 
