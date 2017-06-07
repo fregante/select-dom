@@ -17,6 +17,20 @@ test('selects one element within an ancestor', function (t) {
   t.equal(select('li', select('ul')), li);
 });
 
+test('tests existence of one element', function (t) {
+  t.plan(2);
+
+  t.true(select.exists('ul li'));
+  t.false(select.exists('lololol'));
+});
+
+test('tests existence of one element within an ancestor', function (t) {
+  t.plan(2);
+
+  t.true(select.exists('li', select('ul')));
+  t.false(select.exists('ul', select('li')));
+});
+
 test('selects all elements', function (t) {
   t.plan(1);
 

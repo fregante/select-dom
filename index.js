@@ -1,15 +1,19 @@
 'use strict';
 
-module.exports = function (selector, parent) {
+function select (selector, parent) {
 	return (parent || document).querySelector(selector);
+}
+
+select.exists = function (selector, parent) {
+	return Boolean(select(selector, parent));
 };
 
-module.exports.all = function (selector, parent) {
+select.all = function (selector, parent) {
 	// select.all('selector') or select.all('selector', singleElementOrDocument)
 	if (!parent || typeof parent.querySelectorAll === 'function') {
 		return Array.apply(null, (parent || document).querySelectorAll(selector));
 	}
-	
+
 	var all = [];
 	var current, i, ii;
 	for (i = 0; i < parent.length; i++) {
@@ -22,3 +26,6 @@ module.exports.all = function (selector, parent) {
 	}
 	return all;
 };
+
+
+module.exports = select;

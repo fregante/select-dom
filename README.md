@@ -20,12 +20,29 @@ $ npm install select-dom
 ```js
 var select = require('select-dom')
 
+/**
+ * select()
+ */
 select('.foo a[href=bar]')
 // => <Element>
 
 select('.foo a[href=bar]', parentElement)
 // => <Element>
 
+/**
+ * select.exists()
+ */
+
+select('.foo a[href=bar]')
+// => true/false
+
+select('.foo a[href=bar]', parentElement)
+// => true/false
+
+
+/**
+ * select.all()
+ */
 select.all('.foo a[href=bar]')
 // => [<Element>, <Element>, <Element>]
 
@@ -41,6 +58,10 @@ select.all('.foo a[href=bar]', [parentElement1, parentElement2])
 ### `select(selector[, parent = document])`
 
 Maps to `parent.querySelector(selector)`
+
+### `select.exists(selector[, parent = document])`
+
+Tests the existence of one or more elements matching the selector.
 
 ### `select.all(selector[, parents = document])`
 
