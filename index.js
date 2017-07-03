@@ -1,13 +1,28 @@
 'use strict';
 
+/**
+ * @param {string} selector
+ * @param {Element} [parent]
+ * @return {?Element}
+ */
 function select (selector, parent) {
 	return (parent || document).querySelector(selector);
 }
 
+/**
+ * @param {string} selector
+ * @param {Element} [parent]
+ * @return {boolean}
+ */
 select.exists = function (selector, parent) {
 	return Boolean(select(selector, parent));
 };
 
+/**
+ * @param {string} selector
+ * @param {Element|Element[]} [parent]
+ * @return {Element[]}
+ */
 select.all = function (selector, parent) {
 	// select.all('selector') or select.all('selector', singleElementOrDocument)
 	if (!parent || typeof parent.querySelectorAll === 'function') {
