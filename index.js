@@ -5,7 +5,7 @@
  * @param {Element} [parent]
  * @return {?Element}
  */
-function select (selector, parent) {
+function select(selector, parent) {
 	return (parent || document).querySelector(selector);
 }
 
@@ -24,13 +24,15 @@ select.exists = function (selector, parent) {
  * @return {Element[]}
  */
 select.all = function (selector, parent) {
-	// select.all('selector') or select.all('selector', singleElementOrDocument)
+	// Can be: select.all('selector') or select.all('selector', singleElementOrDocument)
 	if (!parent || typeof parent.querySelectorAll === 'function') {
 		return Array.apply(null, (parent || document).querySelectorAll(selector));
 	}
 
+	var current;
+	var i;
+	var ii;
 	var all = [];
-	var current, i, ii;
 	for (i = 0; i < parent.length; i++) {
 		current = parent[i].querySelectorAll(selector);
 		for (ii = 0; ii < current.length; ii++) {
@@ -41,6 +43,5 @@ select.all = function (selector, parent) {
 	}
 	return all;
 };
-
 
 module.exports = select;

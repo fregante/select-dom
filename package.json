@@ -4,19 +4,27 @@
   "description": "DOM Selector Library",
   "main": "index.js",
   "scripts": {
-    "test": "browserify test.js | tape-run"
+    "test": "xo && browserify test.js | tape-run"
   },
   "devDependencies": {
     "browserify": "^14.4.0",
     "tape": "^4.6.3",
-    "tape-run": "^3.0.0"
+    "tape-run": "^3.0.0",
+    "xo": "^0.18.2"
   },
   "keywords": [
     "dom",
+    "elements",
+    "css",
+    "selector",
     "querySelector",
     "querySelectorAll",
     "selector"
   ],
+  "xo": {
+    "envs": "browser",
+    "esnext": false
+  },
   "license": "MIT",
   "repository": "bfred-it/select-dom",
   "author": "Federico Brigante <github@bfred.it> (bfred.it)"

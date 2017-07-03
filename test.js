@@ -1,53 +1,53 @@
 var test = require('tape');
-var select = require("./");
+var select = require('./');
 
 document.body.innerHTML = '<ul><li>Foo</li><li>Bar</li><li>Qux</li></ul><ul><li>Lorem</li><li>Ipsum</li></ul>';
 
 test('selects one element', function (t) {
-  t.plan(1);
+	t.plan(1);
 
-  var li = document.querySelector('ul li');
-  t.equal(select('ul li'), li);
+	var li = document.querySelector('ul li');
+	t.equal(select('ul li'), li);
 });
 
 test('selects one element within an ancestor', function (t) {
-  t.plan(1);
+	t.plan(1);
 
-  var li = document.querySelector('ul li');
-  t.equal(select('li', select('ul')), li);
+	var li = document.querySelector('ul li');
+	t.equal(select('li', select('ul')), li);
 });
 
 test('tests existence of one element', function (t) {
-  t.plan(2);
+	t.plan(2);
 
-  t.true(select.exists('ul li'));
-  t.false(select.exists('lololol'));
+	t.true(select.exists('ul li'));
+	t.false(select.exists('lololol'));
 });
 
 test('tests existence of one element within an ancestor', function (t) {
-  t.plan(2);
+	t.plan(2);
 
-  t.true(select.exists('li', select('ul')));
-  t.false(select.exists('ul', select('li')));
+	t.true(select.exists('li', select('ul')));
+	t.false(select.exists('ul', select('li')));
 });
 
 test('selects all elements', function (t) {
-  t.plan(1);
+	t.plan(1);
 
-  var li = document.querySelectorAll('ul li');
-  t.deepEqual(select.all('ul li'), li);
+	var li = document.querySelectorAll('ul li');
+	t.deepEqual(select.all('ul li'), li);
 });
 
 test('selects all elements within an ancestor', function (t) {
-  t.plan(1);
+	t.plan(1);
 
-  var li = document.querySelector('ul').querySelectorAll('ul li');
-  t.deepEqual(select.all('li', select('ul')), li);
+	var li = document.querySelector('ul').querySelectorAll('ul li');
+	t.deepEqual(select.all('li', select('ul')), li);
 });
 
 test('selects all elements within an array of ancestors', function (t) {
-  t.plan(1);
+	t.plan(1);
 
-  var li = document.querySelectorAll('ul li');
-  t.deepEqual(select.all('li', select.all('ul')), li);
+	var li = document.querySelectorAll('ul li');
+	t.deepEqual(select.all('li', select.all('ul')), li);
 });
