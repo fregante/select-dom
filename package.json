@@ -23,7 +23,10 @@
   ],
   "xo": {
     "envs": "browser",
-    "esnext": false
+    "esnext": false,
+    "rules": {
+      "valid-jsdoc": "error"
+    }
   },
   "license": "MIT",
   "repository": "bfred-it/select-dom",

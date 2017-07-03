@@ -1,27 +1,27 @@
 'use strict';
 
 /**
- * @param {string} selector
- * @param {Element} [parent]
- * @return {?Element}
+ * @param {string} selector   One or more CSS selectors separated by commas
+ * @param {Element} [parent]  The element to look inside of
+ * @return {?Element}         The element found, if any
  */
 function select(selector, parent) {
 	return (parent || document).querySelector(selector);
 }
 
 /**
- * @param {string} selector
- * @param {Element} [parent]
- * @return {boolean}
+ * @param {string} selector   One or more CSS selectors separated by commas
+ * @param {Element} [parent]  The element to look inside of
+ * @return {boolean}          Whether it's been found
  */
 select.exists = function (selector, parent) {
 	return Boolean(select(selector, parent));
 };
 
 /**
- * @param {string} selector
- * @param {Element|Element[]} [parent]
- * @return {Element[]}
+ * @param {string} selector               One or more CSS selectors separated by commas
+ * @param {Element|Element[]} [parent]    The element or list of elements to look inside of
+ * @return {Element[]}                    An array of elements found
  */
 select.all = function (selector, parent) {
 	// Can be: select.all('selector') or select.all('selector', singleElementOrDocument)
