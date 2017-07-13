@@ -33,10 +33,10 @@ select('.foo a[href=bar]', parentElement)
  * select.exists()
  */
 
-select('.foo a[href=bar]')
+select.exists('.foo a[href=bar]')
 // => true/false
 
-select('.foo a[href=bar]', parentElement)
+select.exists('.foo a[href=bar]', parentElement)
 // => true/false
 
 
