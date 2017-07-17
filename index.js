@@ -32,9 +32,13 @@ select.all = function (selector, parent) {
 	var current;
 	var i;
 	var ii;
-	var all = [];
+	var all;
 	for (i = 0; i < parent.length; i++) {
 		current = parent[i].querySelectorAll(selector);
+		if (!all) {
+			all = Array.apply(null, current);
+			continue;
+		}
 		for (ii = 0; ii < current.length; ii++) {
 			if (all.indexOf(current[ii]) < 0) {
 				all.push(current[ii]);
