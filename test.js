@@ -51,3 +51,18 @@ test('selects all elements within an array of ancestors', function (t) {
 	var li = document.querySelectorAll('ul li');
 	t.deepEqual(select.all('li', select.all('ul')), li);
 });
+
+test('attaches events to all the selected elements', function (t) {
+	var expectedElCount = 5;
+	t.plan(expectedElCount + 1);
+
+	var cb = function () {
+		t.true(true);
+	};
+	var els = select.all('li');
+	t.equal(expectedElCount, els.length);
+	els.on('click', cb);
+	els.forEach(function (el) {
+		el.click();
+	});
+});
