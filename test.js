@@ -1,7 +1,17 @@
 var test = require('tape');
-var select = require('./');
+var select = require('.');
 
-document.body.innerHTML = '<ul><li>Foo</li><li>Bar</li><li>Qux</li></ul><ul><li>Lorem</li><li>Ipsum</li></ul>';
+document.body.innerHTML = `
+	<ul>
+		<li>Foo</li>
+		<li>Bar</li>
+		<li>Qux</li>
+	</ul>
+	<ul>
+		<li>Lorem</li>
+		<li>Ipsum</li>
+	</ul>
+`;
 
 test('selects one element', function (t) {
 	t.plan(1);

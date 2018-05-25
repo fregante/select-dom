@@ -7,10 +7,10 @@
     "test": "xo && browserify test.js | tape-run"
   },
   "devDependencies": {
-    "browserify": "^14.4.0",
-    "tape": "^4.6.3",
-    "tape-run": "^3.0.0",
-    "xo": "^0.18.2"
+    "browserify": "^16.2.2",
+    "tape": "^4.9.0",
+    "tape-run": "^4.0.0",
+    "xo": "*"
   },
   "keywords": [
     "dom",
@@ -19,7 +19,9 @@
     "selector",
     "querySelector",
     "querySelectorAll",
-    "selector"
+    "selector",
+    "jquery",
+    "alternative"
   ],
   "xo": {
     "envs": "browser",
