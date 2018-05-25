@@ -6,6 +6,10 @@
  * @return {?Element}         The element found, if any
  */
 function select(selector, parent) {
+	// Shortcut with specified-but-null parent
+	if (arguments.length === 2 && !parent) {
+		return null;
+	}
 	return (parent || document).querySelector(selector);
 }
 
@@ -15,7 +19,10 @@ function select(selector, parent) {
  * @return {boolean}          Whether it's been found
  */
 select.exists = function (selector, parent) {
-	return Boolean(select(selector, parent));
+	if (parent) {
+		return Boolean(select(selector, parent));
+	}
+	return Boolean(select(selector));
 };
 
 /**
@@ -24,6 +31,11 @@ select.exists = function (selector, parent) {
  * @return {Element[]}                    An array of elements found
  */
 select.all = function (selector, parent) {
+	// Shortcut with specified-but-null parent
+	if (arguments.length === 2 && !parent) {
+		return [];
+	}
+
 	// Can be: select.all('selector') or select.all('selector', singleElementOrDocument)
 	if (!parent || typeof parent.querySelectorAll === 'function') {
 		return Array.apply(null, (parent || document).querySelectorAll(selector));
