@@ -35,10 +35,11 @@ test('tests existence of one element', function (t) {
 });
 
 test('tests existence of one element within an ancestor', function (t) {
-	t.plan(2);
+	t.plan(3);
 
 	t.true(select.exists('li', select('ul')));
 	t.false(select.exists('ul', select('li')));
+	t.false(select.exists('ul', select('lololol')));
 });
 
 test('selects all elements', function (t) {

@@ -19,7 +19,7 @@ function select(selector, parent) {
  * @return {boolean}          Whether it's been found
  */
 select.exists = function (selector, parent) {
-	if (parent) {
+	if (arguments.length === 2) {
 		return Boolean(select(selector, parent));
 	}
 	return Boolean(select(selector));
