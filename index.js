@@ -10,6 +10,7 @@ function select(selector, parent) {
 	if (arguments.length === 2 && !parent) {
 		return null;
 	}
+
 	return (parent || document).querySelector(selector);
 }
 
@@ -22,6 +23,7 @@ select.exists = function (selector, parent) {
 	if (arguments.length === 2) {
 		return Boolean(select(selector, parent));
 	}
+
 	return Boolean(select(selector));
 };
 
@@ -51,12 +53,14 @@ select.all = function (selector, parent) {
 			all = Array.apply(null, current);
 			continue;
 		}
+
 		for (ii = 0; ii < current.length; ii++) {
 			if (all.indexOf(current[ii]) < 0) {
 				all.push(current[ii]);
 			}
 		}
 	}
+
 	return all;
 };
 
