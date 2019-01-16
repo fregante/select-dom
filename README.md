@@ -19,30 +19,31 @@ $ npm install select-dom
 
 ```js
 var select = require('select-dom')
+```
 
-/**
- * select()
- */
+### `select()`
+
+```js
 select('.foo a[href=bar]')
 // => <Element>
 
 select('.foo a[href=bar]', parentElement)
 // => <Element>
+```
 
-/**
- * select.exists()
- */
+### `select.exists()`
 
+```js
 select.exists('.foo a[href=bar]')
 // => true/false
 
 select.exists('.foo a[href=bar]', parentElement)
 // => true/false
+```
 
+### `select.all()`
 
-/**
- * select.all()
- */
+```js
 select.all('.foo a[href=bar]')
 // => [<Element>, <Element>, <Element>]
 
@@ -54,6 +55,8 @@ select.all('.foo a[href=bar]', [parentElement1, parentElement2])
 ```
 
 ## API
+
+**Note:** if a falsy value is passed as `parent`, you'll always get an empty result (bd578b9)
 
 ### `select(selector[, parent = document])`
 
@@ -68,13 +71,11 @@ Tests the existence of one or more elements matching the selector.
 Maps to `parents.querySelectorAll(selector)` plus:
 
 * it always returns an array
-* parents can be *undefined*, an element, an array of elements, or NodeList
+* parents can be an element, an array of elements, or NodeList
 
-Essentially now you can do something like:
+This lets you search through an existing list of elements, like:
 
 ```js
-const parents = select.all('.parents');
-if(checkSomething(parents)) {
-    select.all('.foo a[href=bar]', parents);
-}
+const parents = select.all('.parents').filter(Math.random);
+select.all('.foo a[href=bar]', parents);
 ```
