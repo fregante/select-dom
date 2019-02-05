@@ -2,7 +2,7 @@
 
 type BaseElements = Element | Element[] | NodeList | DocumentFragment;
 
-export default interface SelectDom {
+export interface SelectDom {
 	<K extends keyof HTMLElementTagNameMap>(
 		selectors: K,
 		baseElement?: Element
@@ -40,3 +40,7 @@ export default interface SelectDom {
 		baseElements?: BaseElements
 	): E[];
 }
+
+declare const select: SelectDom;
+
+export default select
