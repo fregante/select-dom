@@ -1,6 +1,6 @@
 {
   "name": "select-dom",
-  "version": "4.2.0-1",
+  "version": "4.2.0-2",
   "description": "Extra lightweight DOM selector helper",
   "main": "index.js",
   "scripts": {
