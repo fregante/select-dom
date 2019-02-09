@@ -27,7 +27,7 @@ var select = require('select-dom')
 select('.foo a[href=bar]')
 // => <Element>
 
-select('.foo a[href=bar]', parentElement)
+select('.foo a[href=bar]', baseElement)
 // => <Element>
 ```
 
@@ -37,7 +37,7 @@ select('.foo a[href=bar]', parentElement)
 select.exists('.foo a[href=bar]')
 // => true/false
 
-select.exists('.foo a[href=bar]', parentElement)
+select.exists('.foo a[href=bar]', baseElement)
 // => true/false
 ```
 
@@ -47,35 +47,35 @@ select.exists('.foo a[href=bar]', parentElement)
 select.all('.foo a[href=bar]')
 // => [<Element>, <Element>, <Element>]
 
-select.all('.foo a[href=bar]', parentElement)
+select.all('.foo a[href=bar]', baseElement)
 // => [<Element>, <Element>, <Element>]
 
-select.all('.foo a[href=bar]', [parentElement1, parentElement2])
+select.all('.foo a[href=bar]', [baseElement1, baseElement2])
 // => [<Element>, <Element>, <Element>]
 ```
 
 ## API
 
-**Note:** if a falsy value is passed as `parent`, you'll always get an empty result (bd578b9)
+**Note:** if a falsy value is passed as `baseElement`, you'll always get an empty result (bd578b9)
 
-### `select(selector[, parent = document])`
+### `select(selector[, baseElement = document])`
 
-Maps to `parent.querySelector(selector)`
+Maps to `baseElement.querySelector(selector)`
 
-### `select.exists(selector[, parent = document])`
+### `select.exists(selector[, baseElement = document])`
 
 Tests the existence of one or more elements matching the selector.
 
-### `select.all(selector[, parents = document])`
+### `select.all(selector[, baseElements = document])`
 
-Maps to `parents.querySelectorAll(selector)` plus:
+Maps to `baseElements.querySelectorAll(selector)` plus:
 
 * it always returns an array
-* parents can be an element, an array of elements, or NodeList
+* baseElements can be an element, an array of elements, or NodeList
 
 This lets you search through an existing list of elements, like:
 
 ```js
-const parents = select.all('.parents').filter(Math.random);
-select.all('.foo a[href=bar]', parents);
+const baseElements = select.all('.baseElements').filter(Math.random);
+select.all('.foo a[href=bar]', baseElements);
 ```

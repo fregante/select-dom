@@ -1,54 +1,54 @@
 'use strict';
 
 /**
- * @param {string} selector   One or more CSS selectors separated by commas
- * @param {Element} [parent]  The element to look inside of
+ * @param {string} selectors   One or more CSS selectors separated by commas
+ * @param {Element} [baseElement]  The element to look inside of
  * @return {?Element}         The element found, if any
  */
-function select(selector, parent) {
-	// Shortcut with specified-but-null parent
-	if (arguments.length === 2 && !parent) {
+function select(selectors, baseElement) {
+	// Shortcut with specified-but-null baseElement
+	if (arguments.length === 2 && !baseElement) {
 		return null;
 	}
 
-	return (parent || document).querySelector(selector);
+	return (baseElement || document).querySelector(selectors);
 }
 
 /**
- * @param {string} selector   One or more CSS selectors separated by commas
- * @param {Element} [parent]  The element to look inside of
+ * @param {string} selectors   One or more CSS selectors separated by commas
+ * @param {Element} [baseElement]  The element to look inside of
  * @return {boolean}          Whether it's been found
  */
-select.exists = function (selector, parent) {
+select.exists = function (selectors, baseElement) {
 	if (arguments.length === 2) {
-		return Boolean(select(selector, parent));
+		return Boolean(select(selectors, baseElement));
 	}
 
-	return Boolean(select(selector));
+	return Boolean(select(selectors));
 };
 
 /**
- * @param {string} selector               One or more CSS selectors separated by commas
- * @param {Element|Element[]} [parent]    The element or list of elements to look inside of
+ * @param {string} selectors               One or more CSS selectors separated by commas
+ * @param {Element|Element[]} [baseElements]    The element or list of elements to look inside of
  * @return {Element[]}                    An array of elements found
  */
-select.all = function (selector, parent) {
-	// Shortcut with specified-but-null parent
-	if (arguments.length === 2 && !parent) {
+select.all = function (selectors, baseElements) {
+	// Shortcut with specified-but-null baseElements
+	if (arguments.length === 2 && !baseElements) {
 		return [];
 	}
 
-	// Can be: select.all('selector') or select.all('selector', singleElementOrDocument)
-	if (!parent || typeof parent.querySelectorAll === 'function') {
-		return Array.apply(null, (parent || document).querySelectorAll(selector));
+	// Can be: select.all('selectors') or select.all('selectors', singleElementOrDocument)
+	if (!baseElements || typeof baseElements.querySelectorAll === 'function') {
+		return Array.apply(null, (baseElements || document).querySelectorAll(selectors));
 	}
 
 	var current;
 	var i;
 	var ii;
 	var all;
-	for (i = 0; i < parent.length; i++) {
-		current = parent[i].querySelectorAll(selector);
+	for (i = 0; i < baseElements.length; i++) {
+		current = baseElements[i].querySelectorAll(selectors);
 		if (!all) {
 			all = Array.apply(null, current);
 			continue;
