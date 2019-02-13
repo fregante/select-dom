@@ -12,7 +12,7 @@ export interface SelectDom {
 		selectors: K,
 		baseElement?: BaseElement
 	): SVGElementTagNameMap[K] | null;
-	<E extends Element = Element>(
+	<E extends HTMLElement = HTMLElement>(
 		selectors: string,
 		baseElement?: BaseElement
 	): E | null;
@@ -24,7 +24,7 @@ export interface SelectDom {
 		selectors: K,
 		baseElement?: BaseElement
 	): boolean;
-	exists<E extends Element = Element>(
+	exists<E extends HTMLElement = HTMLElement>(
 		selectors: string,
 		baseElement?: BaseElement
 	): boolean;
@@ -36,7 +36,7 @@ export interface SelectDom {
 		selectors: K,
 		baseElements?: BaseElements
 	): SVGElementTagNameMap[K][];
-	all<E extends Element = Element>(
+	all<E extends HTMLElement = HTMLElement>(
 		selectors: string,
 		baseElements?: BaseElements
 	): E[];
