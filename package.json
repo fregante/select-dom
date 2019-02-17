@@ -3,7 +3,6 @@
   "version": "4.2.1",
   "description": "Extra lightweight DOM selector helper",
   "main": "index.js",
-  "types": "index.d.ts",
   "scripts": {
     "test": "xo && browserify test.js | tape-run"
   },
