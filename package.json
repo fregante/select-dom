@@ -23,6 +23,10 @@
     "jquery",
     "alternative"
   ],
+  "files": [
+    "index.js",
+    "index.d.ts"
+  ],
   "xo": {
     "envs": "browser",
     "esnext": false,
