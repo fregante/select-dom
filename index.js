@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * @param {string} selectors   One or more CSS selectors separated by commas
- * @param {Element} [baseElement]  The element to look inside of
- * @return {?Element}         The element found, if any
+ * @param selectors      One or more CSS selectors separated by commas
+ * @param [baseElement]  The element to look inside of
+ * @return               The element found, if any
  */
 function select(selectors, baseElement) {
 	// Shortcut with specified-but-null baseElement
@@ -15,9 +15,9 @@ function select(selectors, baseElement) {
 }
 
 /**
- * @param {string} selectors   One or more CSS selectors separated by commas
- * @param {Element} [baseElement]  The element to look inside of
- * @return {boolean}          Whether it's been found
+ * @param selectors      One or more CSS selectors separated by commas
+ * @param [baseElement]  The element to look inside of
+ * @return               Whether it's been found
  */
 select.exists = function (selectors, baseElement) {
 	if (arguments.length === 2) {
@@ -28,9 +28,9 @@ select.exists = function (selectors, baseElement) {
 };
 
 /**
- * @param {string} selectors               One or more CSS selectors separated by commas
- * @param {Element|Element[]} [baseElements]    The element or list of elements to look inside of
- * @return {Element[]}                    An array of elements found
+ * @param selectors       One or more CSS selectors separated by commas
+ * @param [baseElements]  The element or list of elements to look inside of
+ * @return                An array of elements found
  */
 select.all = function (selectors, baseElements) {
 	// Shortcut with specified-but-null baseElements
