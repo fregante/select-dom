@@ -12,7 +12,7 @@
 ## Install
 
 ```bash
-$ npm install select-dom
+$ npm install select-dom@4
 ```
 
 ## Examples
