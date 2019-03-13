@@ -43,15 +43,20 @@ select.all = function (selectors, baseElements) {
 		return new Array(...(baseElements || document).querySelectorAll(selectors));
 	}
 
-	const all = [];
+	const all = new Set();
 	for (let i = 0; i < baseElements.length; i++) {
 		const current = baseElements[i].querySelectorAll(selectors);
 		for (let ii = 0; ii < current.length; ii++) {
-			all.push(current[ii]);
+			all.add(current[ii]);
 		}
 	}
 
-	return [...new Set(all)];
+	// Preserves IE11 support and performs 3x better then rest in Safari
+	const arr = [];
+	all.forEach(function (v) {
+		arr.push(v);
+	});
+	return arr;
 };
 
 module.exports = select;

@@ -29,7 +29,8 @@
   "xo": {
     "envs": "browser",
     "rules": {
-      "valid-jsdoc": 0
+      "valid-jsdoc": 0,
+      "prefer-arrow-callback": 0
     }
   },
   "license": "MIT",
