@@ -28,9 +28,8 @@
   ],
   "xo": {
     "envs": "browser",
-    "esnext": false,
     "rules": {
-      "valid-jsdoc": "error"
+      "valid-jsdoc": 0
     }
   },
   "license": "MIT",

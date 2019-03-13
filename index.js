@@ -40,28 +40,18 @@ select.all = function (selectors, baseElements) {
 
 	// Can be: select.all('selectors') or select.all('selectors', singleElementOrDocument)
 	if (!baseElements || typeof baseElements.querySelectorAll === 'function') {
-		return Array.apply(null, (baseElements || document).querySelectorAll(selectors));
+		return new Array(...(baseElements || document).querySelectorAll(selectors));
 	}
 
-	var current;
-	var i;
-	var ii;
-	var all;
-	for (i = 0; i < baseElements.length; i++) {
-		current = baseElements[i].querySelectorAll(selectors);
-		if (!all) {
-			all = Array.apply(null, current);
-			continue;
-		}
-
-		for (ii = 0; ii < current.length; ii++) {
-			if (all.indexOf(current[ii]) < 0) {
-				all.push(current[ii]);
-			}
+	const all = [];
+	for (let i = 0; i < baseElements.length; i++) {
+		const current = baseElements[i].querySelectorAll(selectors);
+		for (let ii = 0; ii < current.length; ii++) {
+			all.push(current[ii]);
 		}
 	}
 
-	return all;
+	return [...new Set(all)];
 };
 
 module.exports = select;
