@@ -2,7 +2,6 @@
   "name": "select-dom",
   "version": "4.2.1",
   "description": "Extra lightweight DOM selector helper",
-  "main": "index.js",
   "scripts": {
     "test": "xo && browserify test.js | tape-run"
   },
