@@ -9,6 +9,8 @@
 
 > Lightweight `querySelector`/`All` wrapper that outputs an Array
 
+Version 5+ only supports browsers with [`Set` support](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set#Browser_compatibility). If you need IE 10- support, stick to [`select-dom@4`](https://github.com/bfred-it/select-dom/tree/v4.2.1)
+
 ## Install
 
 ```bash
@@ -18,7 +20,7 @@ $ npm install select-dom
 ## Examples
 
 ```js
-var select = require('select-dom')
+const select = require('select-dom')
 ```
 
 ### `select()`
