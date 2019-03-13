@@ -56,7 +56,7 @@ select.all('.foo a[href=bar]', [baseElement1, baseElement2])
 
 ## API
 
-**Note:** if a falsy value is passed as `baseElement`, you'll always get an empty result (bd578b9)
+**Note:** if a falsy value is passed as `baseElement`, you'll always get an empty result ([bd578b9](https://github.com/bfred-it/select-dom/commit/bd578b975e35d9f802cb43a900a6d3c83095c76a))
 
 ### `select(selector[, baseElement = document])`
 
