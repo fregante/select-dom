@@ -1,5 +1,5 @@
-const test = require('tape');
-const select = require('.');
+import test from 'tape';
+import select from '.';
 
 document.body.innerHTML = `
 	<ul>
