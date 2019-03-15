@@ -79,3 +79,10 @@ This lets you search through an existing list of elements, like:
 const baseElements = select.all('.baseElements').filter(Math.random);
 select.all('.foo a[href=bar]', baseElements);
 ```
+
+
+## Related
+
+- [delegate-it](https://github.com/bfred-it/delegate-it) - DOM event delegation, in <1KB.
+- [doma](https://github.com/bfred-it/doma) - Parse an HTML string into `DocumentFragment` or one `Element`, in a few bytes.
+- [Refined GitHub](https://github.com/sindresorhus/refined-github) - Uses this module.
