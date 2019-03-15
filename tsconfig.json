@@ -2,8 +2,7 @@
 	"extends": "@sindresorhus/tsconfig",
 	"compilerOptions": {
 		"outDir": ".",
-		"target": "es2015",
-		"module": "commonjs"
+		"target": "es2015"
 	},
 	"files": [
 		"index.ts"
