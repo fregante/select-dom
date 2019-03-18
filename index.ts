@@ -36,11 +36,11 @@ function select(selectors: any, baseElement: any): any {
  * @param [baseElement]  The element to look inside of
  * @return               Whether it's been found
  */
-function exists <T extends HTMLElement = HTMLElement> (
+function selectExists <T extends HTMLElement = HTMLElement> (
 	selectors: keyof HTMLElementTagNameMap | keyof SVGElementTagNameMap | string,
 	baseElement?: BaseElement
 ): boolean;
-function exists(selectors: any, baseElement: any): boolean {
+function selectExists(selectors: any, baseElement: any): boolean {
 	if (arguments.length === 2) {
 		return Boolean(select(selectors, baseElement));
 	}
@@ -54,19 +54,19 @@ function exists(selectors: any, baseElement: any): boolean {
  * @return                An array of elements found
  */
 
-function all<T extends keyof HTMLElementTagNameMap>(
+function selectAll<T extends keyof HTMLElementTagNameMap>(
 	selectors: T,
 	baseElements?: BaseElements
 ): HTMLElementTagNameMap[T][];
-function all<T extends keyof SVGElementTagNameMap>(
+function selectAll<T extends keyof SVGElementTagNameMap>(
 	selectors: T,
 	baseElements?: BaseElements
 ): SVGElementTagNameMap[T][];
-function all<T extends HTMLElement = HTMLElement> (
+function selectAll<T extends HTMLElement = HTMLElement> (
 	selectors: string,
 	baseElements?: BaseElements
 ): T[];
-function all<T>(selectors: any, baseElements: any): T[] {
+function selectAll<T>(selectors: any, baseElements: any): T[] {
 	// Shortcut with specified-but-null baseElements
 	if (arguments.length === 2 && !baseElements) {
 		return [];
@@ -93,8 +93,8 @@ function all<T>(selectors: any, baseElements: any): T[] {
 	return arr;
 }
 
-select.exists = exists;
-select.all = all;
+select.exists = selectExists;
+select.all = selectAll;
 
 module.exports = select;
 export default select;
