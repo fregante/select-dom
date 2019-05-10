@@ -1,8 +1,9 @@
 // Types inspired by
 // https://github.com/Microsoft/TypeScript/blob/9d3707d/src/lib/dom.generated.d.ts#L10581
 
-type BaseElement = Element | DocumentFragment | Document | Window;
-type BaseElements = Element | Element[] | NodeList | DocumentFragment | Document | Window;
+// ParentNode is inherited by Element, Document, DocumentFragment
+type BaseElement = ParentNode | Window;
+type BaseElements = BaseElement | BaseElement[] | Iterable<BaseElement> | NodeList;
 
 /**
  * @param selectors      One or more CSS selectors separated by commas
