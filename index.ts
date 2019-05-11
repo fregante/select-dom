@@ -97,5 +97,4 @@ function selectAll<T>(selectors: any, baseElements: any): T[] {
 select.exists = selectExists;
 select.all = selectAll;
 
-module.exports = select;
-export default select;
+export = select;
