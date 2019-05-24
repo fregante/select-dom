@@ -4,7 +4,8 @@
 		"outDir": ".",
 		"target": "es2015",
 		"lib": [
-			"dom"
+			"dom",
+			"dom.iterable"
 		]
 	},
 	"files": [
