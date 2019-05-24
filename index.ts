@@ -75,13 +75,7 @@ function selectAll<T>(selectors: any, baseElements: any): T[] {
 
 	// Can be: select.all('selectors') or select.all('selectors', singleElementOrDocument)
 	if (!baseElements || typeof baseElements.querySelectorAll === 'function') {
-		const arr: T[] = [];
-		const selected = (baseElements || document).querySelectorAll(selectors);
-		for (let ii = 0; ii < selected.length; ii++) {
-			arr.push(selected[ii]);
-		}
-
-		return arr;
+		return Array.apply(null, (baseElements || document).querySelectorAll(selectors));
 	}
 
 	const all = [];
