@@ -19,6 +19,19 @@ expectType<SVGElement | null>(select('g'));
 expectType<SVGGElement | null>(select('g'));
 
 /**
+ * LAST
+ */
+expectType<Element | null>(select.last('.wow'));
+expectType<HTMLElement | null>(select.last('.wow'));
+expectType<HTMLAnchorElement | null>(select.last<HTMLAnchorElement>('.wow'));
+
+expectType<HTMLElement | null>(select.last('base'));
+expectType<HTMLBaseElement | null>(select.last('base'));
+
+expectType<SVGElement | null>(select.last('g'));
+expectType<SVGGElement | null>(select.last('g'));
+
+/**
  * EXISTS
  */
 expectType<boolean>(select.exists('.wow'));

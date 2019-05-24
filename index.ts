@@ -35,6 +35,34 @@ function select(selectors: any, baseElement: any): any {
 /**
  * @param selectors      One or more CSS selectors separated by commas
  * @param [baseElement]  The element to look inside of
+ * @return               The element found, if any
+ */
+
+function selectLast<T extends keyof HTMLElementTagNameMap>(
+	selectors: T,
+	baseElement?: BaseElement
+): HTMLElementTagNameMap[T] | null;
+function selectLast<T extends keyof SVGElementTagNameMap>(
+	selectors: T,
+	baseElement?: BaseElement
+): SVGElementTagNameMap[T] | null;
+function selectLast<T extends HTMLElement = HTMLElement>(
+	selectors: string,
+	baseElement?: BaseElement
+): T | null;
+function selectLast(selectors: any, baseElement: any): any {
+	// Shortcut with specified-but-null baseElement
+	if (arguments.length === 2 && !baseElement) {
+		return null;
+	}
+
+	const all = (baseElement || document).querySelectorAll(selectors);
+	return all[all.length - 1];
+}
+
+/**
+ * @param selectors      One or more CSS selectors separated by commas
+ * @param [baseElement]  The element to look inside of
  * @return               Whether it's been found
  */
 function selectExists <T extends HTMLElement = HTMLElement> (
@@ -94,6 +122,7 @@ function selectAll<T>(selectors: any, baseElements: any): T[] {
 	return arr;
 }
 
+select.last = selectLast;
 select.exists = selectExists;
 select.all = selectAll;
 

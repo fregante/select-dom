@@ -27,6 +27,20 @@ test('selects one element within an ancestor', t => {
 	t.equal(select('li', select('ul')), li);
 });
 
+test('selects the last element', t => {
+	t.plan(1);
+
+	const li = [...document.querySelectorAll('ul li')].pop();
+	t.equal(select.last('ul li'), li);
+});
+
+test('selects the last element within an ancestor', t => {
+	t.plan(1);
+
+	const li = [...document.querySelectorAll('ul li')].pop();
+	t.equal(select.last('li', select.last('ul')), li);
+});
+
 test('tests existence of one element', t => {
 	t.plan(2);
 

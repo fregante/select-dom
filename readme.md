@@ -41,6 +41,10 @@ select('.foo a[href=bar]', baseElement)
 // => <Element>
 ```
 
+### `select.last(selector[, baseElement = document])`
+
+Like `select()`, except that it returns the last matching item on the page instead of the first one.
+
 ### `select.exists(selector[, baseElement = document])`
 
 Tests the existence of one or more elements matching the selector. It's like `select()`, except it returns a `boolean`.
