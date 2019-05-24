@@ -1,4 +1,4 @@
-import {expectType} from 'tsd-check';
+import {expectType} from 'tsd';
 import select from '.';
 
 // `select-dom` defaults to HTMLElement where possible
@@ -8,16 +8,15 @@ import select from '.';
 /**
  * SELECT
  */
-expectType<null>(select('.wow'));
-expectType<Element>(select('.wow'));
-expectType<HTMLElement>(select('.wow'));
-expectType<HTMLAnchorElement>(select<HTMLAnchorElement>('.wow'));
+expectType<Element | null>(select('.wow'));
+expectType<HTMLElement | null>(select('.wow'));
+expectType<HTMLAnchorElement | null>(select<HTMLAnchorElement>('.wow'));
 
-expectType<HTMLElement>(select('base'));
-expectType<HTMLBaseElement>(select('base'));
+expectType<HTMLElement | null>(select('base'));
+expectType<HTMLBaseElement | null>(select('base'));
 
-expectType<SVGElement>(select('g'));
-expectType<SVGGElement>(select('g'));
+expectType<SVGElement | null>(select('g'));
+expectType<SVGGElement | null>(select('g'));
 
 /**
  * EXISTS

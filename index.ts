@@ -3,7 +3,7 @@
 
 // ParentNode is inherited by Element, Document, DocumentFragment
 type BaseElement = ParentNode | Window;
-type BaseElements = BaseElement | BaseElement[] | Iterable<BaseElement> | NodeList;
+type BaseElements = BaseElement | ArrayLike<BaseElement>;
 
 /**
  * @param selectors      One or more CSS selectors separated by commas
@@ -58,11 +58,11 @@ function selectExists(selectors: any, baseElement: any): boolean {
 function selectAll<T extends keyof HTMLElementTagNameMap>(
 	selectors: T,
 	baseElements?: BaseElements
-): HTMLElementTagNameMap[T][];
+): Array<HTMLElementTagNameMap[T]>;
 function selectAll<T extends keyof SVGElementTagNameMap>(
 	selectors: T,
 	baseElements?: BaseElements
-): SVGElementTagNameMap[T][];
+): Array<SVGElementTagNameMap[T]>;
 function selectAll<T extends HTMLElement = HTMLElement> (
 	selectors: string,
 	baseElements?: BaseElements
@@ -86,7 +86,7 @@ function selectAll<T>(selectors: any, baseElements: any): T[] {
 		}
 	}
 
-	// Preserves IE11 support and performs 3x better then ...all in Safari
+	// Preserves IE11 support and performs 3x better than `...all` in Safari
 	const arr: T[] = [];
 	all.forEach(function (v) {
 		arr.push(v);

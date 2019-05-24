@@ -3,20 +3,20 @@
   "version": "5.0.2",
   "description": "Extra lightweight DOM selector helper",
   "scripts": {
-    "test": "tsc && tsd-check && xo && browserify -p esmify test.js | tape-run",
+    "test": "tsc && tsd && xo && browserify -p esmify test.js | tape-run",
     "prepublish-only": "tsc",
     "build": "tsc",
     "watch": "tsc --watch"
   },
   "devDependencies": {
-    "@sindresorhus/tsconfig": "^0.2.1",
-    "@typescript-eslint/eslint-plugin": "^1.4.2",
+    "@sindresorhus/tsconfig": "^0.3.0",
+    "@typescript-eslint/eslint-plugin": "^1.9.0",
     "browserify": "^16.2.2",
-    "eslint-config-xo-typescript": "^0.8.0",
+    "eslint-config-xo-typescript": "^0.12.0",
     "esmify": "^2.1.1",
     "tape": "^4.9.0",
-    "tape-run": "^4.0.0",
-    "tsd-check": "^0.3.0",
+    "tape-run": "^6.0.0",
+    "tsd": "^0.7.3",
     "typescript": "^3.3.3333",
     "xo": "*"
   },
@@ -43,7 +43,8 @@
     "envs": "browser",
     "rules": {
       "valid-jsdoc": 0,
-      "prefer-arrow-callback": 0
+      "prefer-arrow-callback": 0,
+      "@typescript-eslint/prefer-for-of": 0
     }
   },
   "license": "MIT",
