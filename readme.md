@@ -16,44 +16,14 @@ Version 5+ only supports browsers with [`Set` support](https://developer.mozilla
 $ npm install select-dom
 ```
 
-## Examples
-
 ```js
 const select = require('select-dom')
 ```
 
-### `select()`
-
 ```js
-select('.foo a[href=bar]')
-// => <Element>
-
-select('.foo a[href=bar]', baseElement)
-// => <Element>
+import select from 'select-dom';
 ```
 
-### `select.exists()`
-
-```js
-select.exists('.foo a[href=bar]')
-// => true/false
-
-select.exists('.foo a[href=bar]', baseElement)
-// => true/false
-```
-
-### `select.all()`
-
-```js
-select.all('.foo a[href=bar]')
-// => [<Element>, <Element>, <Element>]
-
-select.all('.foo a[href=bar]', baseElement)
-// => [<Element>, <Element>, <Element>]
-
-select.all('.foo a[href=bar]', [baseElement1, baseElement2])
-// => [<Element>, <Element>, <Element>]
-```
 
 ## API
 
@@ -63,24 +33,48 @@ select.all('.foo a[href=bar]', [baseElement1, baseElement2])
 
 Maps to `baseElement.querySelector(selector)`
 
+```js
+select('.foo a[href=bar]')
+// => <Element>
+
+select('.foo a[href=bar]', baseElement)
+// => <Element>
+```
+
+### `select.last(selector[, baseElement = document])`
+
+Like `select()`, except that it returns the last matching item on the page instead of the first one.
+
 ### `select.exists(selector[, baseElement = document])`
 
-Tests the existence of one or more elements matching the selector.
+Tests the existence of one or more elements matching the selector. It's like `select()`, except it returns a `boolean`.
+
+```js
+select.exists('.foo a[href=bar]')
+// => true/false
+
+select.exists('.foo a[href=bar]', baseElement)
+// => true/false
+```
 
 ### `select.all(selector[, baseElements = document])`
 
 Maps to `baseElements.querySelectorAll(selector)` plus:
 
 * it always returns an array
-* baseElements can be an element, an array of elements, or NodeList
-
-This lets you search through an existing list of elements, like:
+* `baseElements` can be a list of elements to query
 
 ```js
-const baseElements = select.all('.baseElements').filter(Math.random);
-select.all('.foo a[href=bar]', baseElements);
-```
+select.all('.foo')
+// => [<Element>, <Element>, <Element>]
 
+select.all('.foo', baseElement)
+// => [<Element>, <Element>, <Element>]
+
+select.all('.foo', [baseElement1, baseElement2])
+// => [<Element>, <Element>, <Element>]
+// This is similar to jQuery([baseElement1, baseElement2]).find('.foo')
+```
 
 ## Related
 

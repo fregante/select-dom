@@ -2,8 +2,12 @@
 // https://github.com/Microsoft/TypeScript/blob/9d3707d/src/lib/dom.generated.d.ts#L10581
 
 // ParentNode is inherited by Element, Document, DocumentFragment
-type BaseElement = ParentNode | Window;
-type BaseElements = BaseElement | BaseElement[] | Iterable<BaseElement> | NodeList;
+type BaseElements = ParentNode | ArrayLike<ParentNode>;
+
+// Type predicate for TypeScript
+function isQueryable(object: BaseElements): object is ParentNode {
+	return typeof (object as any).querySelectorAll === 'function';
+}
 
 /**
  * @param selectors      One or more CSS selectors separated by commas
@@ -13,17 +17,17 @@ type BaseElements = BaseElement | BaseElement[] | Iterable<BaseElement> | NodeLi
 
 function select<T extends keyof HTMLElementTagNameMap>(
 	selectors: T,
-	baseElement?: BaseElement
+	baseElement?: ParentNode
 ): HTMLElementTagNameMap[T] | null;
 function select<T extends keyof SVGElementTagNameMap>(
 	selectors: T,
-	baseElement?: BaseElement
+	baseElement?: ParentNode
 ): SVGElementTagNameMap[T] | null;
 function select<T extends HTMLElement = HTMLElement>(
 	selectors: string,
-	baseElement?: BaseElement
+	baseElement?: ParentNode
 ): T | null;
-function select(selectors: any, baseElement: any): any {
+function select(selectors: string, baseElement?: ParentNode): HTMLElement | null {
 	// Shortcut with specified-but-null baseElement
 	if (arguments.length === 2 && !baseElement) {
 		return null;
@@ -35,13 +39,40 @@ function select(selectors: any, baseElement: any): any {
 /**
  * @param selectors      One or more CSS selectors separated by commas
  * @param [baseElement]  The element to look inside of
+ * @return               The element found, if any
+ */
+
+function selectLast<T extends keyof HTMLElementTagNameMap>(
+	selectors: T,
+	baseElement?: ParentNode
+): HTMLElementTagNameMap[T] | null;
+function selectLast<T extends keyof SVGElementTagNameMap>(
+	selectors: T,
+	baseElement?: ParentNode
+): SVGElementTagNameMap[T] | null;
+function selectLast<T extends HTMLElement = HTMLElement>(
+	selectors: string,
+	baseElement?: ParentNode
+): T | null;
+function selectLast(selectors: string, baseElement?: ParentNode): HTMLElement | null {
+	// Shortcut with specified-but-null baseElement
+	if (arguments.length === 2 && !baseElement) {
+		return null;
+	}
+
+	const all = (baseElement || document).querySelectorAll<HTMLElement>(selectors);
+	return all[all.length - 1];
+}
+
+/**
+ * @param selectors      One or more CSS selectors separated by commas
+ * @param [baseElement]  The element to look inside of
  * @return               Whether it's been found
  */
-function selectExists <T extends HTMLElement = HTMLElement> (
+function selectExists(
 	selectors: keyof HTMLElementTagNameMap | keyof SVGElementTagNameMap | string,
-	baseElement?: BaseElement
-): boolean;
-function selectExists(selectors: any, baseElement: any): boolean {
+	baseElement?: ParentNode
+): boolean {
 	if (arguments.length === 2) {
 		return Boolean(select(selectors, baseElement));
 	}
@@ -58,24 +89,25 @@ function selectExists(selectors: any, baseElement: any): boolean {
 function selectAll<T extends keyof HTMLElementTagNameMap>(
 	selectors: T,
 	baseElements?: BaseElements
-): HTMLElementTagNameMap[T][];
+): Array<HTMLElementTagNameMap[T]>;
 function selectAll<T extends keyof SVGElementTagNameMap>(
 	selectors: T,
 	baseElements?: BaseElements
-): SVGElementTagNameMap[T][];
+): Array<SVGElementTagNameMap[T]>;
 function selectAll<T extends HTMLElement = HTMLElement> (
 	selectors: string,
 	baseElements?: BaseElements
 ): T[];
-function selectAll<T>(selectors: any, baseElements: any): T[] {
+function selectAll(selectors: string, baseElements?: BaseElements): Element[] {
 	// Shortcut with specified-but-null baseElements
 	if (arguments.length === 2 && !baseElements) {
 		return [];
 	}
 
 	// Can be: select.all('selectors') or select.all('selectors', singleElementOrDocument)
-	if (!baseElements || typeof baseElements.querySelectorAll === 'function') {
-		return Array.apply(null, (baseElements || document).querySelectorAll(selectors));
+	if (!baseElements || isQueryable(baseElements)) {
+		const elements = (baseElements || document).querySelectorAll(selectors);
+		return Array.apply(null, elements as any) as Element[];
 	}
 
 	const all = [];
@@ -86,8 +118,8 @@ function selectAll<T>(selectors: any, baseElements: any): T[] {
 		}
 	}
 
-	// Preserves IE11 support and performs 3x better then ...all in Safari
-	const arr: T[] = [];
+	// Preserves IE11 support and performs 3x better than `...all` in Safari
+	const arr: Element[] = [];
 	all.forEach(function (v) {
 		arr.push(v);
 	});
@@ -95,8 +127,8 @@ function selectAll<T>(selectors: any, baseElements: any): T[] {
 	return arr;
 }
 
+select.last = selectLast;
 select.exists = selectExists;
 select.all = selectAll;
 
-module.exports = select;
-export default select;
+export = select;
