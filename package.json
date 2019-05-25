@@ -1,6 +1,6 @@
 {
   "name": "select-dom",
-  "version": "5.0.2",
+  "version": "5.1.0",
   "description": "Extra lightweight DOM selector helper",
   "scripts": {
     "test": "tsc && tsd && xo && browserify -p esmify test.js | tape-run",
