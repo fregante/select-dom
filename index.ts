@@ -106,7 +106,8 @@ function selectAll(selectors: string, baseElements?: BaseElements): Element[] {
 
 	// Can be: select.all('selectors') or select.all('selectors', singleElementOrDocument)
 	if (!baseElements || isQueryable(baseElements)) {
-		return new Array(...(baseElements || document).querySelectorAll(selectors));
+		const elements = (baseElements || document).querySelectorAll(selectors);
+		return Array.apply(null, elements as any) as Element[];
 	}
 
 	const all = [];
