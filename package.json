@@ -2,11 +2,41 @@
   "name": "select-dom",
   "version": "5.1.0",
   "description": "Extra lightweight DOM selector helper",
+  "keywords": [
+    "alternative",
+    "css",
+    "dom",
+    "elements",
+    "jquery",
+    "querySelector",
+    "querySelectorAll",
+    "selector"
+  ],
+  "repository": "fregante/select-dom",
+  "license": "MIT",
+  "author": "Federico Brigante <opensource@bfred.it> (bfred.it)",
+  "files": [
+    "index.js",
+    "index.d.ts"
+  ],
   "scripts": {
-    "test": "tsc && tsd && xo && browserify -p esmify test.js | tape-run",
-    "prepublish-only": "tsc",
     "build": "tsc",
+    "prepublish-only": "tsc",
+    "test": "tsc && tsd && xo && browserify -p esmify test.js | tape-run",
     "watch": "tsc --watch"
+  },
+  "xo": {
+    "envs": "browser",
+    "extends": "xo-typescript",
+    "extensions": [
+      "ts"
+    ],
+    "rules": {
+      "valid-jsdoc": 0,
+      "prefer-spread": 0,
+      "prefer-arrow-callback": 0,
+      "@typescript-eslint/prefer-for-of": 0
+    }
   },
   "devDependencies": {
     "@sindresorhus/tsconfig": "^0.3.0",
@@ -19,36 +49,5 @@
     "tsd": "^0.7.3",
     "typescript": "^3.3.3333",
     "xo": "*"
-  },
-  "keywords": [
-    "dom",
-    "elements",
-    "css",
-    "selector",
-    "querySelector",
-    "querySelectorAll",
-    "selector",
-    "jquery",
-    "alternative"
-  ],
-  "files": [
-    "index.js",
-    "index.d.ts"
-  ],
-  "xo": {
-    "extends": "xo-typescript",
-    "extensions": [
-      "ts"
-    ],
-    "envs": "browser",
-    "rules": {
-      "valid-jsdoc": 0,
-      "prefer-spread": 0,
-      "prefer-arrow-callback": 0,
-      "@typescript-eslint/prefer-for-of": 0
-    }
-  },
-  "license": "MIT",
-  "repository": "bfred-it/select-dom",
-  "author": "Federico Brigante <github@bfred.it> (bfred.it)"
+  }
 }

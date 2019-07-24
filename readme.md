@@ -1,14 +1,14 @@
 # select-dom [![gzipped size][badge-gzip]](#no-link) [![Travis build status][badge-travis]][link-travis] [![npm downloads][badge-downloads]][link-npm]
 
   [badge-gzip]: https://img.shields.io/bundlephobia/minzip/select-dom.svg?label=gzipped
-  [badge-travis]: https://api.travis-ci.org/bfred-it/select-dom.svg
+  [badge-travis]: https://api.travis-ci.org/fregante/select-dom.svg
   [badge-downloads]: https://img.shields.io/npm/dt/select-dom.svg
-  [link-travis]: https://travis-ci.org/bfred-it/select-dom
+  [link-travis]: https://travis-ci.org/fregante/select-dom
   [link-npm]: https://www.npmjs.com/package/select-dom
 
 > Lightweight `querySelector`/`All` wrapper that outputs an Array
 
-Version 5+ only supports browsers with [`Set` support](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set#Browser_compatibility). If you need IE 10- support, stick to [`select-dom@4`](https://github.com/bfred-it/select-dom/tree/v4.2.2)
+Version 5+ only supports browsers with [`Set` support](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set#Browser_compatibility). If you need IE 10- support, stick to [`select-dom@4`](https://github.com/fregante/select-dom/tree/v4.2.2)
 
 ## Install
 
@@ -27,7 +27,7 @@ import select from 'select-dom';
 
 ## API
 
-**Note:** if a falsy value is passed as `baseElement`, you'll always get an empty result ([bd578b9](https://github.com/bfred-it/select-dom/commit/bd578b975e35d9f802cb43a900a6d3c83095c76a))
+**Note:** if a falsy value is passed as `baseElement`, you'll always get an empty result ([bd578b9](https://github.com/fregante/select-dom/commit/bd578b975e35d9f802cb43a900a6d3c83095c76a))
 
 ### `select(selector[, baseElement = document])`
 
@@ -78,6 +78,6 @@ select.all('.foo', [baseElement1, baseElement2])
 
 ## Related
 
-- [delegate-it](https://github.com/bfred-it/delegate-it) - DOM event delegation, in <1KB.
-- [doma](https://github.com/bfred-it/doma) - Parse an HTML string into `DocumentFragment` or one `Element`, in a few bytes.
+- [delegate-it](https://github.com/fregante/delegate-it) - DOM event delegation, in <1KB.
+- [doma](https://github.com/fregante/doma) - Parse an HTML string into `DocumentFragment` or one `Element`, in a few bytes.
 - [Refined GitHub](https://github.com/sindresorhus/refined-github) - Uses this module.
