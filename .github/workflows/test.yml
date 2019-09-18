@@ -3,8 +3,13 @@ on: push
 jobs:
   run:
     runs-on: ubuntu-latest
-    container: node:12
+    container: comiq/xvfb
     steps:
     - uses: actions/checkout@v1
+    - name: Install Node
+      run: |
+        curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+        sudo apt-get install -y nodejs
+    - run: nodejs --help
     - run: npm install
     - run: npm test
