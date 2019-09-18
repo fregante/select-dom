@@ -7,6 +7,6 @@ jobs:
     - uses: actions/checkout@v1
     - uses: actions/setup-node@v1
     - run: npm install
-    - uses: bartlett705/npm-cy@master
+    - uses: mujo-code/puppeteer-headful@master
       with:
         args: test
