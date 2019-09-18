@@ -3,13 +3,10 @@ on: push
 jobs:
   run:
     runs-on: ubuntu-latest
-    services:
-      xvfb:
-        image: metal3d/xvfb
     steps:
     - uses: actions/checkout@v1
     - uses: actions/setup-node@v1
     - run: npm install
-    - run: npm test
-      env:
-        DISPLAY: 'xvfb:99'
+    - uses: bartlett705/npm-cy
+      with:
+        args: test
