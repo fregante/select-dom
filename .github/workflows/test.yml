@@ -2,6 +2,7 @@ name: Test
 on: push
 jobs:
   run:
+    runs-on: ubuntu-latest
     container: comiq/xvfb
     steps:
     - uses: actions/checkout@v1
