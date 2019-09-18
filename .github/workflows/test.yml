@@ -3,11 +3,8 @@ name: Test
 on: push
 jobs:
   run:
-    container: kipparker/docker-tape-run
     runs-on: ubuntu-latest
     steps:
-    - run: ls
-    - run: rm -rf node_modules
+    - uses: actions/setup-node@v1
     - run: npm install browser-run
-    - run: npm install electron --verbose
-    - run: echo 'console.log(9001)' | ./node_modules/.bin/browser-run
+    - run: echo 'console.log(9001); window.close()' | browser-run
