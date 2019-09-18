@@ -6,5 +6,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/setup-node@v1
+    - run: apt-get update && apt-get install xvfb
+    - run: export DISPLAY=':99.0'
+    - run: Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
     - run: npm install browser-run
     - run: echo 'console.log(9001); window.close()' | ./node_modules/.bin/browser-run
