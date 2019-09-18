@@ -10,4 +10,5 @@ jobs:
     - run: export DISPLAY=':99.0'
     - run: Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
     - run: npm install browser-run
+    - run: npm install electron
     - run: echo 'console.log(9001); window.close()' | ./node_modules/.bin/browser-run
