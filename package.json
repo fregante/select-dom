@@ -22,7 +22,7 @@
   "scripts": {
     "build": "tsc",
     "prepublish-only": "tsc",
-    "test": "tsc && tsd && xo && echo 'console.log(`Hey from ` + location); window.close()' | browser-run",
+    "test": "tsc && tsd && xo && echo 'console.log(`Hey from ` + location); window.close()'",
     "watch": "tsc --watch"
   },
   "xo": {
