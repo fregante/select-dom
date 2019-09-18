@@ -3,7 +3,7 @@ on: push
 jobs:
   run:
     runs-on: ubuntu-latest
-    container: eruvanos/xvfb
+    container: node: 12
     steps:
     - uses: actions/checkout@v1
     - run: npm install
