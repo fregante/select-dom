@@ -6,6 +6,12 @@ jobs:
     container: comiq/xvfb
     steps:
     - uses: actions/checkout@v1
+    - run: which node
+    - run: which nodejs
+    - run: which npm
     - uses: actions/setup-node@v1
+    - run: which node
+    - run: which nodejs
+    - run: which npm
     - run: npm install
     - run: npm test
