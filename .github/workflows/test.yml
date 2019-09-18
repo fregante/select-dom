@@ -6,6 +6,7 @@ jobs:
     container: kipparker/docker-tape-run
     runs-on: ubuntu-latest
     steps:
-    - run: npm install browser-run
     - run: ls
+    - run: rm -rf node_modules
+    - run: npm install browser-run
     - run: echo 'console.log(9001)' | ./node_modules/.bin/browser-run
