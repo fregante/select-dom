@@ -41,6 +41,7 @@
   "devDependencies": {
     "@sindresorhus/tsconfig": "^0.3.0",
     "@typescript-eslint/eslint-plugin": "^1.9.0",
+		"@typescript-eslint/parser": "^2.2.0",
     "browserify": "^16.2.2",
     "eslint-config-xo-typescript": "^0.12.0",
     "esmify": "^2.1.1",
