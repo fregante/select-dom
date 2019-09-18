@@ -6,6 +6,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/setup-node@v1
-    - run: PATH=$(npm bin):$PATH
     - run: npm install browser-run
-    - run: echo 'console.log(9001); window.close()' | browser-run
+    - run: echo 'console.log(9001); window.close()' | ./node_modules/.bin/browser-run
