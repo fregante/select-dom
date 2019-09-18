@@ -1,14 +1,10 @@
 name: Test
-
 on: push
-
 jobs:
   run:
-
-    runs-on: ubuntu-latest
-    
+    container: comiq/xvfb
     steps:
     - uses: actions/checkout@v1
-    - run: printenv
-    - uses: docker://comiq/xvfb
-    - run: printenv
+    - uses: actions/setup-node@v1
+    - run: npm install
+    - run: npm test
