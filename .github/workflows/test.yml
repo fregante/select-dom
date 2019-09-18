@@ -1,0 +1,14 @@
+name: Test
+
+on: push
+
+jobs:
+  run:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - run: printenv
+    - uses: docker://comiq/xvfb
+    - run: printenv
