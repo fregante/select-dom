@@ -7,5 +7,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - run: npm install browser-run
-    - run: tree
-    - run: echo 'console.log(9001)' | browser-run
+    - run: ls
+    - run: echo 'console.log(9001)' | ./node_modules/.bin/browser-run
