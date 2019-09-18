@@ -9,7 +9,7 @@ jobs:
     - name: Install Node
       run: |
         curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-        sudo apt-get install -y nodejs
+        apt-get install -y nodejs
     - run: nodejs --help
     - run: npm install
     - run: npm test
