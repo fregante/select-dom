@@ -9,4 +9,5 @@ jobs:
     - run: ls
     - run: rm -rf node_modules
     - run: npm install browser-run
+    - run: mpm install electron --verbose
     - run: echo 'console.log(9001)' | ./node_modules/.bin/browser-run
