@@ -6,7 +6,6 @@ jobs:
     container: kipparker/docker-tape-run
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - run: npm init -y
     - run: npm install browser-run
+    - run: tree
     - run: echo 'console.log(9001)' | browser-run
