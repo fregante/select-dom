@@ -3,6 +3,7 @@ name: Test
 on: push
 jobs:
   run:
+    container: kipparker/docker-tape-run
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
