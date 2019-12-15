@@ -33,7 +33,7 @@ function select(selectors: string | string[], baseElement?: ParentNode): HTMLEle
 		return null;
 	}
 
-	return (baseElement || document).querySelector(String(selectors));
+	return (baseElement ?? document).querySelector(String(selectors));
 }
 
 /**
@@ -60,7 +60,7 @@ function selectLast(selectors: string | string[], baseElement?: ParentNode): HTM
 		return null;
 	}
 
-	const all = (baseElement || document).querySelectorAll<HTMLElement>(String(selectors));
+	const all = (baseElement ?? document).querySelectorAll<HTMLElement>(String(selectors));
 	return all[all.length - 1];
 }
 
@@ -106,7 +106,7 @@ function selectAll(selectors: string | string[], baseElements?: BaseElements): E
 
 	// Can be: select.all('selectors') or select.all('selectors', singleElementOrDocument)
 	if (!baseElements || isQueryable(baseElements)) {
-		const elements = (baseElements || document).querySelectorAll(String(selectors));
+		const elements = (baseElements ?? document).querySelectorAll(String(selectors));
 		return Array.apply(null, elements as any) as Element[];
 	}
 

@@ -27,30 +27,43 @@
     "watch": "tsc --watch"
   },
   "xo": {
-    "envs": "browser",
-    "extends": "xo-typescript",
+    "envs": [
+      "browser"
+    ],
     "extensions": [
       "ts"
     ],
+    "overrides": [
+      {
+        "files": "**/*.ts",
+        "extends": "xo-typescript",
+        "parserOptions": {
+          "project": "./tsconfig.xo.json"
+        },
+        "rules": {
+          "@typescript-eslint/prefer-for-of": "off"
+        }
+      }
+    ],
     "rules": {
-      "valid-jsdoc": 0,
-      "prefer-spread": 0,
-      "prefer-arrow-callback": 0,
-      "@typescript-eslint/prefer-for-of": 0
+      "valid-jsdoc": "off",
+      "prefer-spread": "off",
+      "prefer-arrow-callback": "off",
+      "unicorn/no-for-loop": "off"
     }
   },
   "devDependencies": {
-    "@sindresorhus/tsconfig": "^0.3.0",
-    "@typescript-eslint/eslint-plugin": "^1.9.0",
-    "@typescript-eslint/parser": "1.13.0",
-    "browserify": "^16.2.2",
-    "eslint-config-xo-typescript": "^0.12.0",
+    "@sindresorhus/tsconfig": "^0.6.0",
+    "@typescript-eslint/eslint-plugin": "^2.11.0",
+    "@typescript-eslint/parser": "^2.11.0",
+    "browserify": "^16.5.0",
+    "eslint-config-xo-typescript": "^0.23.0",
     "esmify": "^2.1.1",
-    "tape": "^4.9.0",
-    "tape-run": "^6.0.0",
-    "tsd": "^0.7.3",
-    "typescript": "^3.3.3333",
-    "xo": "*"
+    "tape": "^4.11.0",
+    "tape-run": "^6.0.1",
+    "tsd": "^0.11.0",
+    "typescript": "^3.7.3",
+    "xo": "^0.25.3"
   },
   "type": "module"
 }

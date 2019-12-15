@@ -1,9 +1,7 @@
-# select-dom [![gzipped size][badge-gzip]](#no-link) [![Travis build status][badge-travis]][link-travis] [![npm downloads][badge-downloads]][link-npm]
+# select-dom [![][badge-gzip]][link-npm] [![npm downloads][badge-downloads]][link-npm]
 
   [badge-gzip]: https://img.shields.io/bundlephobia/minzip/select-dom.svg?label=gzipped
-  [badge-travis]: https://api.travis-ci.org/fregante/select-dom.svg
   [badge-downloads]: https://img.shields.io/npm/dt/select-dom.svg
-  [link-travis]: https://travis-ci.org/fregante/select-dom
   [link-npm]: https://www.npmjs.com/package/select-dom
 
 > Lightweight `querySelector`/`All` wrapper that outputs an Array
