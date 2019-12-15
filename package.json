@@ -19,6 +19,7 @@
     "index.js",
     "index.d.ts"
   ],
+  "module": "index.js",
   "scripts": {
     "build": "tsc",
     "prepublish-only": "tsc",
@@ -50,5 +51,6 @@
     "tsd": "^0.7.3",
     "typescript": "^3.3.3333",
     "xo": "*"
-  }
+  },
+  "type": "module"
 }

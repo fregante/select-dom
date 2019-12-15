@@ -13,14 +13,11 @@ Version 5+ only supports browsers with [`Set` support](https://developer.mozilla
 ## Install
 
 ```bash
-$ npm install select-dom
+npm install select-dom
 ```
 
 ```js
-const select = require('select-dom')
-```
-
-```js
+// This module is only offered as a ES Module
 import select from 'select-dom';
 ```
 

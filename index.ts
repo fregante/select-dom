@@ -131,4 +131,4 @@ select.last = selectLast;
 select.exists = selectExists;
 select.all = selectAll;
 
-export = select;
+export default select;
