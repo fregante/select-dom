@@ -32,7 +32,7 @@ function select(selectors: string | string[], baseElement?: ParentNode): HTMLEle
 		return;
 	}
 
-	return (baseElement ?? document).querySelector(String(selectors)) ?? undefined;
+	return (baseElement ?? document).querySelector<T>(String(selectors)) ?? undefined;
 }
 
 /**
