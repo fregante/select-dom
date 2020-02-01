@@ -2,7 +2,7 @@
 // https://github.com/Microsoft/TypeScript/blob/9d3707d/src/lib/dom.generated.d.ts#L10581
 
 // ParentNode is inherited by Element, Document, DocumentFragment
-type BaseElements = ParentNode | ArrayLike<ParentNode>;
+type BaseElements = ParentNode | Iterable<ParentNode>;
 
 // Type predicate for TypeScript
 function isQueryable(object: BaseElements): object is ParentNode {
@@ -108,7 +108,7 @@ function selectAll(selectors: string | string[], baseElements?: BaseElements): E
 		return Array.apply(null, elements as any) as Element[];
 	}
 
-	const queried = new Set();
+	const queried = new Set<Element>();
 	for (const baseElement of baseElements) {
 		for (const element of baseElement.querySelectorAll(String(selectors))) {
 			queried.add(element);
