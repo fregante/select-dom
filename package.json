@@ -39,18 +39,9 @@
         "extends": "xo-typescript",
         "parserOptions": {
           "project": "./tsconfig.xo.json"
-        },
-        "rules": {
-          "@typescript-eslint/prefer-for-of": "off"
         }
       }
-    ],
-    "rules": {
-      "valid-jsdoc": "off",
-      "prefer-spread": "off",
-      "prefer-arrow-callback": "off",
-      "unicorn/no-for-loop": "off"
-    }
+    ]
   },
   "devDependencies": {
     "@sindresorhus/tsconfig": "^0.6.0",
