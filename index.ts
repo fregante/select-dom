@@ -14,26 +14,25 @@ function isQueryable(object: BaseElements): object is ParentNode {
  * @param [baseElement]  The element to look inside of
  * @return               The element found, if any
  */
-
 function select<T extends keyof HTMLElementTagNameMap>(
 	selectors: T,
 	baseElement?: ParentNode
-): HTMLElementTagNameMap[T] | null;
+): HTMLElementTagNameMap[T] | undefined;
 function select<T extends keyof SVGElementTagNameMap>(
 	selectors: T,
 	baseElement?: ParentNode
-): SVGElementTagNameMap[T] | null;
+): SVGElementTagNameMap[T] | undefined;
 function select<T extends HTMLElement = HTMLElement>(
 	selectors: string | string[],
 	baseElement?: ParentNode
-): T | null;
-function select(selectors: string | string[], baseElement?: ParentNode): HTMLElement | null {
+): T | undefined;
+function select(selectors: string | string[], baseElement?: ParentNode): HTMLElement | undefined {
 	// Shortcut with specified-but-null baseElement
 	if (arguments.length === 2 && !baseElement) {
-		return null;
+		return;
 	}
 
-	return (baseElement ?? document).querySelector(String(selectors));
+	return (baseElement ?? document).querySelector(String(selectors)) ?? undefined;
 }
 
 /**
@@ -41,23 +40,22 @@ function select(selectors: string | string[], baseElement?: ParentNode): HTMLEle
  * @param [baseElement]  The element to look inside of
  * @return               The element found, if any
  */
-
 function selectLast<T extends keyof HTMLElementTagNameMap>(
 	selectors: T,
 	baseElement?: ParentNode
-): HTMLElementTagNameMap[T] | null;
+): HTMLElementTagNameMap[T] | undefined;
 function selectLast<T extends keyof SVGElementTagNameMap>(
 	selectors: T,
 	baseElement?: ParentNode
-): SVGElementTagNameMap[T] | null;
+): SVGElementTagNameMap[T] | undefined;
 function selectLast<T extends HTMLElement = HTMLElement>(
 	selectors: string | string[],
 	baseElement?: ParentNode
-): T | null;
-function selectLast(selectors: string | string[], baseElement?: ParentNode): HTMLElement | null {
+): T | undefined;
+function selectLast(selectors: string | string[], baseElement?: ParentNode): HTMLElement | undefined {
 	// Shortcut with specified-but-null baseElement
 	if (arguments.length === 2 && !baseElement) {
-		return null;
+		return undefined;
 	}
 
 	const all = (baseElement ?? document).querySelectorAll<HTMLElement>(String(selectors));
@@ -73,11 +71,12 @@ function selectExists(
 	selectors: keyof HTMLElementTagNameMap | keyof SVGElementTagNameMap | string | string[],
 	baseElement?: ParentNode
 ): boolean {
-	if (arguments.length === 2) {
-		return Boolean(select(selectors, baseElement));
+	// Shortcut with specified-but-null baseElement
+	if (arguments.length === 2 && !baseElement) {
+		return false;
 	}
 
-	return Boolean(select(selectors));
+	return Boolean((baseElement ?? document).querySelector(String(selectors)));
 }
 
 /**
@@ -85,7 +84,6 @@ function selectExists(
  * @param [baseElements]  The element or list of elements to look inside of
  * @return                An array of elements found
  */
-
 function selectAll<T extends keyof HTMLElementTagNameMap>(
 	selectors: T,
 	baseElements?: BaseElements
@@ -110,21 +108,14 @@ function selectAll(selectors: string | string[], baseElements?: BaseElements): E
 		return Array.apply(null, elements as any) as Element[];
 	}
 
-	const all = [];
-	for (let i = 0; i < baseElements.length; i++) {
-		const current = baseElements[i].querySelectorAll(String(selectors));
-		for (let ii = 0; ii < current.length; ii++) {
-			all.push(current[ii]);
+	const queried = new Set();
+	for (const baseElement of baseElements) {
+		for (const element of baseElement.querySelectorAll(String(selectors))) {
+			queried.add(element);
 		}
 	}
 
-	// Preserves IE11 support and performs 3x better than `...all` in Safari
-	const arr: Element[] = [];
-	all.forEach(function (v) {
-		arr.push(v);
-	});
-
-	return arr;
+	return [...queried]; // Convert to array
 }
 
 select.last = selectLast;
