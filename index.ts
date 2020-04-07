@@ -119,12 +119,12 @@ function selectAll(selectors: string | string[], baseElements?: BaseElements): E
 	}
 
 	// Preserves IE11 support and performs 3x better than `...all` in Safari
-	const arr: Element[] = [];
+	const array: Element[] = [];
 	all.forEach(function (v) {
-		arr.push(v);
+		array.push(v);
 	});
 
-	return arr;
+	return array;
 }
 
 select.last = selectLast;
