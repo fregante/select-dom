@@ -34,6 +34,7 @@
     ],
     "rules": {
       "@typescript-eslint/prefer-for-of": "off",
+      "@typescript-eslint/prefer-readonly-parameter-types": "off",
       "valid-jsdoc": "off",
       "prefer-spread": "off",
       "prefer-arrow-callback": "off",
@@ -44,10 +45,10 @@
     "@sindresorhus/tsconfig": "^0.7.0",
     "browserify": "^16.5.1",
     "esmify": "^2.1.1",
-    "tape": "^4.13.2",
+    "tape": "^5.0.0",
     "tape-run": "^7.0.0",
     "tsd": "^0.11.0",
     "typescript": "^3.8.3",
-    "xo": "^0.28.3"
+    "xo": "^0.30.0"
   }
 }

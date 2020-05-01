@@ -110,7 +110,7 @@ function selectAll(selectors: string | string[], baseElements?: BaseElements): E
 		return Array.apply(null, elements as any) as Element[];
 	}
 
-	const all = [];
+	const all: Element[] = [];
 	for (let i = 0; i < baseElements.length; i++) {
 		const current = baseElements[i].querySelectorAll(String(selectors));
 		for (let ii = 0; ii < current.length; ii++) {
