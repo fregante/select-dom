@@ -23,8 +23,8 @@
     "index.d.ts"
   ],
   "scripts": {
-    "build": "tsc --sourceMap false",
-    "prepublishOnly": "tsc",
+    "build": "tsc",
+    "prepack": "tsc --sourceMap false",
     "test": "tsc && tsd && xo && browserify -p esmify test.js | tape-run",
     "watch": "tsc --watch"
   },
