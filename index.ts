@@ -92,7 +92,7 @@ function selectAll<T extends keyof SVGElementTagNameMap>(
 	selectors: T,
 	baseElements?: BaseElements
 ): Array<SVGElementTagNameMap[T]>;
-function selectAll<T extends HTMLElement = HTMLElement> (
+function selectAll<T extends HTMLElement = HTMLElement>(
 	selectors: string | string[],
 	baseElements?: BaseElements
 ): T[];

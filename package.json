@@ -34,22 +34,17 @@
       "browser"
     ],
     "rules": {
-      "@typescript-eslint/prefer-for-of": "off",
-      "@typescript-eslint/prefer-readonly-parameter-types": "off",
-      "valid-jsdoc": "off",
-      "prefer-spread": "off",
-      "prefer-arrow-callback": "off",
-      "unicorn/no-for-loop": "off"
+      "prefer-spread": "off"
     }
   },
   "devDependencies": {
-    "@sindresorhus/tsconfig": "^0.7.0",
-    "browserify": "^16.5.1",
+    "@sindresorhus/tsconfig": "^0.8.0",
+    "browserify": "^17.0.0",
     "esmify": "^2.1.1",
-    "tape": "^5.0.0",
-    "tape-run": "^7.0.0",
-    "tsd": "^0.11.0",
-    "typescript": "^3.8.3",
-    "xo": "^0.30.0"
+    "tape": "^5.0.1",
+    "tape-run": "^8.0.0",
+    "tsd": "^0.14.0",
+    "typescript": "^4.1.3",
+    "xo": "^0.36.1"
   }
 }
