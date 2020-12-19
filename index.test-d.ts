@@ -8,20 +8,20 @@ import select from '.';
 /**
  * SELECT
  */
-expectType<HTMLElement | null>(select('.wow'));
-expectType<HTMLAnchorElement | null>(select<HTMLAnchorElement>('.wow'));
+expectType<HTMLElement | undefined>(select('.wow'));
+expectType<HTMLAnchorElement | undefined>(select<HTMLAnchorElement>('.wow'));
 
-expectType<HTMLBaseElement | null>(select('base'));
+expectType<HTMLBaseElement | undefined>(select('base'));
 
-expectType<SVGGElement | null>(select('g'));
+expectType<SVGGElement | undefined>(select('g'));
 
 /**
  * LAST
  */
-expectType<HTMLElement | null>(select.last('.wow'));
-expectType<HTMLAnchorElement | null>(select.last<HTMLAnchorElement>('.wow'));
-expectType<HTMLBaseElement | null>(select.last('base'));
-expectType<SVGGElement | null>(select.last('g'));
+expectType<HTMLElement | undefined>(select.last('.wow'));
+expectType<HTMLAnchorElement | undefined>(select.last<HTMLAnchorElement>('.wow'));
+expectType<HTMLBaseElement | undefined>(select.last('base'));
+expectType<SVGGElement | undefined>(select.last('g'));
 
 /**
  * EXISTS
