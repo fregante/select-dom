@@ -26,7 +26,7 @@ import select from 'select-dom';
 
 ### `select(selector[, baseElement = document])`
 
-Maps to `baseElement.querySelector(selector)`
+Maps to `baseElement.querySelector(selector)`, except it returns `undefined` if it's not found
 
 ```js
 select('.foo a[href=bar]')
@@ -34,6 +34,9 @@ select('.foo a[href=bar]')
 
 select('.foo a[href=bar]', baseElement)
 // => <Element>
+
+select('.non-existent', baseElement)
+// => undefined
 ```
 
 ### `select.last(selector[, baseElement = document])`
