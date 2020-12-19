@@ -1,8 +1,5 @@
 import type {ParseSelector} from 'typed-query-selector/parser';
 
-// Types inspired by
-// https://github.com/Microsoft/TypeScript/blob/9d3707d/src/lib/dom.generated.d.ts#L10581
-
 // ParentNode is inherited by Element, Document, DocumentFragment
 type BaseElements = ParentNode | Iterable<ParentNode>;
 
@@ -16,14 +13,19 @@ function isQueryable(object: BaseElements): object is ParentNode {
  * @param [baseElement]  The element to look inside of
  * @return               The element found, if any
  */
-function select
-<S extends string, E extends Element = ParseSelector<S>>(selectors: S | S[], baseElement?: ParentNode): E | undefined {
+function select<
+	Selector extends string,
+	TElement extends Element = ParseSelector<Selector>
+>(
+	selectors: Selector | Selector[],
+	baseElement?: ParentNode
+): TElement | undefined {
 	// Shortcut with specified-but-null baseElement
 	if (arguments.length === 2 && !baseElement) {
 		return;
 	}
 
-	return (baseElement ?? document).querySelector<E>(String(selectors)) ?? undefined;
+	return (baseElement ?? document).querySelector<TElement>(String(selectors)) ?? undefined;
 }
 
 /**
@@ -31,14 +33,19 @@ function select
  * @param [baseElement]  The element to look inside of
  * @return               The element found, if any
  */
-function selectLast
-<S extends string, E extends Element = ParseSelector<S>>(selectors: S | S[], baseElement?: ParentNode): E | undefined {
+function selectLast<
+	Selector extends string,
+	TElement extends Element = ParseSelector<Selector>
+>(
+	selectors: Selector | Selector[],
+	baseElement?: ParentNode
+): TElement | undefined {
 	// Shortcut with specified-but-null baseElement
 	if (arguments.length === 2 && !baseElement) {
 		return undefined;
 	}
 
-	const all = (baseElement ?? document).querySelectorAll<E>(String(selectors));
+	const all = (baseElement ?? document).querySelectorAll<TElement>(String(selectors));
 	return all[all.length - 1];
 }
 
@@ -64,8 +71,13 @@ function selectExists(
  * @param [baseElements]  The element or list of elements to look inside of
  * @return                An array of elements found
  */
-function selectAll
-<S extends string, E extends Element = ParseSelector<S>>(selectors: S | S[], baseElements?: BaseElements): E[] {
+function selectAll<
+	Selector extends string,
+	TElement extends Element = ParseSelector<Selector>
+>(
+	selectors: Selector | Selector[],
+	baseElements?: BaseElements
+): TElement[] {
 	// Shortcut with specified-but-null baseElements
 	if (arguments.length === 2 && !baseElements) {
 		return [];
@@ -73,13 +85,13 @@ function selectAll
 
 	// Can be: select.all('selectors') or select.all('selectors', singleElementOrDocument)
 	if (!baseElements || isQueryable(baseElements)) {
-		const elements = (baseElements ?? document).querySelectorAll<E>(String(selectors));
+		const elements = (baseElements ?? document).querySelectorAll<TElement>(String(selectors));
 		return [...elements];
 	}
 
-	const queried = new Set<E>();
+	const queried = new Set<TElement>();
 	for (const baseElement of baseElements) {
-		for (const element of baseElement.querySelectorAll<E>(String(selectors))) {
+		for (const element of baseElement.querySelectorAll<TElement>(String(selectors))) {
 			queried.add(element);
 		}
 	}
