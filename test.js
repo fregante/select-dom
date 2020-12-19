@@ -60,19 +60,19 @@ test('selects all elements', t => {
 	t.plan(1);
 
 	const li = document.querySelectorAll('ul li');
-	t.deepEqual(select.all('ul li'), li);
+	t.deepEqual(select.all('ul li'), [...li]);
 });
 
 test('selects all elements within an ancestor', t => {
 	t.plan(1);
 
 	const li = document.querySelector('ul').querySelectorAll('ul li');
-	t.deepEqual(select.all('li', select('ul')), li);
+	t.deepEqual(select.all('li', select('ul')), [...li]);
 });
 
 test('selects all elements within an array of ancestors', t => {
 	t.plan(1);
 
 	const li = document.querySelectorAll('ul li');
-	t.deepEqual(select.all('li', select.all('ul')), li);
+	t.deepEqual(select.all('li', select.all('ul')), [...li]);
 });

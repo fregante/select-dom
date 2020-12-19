@@ -1,6 +1,6 @@
 {
   "name": "select-dom",
-  "version": "6.0.0",
+  "version": "6.0.2",
   "description": "Extra lightweight DOM selector helper",
   "keywords": [
     "alternative",
@@ -15,46 +15,41 @@
   "repository": "fregante/select-dom",
   "license": "MIT",
   "author": "Federico Brigante <opensource@bfred.it> (bfred.it)",
+  "type": "module",
+  "main": "index.js",
+  "module": "index.js",
   "files": [
     "index.js",
     "index.d.ts"
   ],
-  "module": "index.js",
   "scripts": {
     "build": "tsc",
-    "prepublish-only": "tsc",
-    "test": "tsc && tsd && xo && browserify -p esmify test.js | tape-run",
+    "prepack": "tsc --sourceMap false",
+    "test": "tsc && tsd && xo && npm run tape",
+    "test:tape": "browserify -p esmify test.js | tape-run",
     "watch": "tsc --watch"
   },
   "xo": {
     "envs": [
       "browser"
     ],
-    "extensions": [
-      "ts"
-    ],
-    "overrides": [
-      {
-        "files": "**/*.ts",
-        "extends": "xo-typescript",
-        "parserOptions": {
-          "project": "./tsconfig.xo.json"
-        }
-      }
-    ]
+    "rules": {
+      "@typescript-eslint/prefer-for-of": "off",
+      "@typescript-eslint/prefer-readonly-parameter-types": "off",
+      "valid-jsdoc": "off",
+      "prefer-spread": "off",
+      "prefer-arrow-callback": "off",
+      "unicorn/no-for-loop": "off"
+    }
   },
   "devDependencies": {
-    "@sindresorhus/tsconfig": "^0.6.0",
-    "@typescript-eslint/eslint-plugin": "^2.11.0",
-    "@typescript-eslint/parser": "^2.11.0",
-    "browserify": "^16.5.0",
-    "eslint-config-xo-typescript": "^0.23.0",
+    "@sindresorhus/tsconfig": "^0.7.0",
+    "browserify": "^16.5.1",
     "esmify": "^2.1.1",
-    "tape": "^4.11.0",
-    "tape-run": "^6.0.1",
+    "tape": "^5.0.0",
+    "tape-run": "^7.0.0",
     "tsd": "^0.11.0",
-    "typescript": "^3.7.3",
-    "xo": "^0.25.3"
-  },
-  "type": "module"
+    "typescript": "^3.8.3",
+    "xo": "^0.30.0"
+  }
 }

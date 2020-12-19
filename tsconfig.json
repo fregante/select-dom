@@ -1,12 +1,10 @@
 {
 	"extends": "@sindresorhus/tsconfig",
 	"compilerOptions": {
-		"outDir": ".",
 		"target": "es2015",
 		"module": "es2015",
 		"lib": [
-			"dom",
-			"dom.iterable"
+			"dom"
 		]
 	},
 	"files": [
