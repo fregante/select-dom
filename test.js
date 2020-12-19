@@ -76,3 +76,10 @@ test('selects all elements within an array of ancestors', t => {
 	const li = document.querySelectorAll('ul li');
 	t.deepEqual(select.all('li', select.all('ul')), [...li]);
 });
+
+test('selects all elements within an array of ancestors without duplicates', t => {
+	t.plan(1);
+
+	const li = document.querySelector('ul').querySelectorAll('li');
+	t.deepEqual(select.all('li', [select('ul'), select('ul')]), [...li]);
+});
