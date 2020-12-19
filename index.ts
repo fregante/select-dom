@@ -1,3 +1,5 @@
+import type {ParseSelector} from 'typed-query-selector/parser';
+
 // Types inspired by
 // https://github.com/Microsoft/TypeScript/blob/9d3707d/src/lib/dom.generated.d.ts#L10581
 
@@ -14,25 +16,14 @@ function isQueryable(object: BaseElements): object is ParentNode {
  * @param [baseElement]  The element to look inside of
  * @return               The element found, if any
  */
-function select<T extends keyof HTMLElementTagNameMap>(
-	selectors: T,
-	baseElement?: ParentNode
-): HTMLElementTagNameMap[T] | undefined;
-function select<T extends keyof SVGElementTagNameMap>(
-	selectors: T,
-	baseElement?: ParentNode
-): SVGElementTagNameMap[T] | undefined;
-function select<T extends HTMLElement = HTMLElement>(
-	selectors: string | string[],
-	baseElement?: ParentNode
-): T | undefined;
-function select(selectors: string | string[], baseElement?: ParentNode): HTMLElement | undefined {
+function select
+<S extends string, E extends Element = ParseSelector<S>>(selectors: S | S[], baseElement?: ParentNode): E | undefined {
 	// Shortcut with specified-but-null baseElement
 	if (arguments.length === 2 && !baseElement) {
 		return;
 	}
 
-	return (baseElement ?? document).querySelector<HTMLElement>(String(selectors)) ?? undefined;
+	return (baseElement ?? document).querySelector<E>(String(selectors)) ?? undefined;
 }
 
 /**
@@ -40,25 +31,14 @@ function select(selectors: string | string[], baseElement?: ParentNode): HTMLEle
  * @param [baseElement]  The element to look inside of
  * @return               The element found, if any
  */
-function selectLast<T extends keyof HTMLElementTagNameMap>(
-	selectors: T,
-	baseElement?: ParentNode
-): HTMLElementTagNameMap[T] | undefined;
-function selectLast<T extends keyof SVGElementTagNameMap>(
-	selectors: T,
-	baseElement?: ParentNode
-): SVGElementTagNameMap[T] | undefined;
-function selectLast<T extends HTMLElement = HTMLElement>(
-	selectors: string | string[],
-	baseElement?: ParentNode
-): T | undefined;
-function selectLast(selectors: string | string[], baseElement?: ParentNode): HTMLElement | undefined {
+function selectLast
+<S extends string, E extends Element = ParseSelector<S>>(selectors: S | S[], baseElement?: ParentNode): E | undefined {
 	// Shortcut with specified-but-null baseElement
 	if (arguments.length === 2 && !baseElement) {
 		return undefined;
 	}
 
-	const all = (baseElement ?? document).querySelectorAll<HTMLElement>(String(selectors));
+	const all = (baseElement ?? document).querySelectorAll<E>(String(selectors));
 	return all[all.length - 1];
 }
 
@@ -68,7 +48,7 @@ function selectLast(selectors: string | string[], baseElement?: ParentNode): HTM
  * @return               Whether it's been found
  */
 function selectExists(
-	selectors: keyof HTMLElementTagNameMap | keyof SVGElementTagNameMap | string | string[],
+	selectors: string | string[],
 	baseElement?: ParentNode
 ): boolean {
 	// Shortcut with specified-but-null baseElement
@@ -84,19 +64,8 @@ function selectExists(
  * @param [baseElements]  The element or list of elements to look inside of
  * @return                An array of elements found
  */
-function selectAll<T extends keyof HTMLElementTagNameMap>(
-	selectors: T,
-	baseElements?: BaseElements
-): Array<HTMLElementTagNameMap[T]>;
-function selectAll<T extends keyof SVGElementTagNameMap>(
-	selectors: T,
-	baseElements?: BaseElements
-): Array<SVGElementTagNameMap[T]>;
-function selectAll<T extends HTMLElement = HTMLElement>(
-	selectors: string | string[],
-	baseElements?: BaseElements
-): T[];
-function selectAll(selectors: string | string[], baseElements?: BaseElements): Element[] {
+function selectAll
+<S extends string, E extends Element = ParseSelector<S>>(selectors: S | S[], baseElements?: BaseElements): E[] {
 	// Shortcut with specified-but-null baseElements
 	if (arguments.length === 2 && !baseElements) {
 		return [];
@@ -104,13 +73,13 @@ function selectAll(selectors: string | string[], baseElements?: BaseElements): E
 
 	// Can be: select.all('selectors') or select.all('selectors', singleElementOrDocument)
 	if (!baseElements || isQueryable(baseElements)) {
-		const elements = (baseElements ?? document).querySelectorAll(String(selectors));
-		return Array.apply(null, elements as any) as Element[];
+		const elements = (baseElements ?? document).querySelectorAll<E>(String(selectors));
+		return [...elements];
 	}
 
-	const queried = new Set<Element>();
+	const queried = new Set<E>();
 	for (const baseElement of baseElements) {
-		for (const element of baseElement.querySelectorAll(String(selectors))) {
+		for (const element of baseElement.querySelectorAll<E>(String(selectors))) {
 			queried.add(element);
 		}
 	}

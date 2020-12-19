@@ -9,7 +9,7 @@ import select from '.';
  * SELECT
  */
 expectType<HTMLElement | undefined>(select('.wow'));
-expectType<HTMLAnchorElement | undefined>(select<HTMLAnchorElement>('.wow'));
+expectType<HTMLAnchorElement | undefined>(select('a.wow'));
 
 expectType<HTMLBaseElement | undefined>(select('base'));
 
@@ -19,7 +19,7 @@ expectType<SVGGElement | undefined>(select('g'));
  * LAST
  */
 expectType<HTMLElement | undefined>(select.last('.wow'));
-expectType<HTMLAnchorElement | undefined>(select.last<HTMLAnchorElement>('.wow'));
+expectType<HTMLAnchorElement | undefined>(select.last('a.wow'));
 expectType<HTMLBaseElement | undefined>(select.last('base'));
 expectType<SVGGElement | undefined>(select.last('g'));
 
@@ -36,4 +36,4 @@ expectType<boolean>(select.exists('g'));
 expectType<HTMLElement[]>(select.all('.wow'));
 expectType<HTMLBaseElement[]>(select.all('base'));
 expectType<SVGGElement[]>(select.all('g'));
-expectType<HTMLAnchorElement[]>(select.all<HTMLAnchorElement>('.wow'));
+expectType<HTMLAnchorElement[]>(select.all('a.wow'));
