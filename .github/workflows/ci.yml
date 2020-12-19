@@ -12,18 +12,12 @@ jobs:
       - run: npm install
       - run: npx xo
 
-  Build:
+  Types:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - run: npm install
       - run: npm run build
-
-  TSD:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - run: npm install
       - run: npx tsd
 
   Test:
