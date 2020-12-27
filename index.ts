@@ -13,6 +13,10 @@ function isQueryable(object: BaseElements): object is ParentNode {
  * @param [baseElement]  The element to look inside of
  * @return               The element found, if any
  */
+function select<TElement extends Element>(
+	selectors: string | string[],
+	baseElement?: ParentNode
+): TElement | undefined;
 function select<
 	Selector extends string,
 	TElement extends Element = ParseSelector<Selector>
@@ -33,6 +37,10 @@ function select<
  * @param [baseElement]  The element to look inside of
  * @return               The element found, if any
  */
+function selectLast<TElement extends Element>(
+	selectors: string | string[],
+	baseElement?: ParentNode
+): TElement | undefined;
 function selectLast<
 	Selector extends string,
 	TElement extends Element = ParseSelector<Selector>
@@ -71,6 +79,10 @@ function selectExists(
  * @param [baseElements]  The element or list of elements to look inside of
  * @return                An array of elements found
  */
+function selectAll<TElement extends Element>(
+	selectors: string | string[],
+	baseElement?: BaseElements
+): TElement | undefined;
 function selectAll<
 	Selector extends string,
 	TElement extends Element = ParseSelector<Selector>
