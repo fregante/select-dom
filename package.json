@@ -25,17 +25,14 @@
   "scripts": {
     "build": "tsc",
     "prepack": "tsc --sourceMap false",
-    "test": "tsc && tsd && xo && npm run tape",
+    "test": "tsc && tsd && xo && npm run test:tape",
     "test:tape": "browserify -p esmify test.js | tape-run",
     "watch": "tsc --watch"
   },
   "xo": {
     "envs": [
       "browser"
-    ],
-    "rules": {
-      "prefer-spread": "off"
-    }
+    ]
   },
   "devDependencies": {
     "@sindresorhus/tsconfig": "^0.8.0",
