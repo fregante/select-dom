@@ -48,6 +48,6 @@
     "xo": "^0.36.1"
   },
   "dependencies": {
-    "typed-query-selector": "^2.1.0"
+    "typed-query-selector": "^2.1.1"
   }
 }
