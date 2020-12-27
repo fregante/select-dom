@@ -13,15 +13,17 @@ function isQueryable(object: BaseElements): object is ParentNode {
  * @param [baseElement]  The element to look inside of
  * @return               The element found, if any
  */
-function select<TElement extends Element = HTMLElement>(
-	selectors: string | string[],
-	baseElement?: ParentNode
-): TElement | undefined;
 function select<
 	Selector extends string,
 	TElement extends Element = ParseSelector<Selector>
 >(
 	selectors: Selector | Selector[],
+	baseElement?: ParentNode
+): TElement | undefined;
+function select<
+	TElement extends Element = HTMLElement
+>(
+	selectors: string | string[],
 	baseElement?: ParentNode
 ): TElement | undefined {
 	// Shortcut with specified-but-null baseElement
@@ -37,15 +39,17 @@ function select<
  * @param [baseElement]  The element to look inside of
  * @return               The element found, if any
  */
-function selectLast<TElement extends Element = HTMLElement>(
-	selectors: string | string[],
-	baseElement?: ParentNode
-): TElement | undefined;
 function selectLast<
 	Selector extends string,
 	TElement extends Element = ParseSelector<Selector>
 >(
 	selectors: Selector | Selector[],
+	baseElement?: ParentNode
+): TElement | undefined;
+function selectLast<
+	TElement extends Element = HTMLElement
+>(
+	selectors: string | string[],
 	baseElement?: ParentNode
 ): TElement | undefined {
 	// Shortcut with specified-but-null baseElement
@@ -79,15 +83,17 @@ function selectExists(
  * @param [baseElements]  The element or list of elements to look inside of
  * @return                An array of elements found
  */
-function selectAll<TElement extends Element = HTMLElement>(
-	selectors: string | string[],
-	baseElements?: BaseElements
-): TElement[];
 function selectAll<
 	Selector extends string,
 	TElement extends Element = ParseSelector<Selector>
 >(
 	selectors: Selector | Selector[],
+	baseElements?: BaseElements
+): TElement[];
+function selectAll<
+	TElement extends Element = HTMLElement
+>(
+	selectors: string | string[],
 	baseElements?: BaseElements
 ): TElement[] {
 	// Shortcut with specified-but-null baseElements
