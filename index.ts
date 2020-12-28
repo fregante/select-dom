@@ -23,7 +23,7 @@ function select<TElement extends Element = HTMLElement>(
 	selectors: string | string[],
 	baseElement?: ParentNode
 ): TElement | undefined;
-function select<TElement extends Element = HTMLElement>(
+function select<TElement extends Element>(
 	selectors: string | string[],
 	baseElement?: ParentNode
 ): TElement | undefined {
@@ -48,7 +48,7 @@ function selectLast<TElement extends Element = HTMLElement>(
 	selectors: string | string[],
 	baseElement?: ParentNode
 ): TElement | undefined;
-function selectLast<TElement extends Element = HTMLElement>(
+function selectLast<TElement extends Element>(
 	selectors: string | string[],
 	baseElement?: ParentNode
 ): TElement | undefined {
@@ -91,7 +91,7 @@ function selectAll<TElement extends Element = HTMLElement>(
 	selectors: string | string[],
 	baseElements?: BaseElements
 ): TElement[];
-function selectAll<TElement extends Element = HTMLElement>(
+function selectAll<TElement extends Element>(
 	selectors: string | string[],
 	baseElements?: BaseElements
 ): TElement[] {
