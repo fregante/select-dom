@@ -1,5 +1,11 @@
 import type {ParseSelector} from 'typed-query-selector/parser';
 
+// Default to HTMLElement instead of Element
+type Parse<Selector extends string> =
+    HTMLElement extends ParseSelector<Selector> ?
+        HTMLElement :
+        ParseSelector<Selector>
+
 // WARNING: Overloads have to repeated in that fashion because the actual function’s signature is discarded; Only the 2 overloads are brought into the .d.ts file. Tests pass because `tsd` reads from this file instead of `.d.ts`
 
 // ParentNode is inherited by Element, Document, DocumentFragment
@@ -15,7 +21,7 @@ function isQueryable(object: BaseElements): object is ParentNode {
  * @param [baseElement]  The element to look inside of
  * @return               The element found, if any
  */
-function select<Selector extends string, TElement extends Element = ParseSelector<Selector>>(
+function select<Selector extends string, TElement extends Element = Parse<Selector>>(
 	selectors: Selector | Selector[],
 	baseElement?: ParentNode
 ): TElement | undefined;
@@ -40,7 +46,7 @@ function select<TElement extends Element>(
  * @param [baseElement]  The element to look inside of
  * @return               The element found, if any
  */
-function selectLast<Selector extends string, TElement extends Element = ParseSelector<Selector>>(
+function selectLast<Selector extends string, TElement extends Element = Parse<Selector>>(
 	selectors: Selector | Selector[],
 	baseElement?: ParentNode
 ): TElement | undefined;
@@ -83,7 +89,7 @@ function selectExists(
  * @param [baseElements]  The element or list of elements to look inside of
  * @return                An array of elements found
  */
-function selectAll<Selector extends string, TElement extends Element = ParseSelector<Selector>>(
+function selectAll<Selector extends string, TElement extends Element = Parse<Selector>>(
 	selectors: Selector | Selector[],
 	baseElements?: BaseElements
 ): TElement[];
