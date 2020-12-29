@@ -1,8 +1,8 @@
 # select-dom [![][badge-gzip]][link-npm] [![npm downloads][badge-downloads]][link-npm]
 
-  [badge-gzip]: https://img.shields.io/bundlephobia/minzip/select-dom.svg?label=gzipped
-  [badge-downloads]: https://img.shields.io/npm/dt/select-dom.svg
-  [link-npm]: https://www.npmjs.com/package/select-dom
+[badge-gzip]: https://img.shields.io/bundlephobia/minzip/select-dom.svg?label=gzipped
+[badge-downloads]: https://img.shields.io/npm/dt/select-dom.svg
+[link-npm]: https://www.npmjs.com/package/select-dom
 
 > Lightweight `querySelector`/`All` wrapper that outputs an Array
 
@@ -19,7 +19,6 @@ npm install select-dom
 import select from 'select-dom';
 ```
 
-
 ## API
 
 **Note:** if a falsy value is passed as `baseElement`, you'll always get an empty result ([bd578b9](https://github.com/fregante/select-dom/commit/bd578b975e35d9f802cb43a900a6d3c83095c76a))
@@ -29,13 +28,13 @@ import select from 'select-dom';
 Maps to `baseElement.querySelector(selector)`, except it returns `undefined` if it's not found
 
 ```js
-select('.foo a[href=bar]')
+select('.foo a[href=bar]');
 // => <Element>
 
-select('.foo a[href=bar]', baseElement)
+select('.foo a[href=bar]', baseElement);
 // => <Element>
 
-select('.non-existent', baseElement)
+select('.non-existent', baseElement);
 // => undefined
 ```
 
@@ -48,10 +47,10 @@ Like `select()`, except that it returns the last matching item on the page inste
 Tests the existence of one or more elements matching the selector. It's like `select()`, except it returns a `boolean`.
 
 ```js
-select.exists('.foo a[href=bar]')
+select.exists('.foo a[href=bar]');
 // => true/false
 
-select.exists('.foo a[href=bar]', baseElement)
+select.exists('.foo a[href=bar]', baseElement);
 // => true/false
 ```
 
@@ -59,17 +58,17 @@ select.exists('.foo a[href=bar]', baseElement)
 
 Maps to `baseElements.querySelectorAll(selector)` plus:
 
-* it always returns an array
-* `baseElements` can be a list of elements to query
+- it always returns an array
+- `baseElements` can be a list of elements to query
 
 ```js
-select.all('.foo')
+select.all('.foo');
 // => [<Element>, <Element>, <Element>]
 
-select.all('.foo', baseElement)
+select.all('.foo', baseElement);
 // => [<Element>, <Element>, <Element>]
 
-select.all('.foo', [baseElement1, baseElement2])
+select.all('.foo', [baseElement1, baseElement2]);
 // => [<Element>, <Element>, <Element>]
 // This is similar to jQuery([baseElement1, baseElement2]).find('.foo')
 ```
