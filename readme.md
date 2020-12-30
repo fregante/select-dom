@@ -6,7 +6,7 @@
 
 > Lightweight `querySelector`/`All` wrapper that outputs an Array
 
-Version 5+ only supports browsers with [`Set` support](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set#Browser_compatibility). If you need IE 10- support, stick to [`select-dom@4`](https://github.com/fregante/select-dom/tree/v4.2.2)
+Version 7+ only supports browsers with [iterable `NodeList`s](https://developer.mozilla.org/en-US/docs/Web/API/NodeList/entries). If you need IE support, stick to [`select-dom@6`](https://github.com/fregante/select-dom/tree/v6.0.4) or lower.
 
 ## Install
 
