@@ -1,7 +1,7 @@
 {
 	"extends": "@sindresorhus/tsconfig",
 	"compilerOptions": {
-		"target": "es2017",
+		"target": "es2015",
 		"module": "es2015",
 		"lib": [
 			"dom",
