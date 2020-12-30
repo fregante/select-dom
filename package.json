@@ -24,7 +24,7 @@
 	],
 	"scripts": {
 		"build": "tsc",
-		"prepare": "tsc --sourceMap false",
+		"prepack": "tsc --sourceMap false",
 		"test": "tsc && tsd && xo && npm run test:tape",
 		"test:tape": "browserify -p esmify test.js | tape-run",
 		"watch": "tsc --watch"
