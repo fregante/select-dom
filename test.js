@@ -1,5 +1,5 @@
 import test from 'tape';
-import select from '.';
+import select from './index.js';
 
 document.body.innerHTML = `
 	<ul>

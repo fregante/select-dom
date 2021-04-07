@@ -1,5 +1,5 @@
 import {expectType} from 'tsd';
-import select from '.';
+import select from './index.js';
 
 // `select-dom` defaults to HTMLElement where possible because it's the most common use case, even if technically this should not be HTMLElement.
 
