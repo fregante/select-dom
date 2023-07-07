@@ -77,4 +77,3 @@ select.all('.foo', [baseElement1, baseElement2]);
 
 - [delegate-it](https://github.com/fregante/delegate-it) - DOM event delegation, in <1KB.
 - [doma](https://github.com/fregante/doma) - Parse an HTML string into `DocumentFragment` or one `Element`, in a few bytes.
-- [Refined GitHub](https://github.com/sindresorhus/refined-github) - Uses this module.

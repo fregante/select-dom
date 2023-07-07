@@ -1,4 +1,4 @@
-import type {ParseSelector} from 'typed-query-selector/parser';
+import type {ParseSelector} from 'typed-query-selector/parser.js';
 
 // WARNING: Overloads have to repeated in that fashion because the actual function’s signature is discarded; Only the 2 overloads are brought into the .d.ts file. Tests pass because `tsd` reads from this file instead of `.d.ts`
 
@@ -15,24 +15,24 @@ function isQueryable(object: BaseElements): object is ParentNode {
  * @param [baseElement]  The element to look inside of
  * @return               The element found, if any
  */
-function select<Selector extends string, TElement extends Element = ParseSelector<Selector, HTMLElement>>(
+function select<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
 	selectors: Selector | Selector[],
 	baseElement?: ParentNode
-): TElement | undefined;
-function select<TElement extends Element = HTMLElement>(
+): Selected | undefined;
+function select<Selected extends Element = HTMLElement>(
 	selectors: string | string[],
 	baseElement?: ParentNode
-): TElement | undefined;
-function select<TElement extends Element>(
+): Selected | undefined;
+function select<Selected extends Element>(
 	selectors: string | string[],
-	baseElement?: ParentNode
-): TElement | undefined {
+	baseElement?: ParentNode,
+): Selected | undefined {
 	// Shortcut with specified-but-null baseElement
 	if (arguments.length === 2 && !baseElement) {
 		return;
 	}
 
-	return (baseElement ?? document).querySelector<TElement>(String(selectors)) ?? undefined;
+	return (baseElement ?? document).querySelector<Selected>(String(selectors)) ?? undefined;
 }
 
 /**
@@ -40,24 +40,24 @@ function select<TElement extends Element>(
  * @param [baseElement]  The element to look inside of
  * @return               The element found, if any
  */
-function selectLast<Selector extends string, TElement extends Element = ParseSelector<Selector, HTMLElement>>(
+function selectLast<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
 	selectors: Selector | Selector[],
 	baseElement?: ParentNode
-): TElement | undefined;
-function selectLast<TElement extends Element = HTMLElement>(
+): Selected | undefined;
+function selectLast<Selected extends Element = HTMLElement>(
 	selectors: string | string[],
 	baseElement?: ParentNode
-): TElement | undefined;
-function selectLast<TElement extends Element>(
+): Selected | undefined;
+function selectLast<Selected extends Element>(
 	selectors: string | string[],
-	baseElement?: ParentNode
-): TElement | undefined {
+	baseElement?: ParentNode,
+): Selected | undefined {
 	// Shortcut with specified-but-null baseElement
 	if (arguments.length === 2 && !baseElement) {
 		return undefined;
 	}
 
-	const all = (baseElement ?? document).querySelectorAll<TElement>(String(selectors));
+	const all = (baseElement ?? document).querySelectorAll<Selected>(String(selectors));
 	return all[all.length - 1];
 }
 
@@ -68,7 +68,7 @@ function selectLast<TElement extends Element>(
  */
 function selectExists(
 	selectors: string | string[],
-	baseElement?: ParentNode
+	baseElement?: ParentNode,
 ): boolean {
 	// Shortcut with specified-but-null baseElement
 	if (arguments.length === 2 && !baseElement) {
@@ -83,18 +83,18 @@ function selectExists(
  * @param [baseElements]  The element or list of elements to look inside of
  * @return                An array of elements found
  */
-function selectAll<Selector extends string, TElement extends Element = ParseSelector<Selector, HTMLElement>>(
+function selectAll<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
 	selectors: Selector | Selector[],
 	baseElements?: BaseElements
-): TElement[];
-function selectAll<TElement extends Element = HTMLElement>(
+): Selected[];
+function selectAll<Selected extends Element = HTMLElement>(
 	selectors: string | string[],
 	baseElements?: BaseElements
-): TElement[];
-function selectAll<TElement extends Element>(
+): Selected[];
+function selectAll<Selected extends Element>(
 	selectors: string | string[],
-	baseElements?: BaseElements
-): TElement[] {
+	baseElements?: BaseElements,
+): Selected[] {
 	// Shortcut with specified-but-null baseElements
 	if (arguments.length === 2 && !baseElements) {
 		return [];
@@ -102,13 +102,13 @@ function selectAll<TElement extends Element>(
 
 	// Can be: select.all('selectors') or select.all('selectors', singleElementOrDocument)
 	if (!baseElements || isQueryable(baseElements)) {
-		const elements = (baseElements ?? document).querySelectorAll<TElement>(String(selectors));
+		const elements = (baseElements ?? document).querySelectorAll<Selected>(String(selectors));
 		return [...elements];
 	}
 
-	const queried = new Set<TElement>();
+	const queried = new Set<Selected>();
 	for (const baseElement of baseElements) {
-		for (const element of baseElement.querySelectorAll<TElement>(String(selectors))) {
+		for (const element of baseElement.querySelectorAll<Selected>(String(selectors))) {
 			queried.add(element);
 		}
 	}

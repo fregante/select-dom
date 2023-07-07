@@ -13,11 +13,13 @@
 		"selector"
 	],
 	"repository": "fregante/select-dom",
+	"funding": "https://github.com/sponsors/fregante",
 	"license": "MIT",
 	"author": "Federico Brigante <me@fregante.com> (https://fregante.com)",
 	"type": "module",
-	"main": "index.js",
-	"module": "index.js",
+	"exports": "./index.js",
+	"main": "./index.js",
+	"types": "./index.d.ts",
 	"files": [
 		"index.js",
 		"index.d.ts"
@@ -35,16 +37,19 @@
 		]
 	},
 	"dependencies": {
-		"typed-query-selector": "^2.4.1"
+		"typed-query-selector": "^2.11.0"
 	},
 	"devDependencies": {
-		"@sindresorhus/tsconfig": "^1.0.1",
+		"@sindresorhus/tsconfig": "^3.0.1",
 		"browserify": "^17.0.0",
 		"esmify": "^2.1.1",
-		"tape": "^5.2.2",
-		"tape-run": "^8.0.0",
-		"tsd": "^0.14.0",
-		"typescript": "^4.2.3",
-		"xo": "^0.38.2"
+		"tape": "^5.6.4",
+		"tape-run": "^10.0.0",
+		"tsd": "^0.28.1",
+		"typescript": "^5.1.6",
+		"xo": "^0.54.2"
+	},
+	"engines": {
+		"node": ">=16"
 	}
 }

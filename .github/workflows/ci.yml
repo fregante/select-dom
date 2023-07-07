@@ -1,4 +1,4 @@
-name: Test
+name: CI
 
 on:
   - pull_request
@@ -8,14 +8,16 @@ jobs:
   Lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
       - run: npm install
       - run: npx xo
 
   Types:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
       - run: npm install
       - run: npm run build
       - run: npx tsd
@@ -23,7 +25,8 @@ jobs:
   Test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
       - run: npm install
       - run: npm run build
       - run: sudo apt-get install xvfb
