@@ -1,5 +1,5 @@
 import test from 'tape';
-import {$, $$, lastElement, elementExists, ElementNotFoundError} from './index.js';
+import {$, $$, lastElement, elementExists, expectElement, ElementNotFoundError} from './index.js';
 
 document.body.innerHTML = `
 	<ul>
@@ -28,21 +28,21 @@ test('selects one element within an ancestor', t => {
 });
 
 test('expects at least one element', t => {
-	t.plan(1);
+	t.plan(2);
 
 	const li = document.querySelector('ul li');
-	t.equal($('ul li'), li);
+	t.equal(expectElement('ul li'), li);
 
-	t.throws(() => $('lololol'));
+	t.throws(() => expectElement('lololol'));
 });
 
 test('expects one element within an ancestor', t => {
-	t.plan(1);
+	t.plan(2);
 
 	const li = document.querySelector('ul li');
-	t.equal($('li', $('ul')), li);
+	t.equal(expectElement('li', expectElement('ul')), li);
 
-	t.throws(() => $('ul', $('li')), error => error instanceof ElementNotFoundError);
+	t.throws(() => expectElement('ul', expectElement('li')), error => error instanceof ElementNotFoundError);
 });
 
 test('selects the last element', t => {
