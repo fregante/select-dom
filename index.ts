@@ -104,17 +104,17 @@ function selectAll<Selected extends Element>(
 	// Can be: select.all('selectors') or select.all('selectors', singleElementOrDocument)
 	if (!baseElements || isQueryable(baseElements)) {
 		const elements = (baseElements ?? document).querySelectorAll<Selected>(String(selectors));
-		return [...elements];
+		return Array.prototype.slice.call(elements) as Selected[];
 	}
 
-	const queried = new Set<Selected>();
+	const elements = new Set<Selected>();
 	for (const baseElement of baseElements) {
 		for (const element of baseElement.querySelectorAll<Selected>(String(selectors))) {
-			queried.add(element);
+			elements.add(element);
 		}
 	}
 
-	return [...queried]; // Convert to array
+	return [...elements]; // Convert to array
 }
 
 select.last = selectLast;
