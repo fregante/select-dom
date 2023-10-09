@@ -40,15 +40,15 @@ function $<Selected extends Element>(
  * @param [baseElement]  The element to look inside of
  * @return               The element found, if any
  */
-function $last<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
+function lastElement<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
 	selectors: Selector | Selector[],
 	baseElement?: ParentNode
 ): Selected | undefined;
-function $last<Selected extends Element = HTMLElement>(
+function lastElement<Selected extends Element = HTMLElement>(
 	selectors: string | string[],
 	baseElement?: ParentNode
 ): Selected | undefined;
-function $last<Selected extends Element>(
+function lastElement<Selected extends Element>(
 	selectors: string | string[],
 	baseElement?: ParentNode,
 ): Selected | undefined {
@@ -67,7 +67,7 @@ function $last<Selected extends Element>(
  * @param [baseElement]  The element to look inside of
  * @return               Whether it's been found
  */
-function $exists(
+function elementExists(
 	selectors: string | string[],
 	baseElement?: ParentNode,
 ): boolean {
@@ -117,4 +117,4 @@ function $$<Selected extends Element>(
 	return [...elements]; // Convert to array
 }
 
-export {$, $$, $last, $exists};
+export {$, $$, lastElement, elementExists};

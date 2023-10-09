@@ -16,7 +16,7 @@ npm install select-dom
 
 ```js
 // This module is only offered as a ES Module
-import {$, $$, $last, $exists} from 'select-dom';
+import {$, $$, lastElement, elementExists} from 'select-dom';
 ```
 
 ## API
@@ -38,19 +38,19 @@ $('.non-existent', baseElement);
 // => undefined
 ```
 
-### `$last(selector[, baseElement = document])`
+### `lastElement(selector[, baseElement = document])`
 
 Like `$()`, except that it returns the last matching item on the page instead of the first one.
 
-### `$exists(selector[, baseElement = document])`
+### `elementExists(selector[, baseElement = document])`
 
 Tests the existence of one or more elements matching the selector. It's like `$()`, except it returns a `boolean`.
 
 ```js
-$exists('.foo a[href=bar]');
+elementExists('.foo a[href=bar]');
 // => true/false
 
-$exists('.foo a[href=bar]', baseElement);
+elementExists('.foo a[href=bar]', baseElement);
 // => true/false
 ```
 

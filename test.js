@@ -1,5 +1,5 @@
 import test from 'tape';
-import {$, $$, $last, $exists} from './index.js';
+import {$, $$, lastElement, elementExists} from './index.js';
 
 document.body.innerHTML = `
 	<ul>
@@ -31,29 +31,29 @@ test('selects the last element', t => {
 	t.plan(1);
 
 	const li = [...document.querySelectorAll('ul li')].pop();
-	t.equal($last('ul li'), li);
+	t.equal(lastElement('ul li'), li);
 });
 
 test('selects the last element within an ancestor', t => {
 	t.plan(1);
 
 	const li = [...document.querySelectorAll('ul li')].pop();
-	t.equal($last('li', $last('ul')), li);
+	t.equal(lastElement('li', lastElement('ul')), li);
 });
 
 test('tests existence of one element', t => {
 	t.plan(2);
 
-	t.true($exists('ul li'));
-	t.false($exists('lololol'));
+	t.true(elementExists('ul li'));
+	t.false(elementExists('lololol'));
 });
 
 test('tests existence of one element within an ancestor', t => {
 	t.plan(3);
 
-	t.true($exists('li', $('ul')));
-	t.false($exists('ul', $('li')));
-	t.false($exists('ul', $('lololol')));
+	t.true(elementExists('li', $('ul')));
+	t.false(elementExists('ul', $('li')));
+	t.false(elementExists('ul', $('lololol')));
 });
 
 test('selects all elements', t => {
