@@ -47,22 +47,21 @@ export class ElementNotFoundError extends Error {
 function expectElement<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
 	selectors: Selector | Selector[],
 	baseElement?: ParentNode
-): Selected | never;
+): Selected;
 function expectElement<Selected extends Element = HTMLElement>(
 	selectors: string | string[],
 	baseElement?: ParentNode
-): Selected | never;
+): Selected;
 function expectElement<Selected extends Element>(
 	selectors: string | string[],
 	baseElement?: ParentNode,
-): Selected | never {
+): Selected {
 	// Shortcut with specified-but-null baseElement
 	if (arguments.length === 2 && !baseElement) {
 		throw new ElementNotFoundError('Expected element not found because the base is specified but null');
 	}
 
-	const element = $<Selected>(selectors, baseElement);
-
+	const element = (baseElement ?? document).querySelector<Selected>(String(selectors));
 	if (element) {
 		return element;
 	}

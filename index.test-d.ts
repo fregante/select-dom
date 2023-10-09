@@ -14,10 +14,10 @@ expectType<SVGGElement | undefined>($('g'));
 /**
  * EXPECT
  */
-expectType<HTMLElement | undefined>(expectElement('.wow'));
-expectType<HTMLAnchorElement | undefined>(expectElement('a.wow'));
-expectType<HTMLBaseElement | undefined>(expectElement('base'));
-expectType<SVGGElement | undefined>(expectElement('g'));
+expectType<HTMLElement>(expectElement('.wow'));
+expectType<HTMLAnchorElement>(expectElement('a.wow'));
+expectType<HTMLBaseElement>(expectElement('base'));
+expectType<SVGGElement>(expectElement('g'));
 
 /**
  * LAST
