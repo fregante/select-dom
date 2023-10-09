@@ -38,6 +38,37 @@ function $<Selected extends Element>(
 /**
  * @param selectors      One or more CSS selectors separated by commas
  * @param [baseElement]  The element to look inside of
+ * @return               The element found, or an error
+ */
+function expectElement<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
+	selectors: Selector | Selector[],
+	baseElement?: ParentNode
+): Selected | never;
+function expectElement<Selected extends Element = HTMLElement>(
+	selectors: string | string[],
+	baseElement?: ParentNode
+): Selected | never;
+function expectElement<Selected extends Element>(
+	selectors: string | string[],
+	baseElement?: ParentNode,
+): Selected | never {
+	// Shortcut with specified-but-null baseElement
+	if (arguments.length === 2 && !baseElement) {
+		throw new Error('Expected element not found because the base is specified but null');
+	}
+
+	const element = $<Selected>(selectors, baseElement);
+
+	if (element) {
+		return element;
+	}
+
+	throw new Error(`Expected element not found: ${String(selectors)}`);
+}
+
+/**
+ * @param selectors      One or more CSS selectors separated by commas
+ * @param [baseElement]  The element to look inside of
  * @return               The element found, if any
  */
 function lastElement<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
@@ -117,4 +148,4 @@ function $$<Selected extends Element>(
 	return [...elements]; // Convert to array
 }
 
-export {$, $$, lastElement, elementExists};
+export {$, $$, lastElement, elementExists, expectElement};

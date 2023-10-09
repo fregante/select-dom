@@ -27,6 +27,24 @@ test('selects one element within an ancestor', t => {
 	t.equal($('li', $('ul')), li);
 });
 
+test('expects at least one element', t => {
+	t.plan(1);
+
+	const li = document.querySelector('ul li');
+	t.equal($('ul li'), li);
+
+	t.throws(() => $('lololol'));
+});
+
+test('expects one element within an ancestor', t => {
+	t.plan(1);
+
+	const li = document.querySelector('ul li');
+	t.equal($('li', $('ul')), li);
+
+	t.throws(() => $('ul', $('li')));
+});
+
 test('selects the last element', t => {
 	t.plan(1);
 
