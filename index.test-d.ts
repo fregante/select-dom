@@ -1,37 +1,37 @@
 import {expectType} from 'tsd';
-import select from './index.js';
+import {$, $$, $exists, $last} from './index.js';
 
-// `select-dom` defaults to HTMLElement where possible because it's the most common use case, even if technically this should not be HTMLElement.
+// `$-dom` defaults to HTMLElement where possible because it's the most common use case, even if technically this should not be HTMLElement.
 
 /**
  * SELECT
  */
-expectType<HTMLElement | undefined>(select('.wow'));
-expectType<HTMLAnchorElement | undefined>(select('a.wow'));
+expectType<HTMLElement | undefined>($('.wow'));
+expectType<HTMLAnchorElement | undefined>($('a.wow'));
 
-expectType<HTMLBaseElement | undefined>(select('base'));
+expectType<HTMLBaseElement | undefined>($('base'));
 
-expectType<SVGGElement | undefined>(select('g'));
+expectType<SVGGElement | undefined>($('g'));
 
 /**
  * LAST
  */
-expectType<HTMLElement | undefined>(select.last('.wow'));
-expectType<HTMLAnchorElement | undefined>(select.last('a.wow'));
-expectType<HTMLBaseElement | undefined>(select.last('base'));
-expectType<SVGGElement | undefined>(select.last('g'));
+expectType<HTMLElement | undefined>($last('.wow'));
+expectType<HTMLAnchorElement | undefined>($last('a.wow'));
+expectType<HTMLBaseElement | undefined>($last('base'));
+expectType<SVGGElement | undefined>($last('g'));
 
 /**
  * EXISTS
  */
-expectType<boolean>(select.exists('.wow'));
-expectType<boolean>(select.exists('base'));
-expectType<boolean>(select.exists('g'));
+expectType<boolean>($exists('.wow'));
+expectType<boolean>($exists('base'));
+expectType<boolean>($exists('g'));
 
 /**
  * ALL
  */
-expectType<HTMLElement[]>(select.all('.wow'));
-expectType<HTMLBaseElement[]>(select.all('base'));
-expectType<SVGGElement[]>(select.all('g'));
-expectType<HTMLAnchorElement[]>(select.all('a.wow'));
+expectType<HTMLElement[]>($$('.wow'));
+expectType<HTMLBaseElement[]>($$('base'));
+expectType<SVGGElement[]>($$('g'));
+expectType<HTMLAnchorElement[]>($$('a.wow'));

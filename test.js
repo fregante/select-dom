@@ -1,5 +1,5 @@
 import test from 'tape';
-import {$, $$, $last, elementExists} from './index.js';
+import {$, $$, $last, $exists} from './index.js';
 
 document.body.innerHTML = `
 	<ul>
@@ -44,16 +44,16 @@ test('selects the last element within an ancestor', t => {
 test('tests existence of one element', t => {
 	t.plan(2);
 
-	t.true(elementExists('ul li'));
-	t.false(elementExists('lololol'));
+	t.true($exists('ul li'));
+	t.false($exists('lololol'));
 });
 
 test('tests existence of one element within an ancestor', t => {
 	t.plan(3);
 
-	t.true(elementExists('li', $('ul')));
-	t.false(elementExists('ul', $('li')));
-	t.false(elementExists('ul', $('lololol')));
+	t.true($exists('li', $('ul')));
+	t.false($exists('ul', $('li')));
+	t.false($exists('ul', $('lololol')));
 });
 
 test('selects all elements', t => {
