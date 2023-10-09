@@ -40,14 +40,14 @@
 		"typed-query-selector": "^2.11.0"
 	},
 	"devDependencies": {
-		"@sindresorhus/tsconfig": "^3.0.1",
+		"@sindresorhus/tsconfig": "^5.0.0",
 		"browserify": "^17.0.0",
 		"esmify": "^2.1.1",
-		"tape": "^5.6.4",
-		"tape-run": "^10.0.0",
-		"tsd": "^0.28.1",
-		"typescript": "^5.1.6",
-		"xo": "^0.54.2"
+		"tape": "^5.7.0",
+		"tape-run": "^11.0.0",
+		"tsd": "^0.29.0",
+		"typescript": "^5.2.2",
+		"xo": "^0.56.0"
 	},
 	"engines": {
 		"node": ">=16"
