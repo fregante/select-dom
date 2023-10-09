@@ -58,6 +58,7 @@ function selectLast<Selected extends Element>(
 	}
 
 	const all = (baseElement ?? document).querySelectorAll<Selected>(String(selectors));
+	// eslint-disable-next-line unicorn/prefer-at -- Not an Array, not worth converting it
 	return all[all.length - 1];
 }
 
