@@ -16,45 +16,45 @@ npm install select-dom
 
 ```js
 // This module is only offered as a ES Module
-import select from 'select-dom';
+import {$, $$, lastElement, elementExists} from 'select-dom';
 ```
 
 ## API
 
 **Note:** if a falsy value is passed as `baseElement`, you'll always get an empty result ([bd578b9](https://github.com/fregante/select-dom/commit/bd578b975e35d9f802cb43a900a6d3c83095c76a))
 
-### `select(selector[, baseElement = document])`
+### `$(selector[, baseElement = document])`
 
 Maps to `baseElement.querySelector(selector)`, except it returns `undefined` if it's not found
 
 ```js
-select('.foo a[href=bar]');
+$('.foo a[href=bar]');
 // => <Element>
 
-select('.foo a[href=bar]', baseElement);
+$('.foo a[href=bar]', baseElement);
 // => <Element>
 
-select('.non-existent', baseElement);
+$('.non-existent', baseElement);
 // => undefined
 ```
 
-### `select.last(selector[, baseElement = document])`
+### `lastElement(selector[, baseElement = document])`
 
-Like `select()`, except that it returns the last matching item on the page instead of the first one.
+Like `$()`, except that it returns the last matching item on the page instead of the first one.
 
-### `select.exists(selector[, baseElement = document])`
+### `elementExists(selector[, baseElement = document])`
 
-Tests the existence of one or more elements matching the selector. It's like `select()`, except it returns a `boolean`.
+Tests the existence of one or more elements matching the selector. It's like `$()`, except it returns a `boolean`.
 
 ```js
-select.exists('.foo a[href=bar]');
+elementExists('.foo a[href=bar]');
 // => true/false
 
-select.exists('.foo a[href=bar]', baseElement);
+elementExists('.foo a[href=bar]', baseElement);
 // => true/false
 ```
 
-### `select.all(selector[, baseElements = document])`
+### `$$(selector[, baseElements = document])`
 
 Maps to `baseElements.querySelectorAll(selector)` plus:
 
@@ -62,13 +62,13 @@ Maps to `baseElements.querySelectorAll(selector)` plus:
 - `baseElements` can be a list of elements to query
 
 ```js
-select.all('.foo');
+$$('.foo');
 // => [<Element>, <Element>, <Element>]
 
-select.all('.foo', baseElement);
+$$('.foo', baseElement);
 // => [<Element>, <Element>, <Element>]
 
-select.all('.foo', [baseElement1, baseElement2]);
+$$('.foo', [baseElement1, baseElement2]);
 // => [<Element>, <Element>, <Element>]
 // This is similar to jQuery([baseElement1, baseElement2]).find('.foo')
 ```

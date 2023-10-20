@@ -15,15 +15,15 @@ function isQueryable(object: BaseElements): object is ParentNode {
  * @param [baseElement]  The element to look inside of
  * @return               The element found, if any
  */
-function select<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
+function $<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
 	selectors: Selector | Selector[],
 	baseElement?: ParentNode
 ): Selected | undefined;
-function select<Selected extends Element = HTMLElement>(
+function $<Selected extends Element = HTMLElement>(
 	selectors: string | string[],
 	baseElement?: ParentNode
 ): Selected | undefined;
-function select<Selected extends Element>(
+function $<Selected extends Element>(
 	selectors: string | string[],
 	baseElement?: ParentNode,
 ): Selected | undefined {
@@ -40,15 +40,15 @@ function select<Selected extends Element>(
  * @param [baseElement]  The element to look inside of
  * @return               The element found, if any
  */
-function selectLast<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
+function lastElement<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
 	selectors: Selector | Selector[],
 	baseElement?: ParentNode
 ): Selected | undefined;
-function selectLast<Selected extends Element = HTMLElement>(
+function lastElement<Selected extends Element = HTMLElement>(
 	selectors: string | string[],
 	baseElement?: ParentNode
 ): Selected | undefined;
-function selectLast<Selected extends Element>(
+function lastElement<Selected extends Element>(
 	selectors: string | string[],
 	baseElement?: ParentNode,
 ): Selected | undefined {
@@ -67,7 +67,7 @@ function selectLast<Selected extends Element>(
  * @param [baseElement]  The element to look inside of
  * @return               Whether it's been found
  */
-function selectExists(
+function elementExists(
 	selectors: string | string[],
 	baseElement?: ParentNode,
 ): boolean {
@@ -84,15 +84,15 @@ function selectExists(
  * @param [baseElements]  The element or list of elements to look inside of
  * @return                An array of elements found
  */
-function selectAll<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
+function $$<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
 	selectors: Selector | Selector[],
 	baseElements?: BaseElements
 ): Selected[];
-function selectAll<Selected extends Element = HTMLElement>(
+function $$<Selected extends Element = HTMLElement>(
 	selectors: string | string[],
 	baseElements?: BaseElements
 ): Selected[];
-function selectAll<Selected extends Element>(
+function $$<Selected extends Element>(
 	selectors: string | string[],
 	baseElements?: BaseElements,
 ): Selected[] {
@@ -117,8 +117,4 @@ function selectAll<Selected extends Element>(
 	return [...elements]; // Convert to array
 }
 
-select.last = selectLast;
-select.exists = selectExists;
-select.all = selectAll;
-
-export default select;
+export {$, $$, lastElement, elementExists};
