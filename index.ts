@@ -35,6 +35,40 @@ function $<Selected extends Element>(
 	return (baseElement ?? document).querySelector<Selected>(String(selectors)) ?? undefined;
 }
 
+export class ElementNotFoundError extends Error {
+	override name = 'ElementNotFoundError';
+}
+
+/**
+ * @param selectors      One or more CSS selectors separated by commas
+ * @param [baseElement]  The element to look inside of
+ * @return               The element found, or an error
+ */
+function expectElement<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
+	selectors: Selector | Selector[],
+	baseElement?: ParentNode
+): Selected;
+function expectElement<Selected extends Element = HTMLElement>(
+	selectors: string | string[],
+	baseElement?: ParentNode
+): Selected;
+function expectElement<Selected extends Element>(
+	selectors: string | string[],
+	baseElement?: ParentNode,
+): Selected {
+	// Shortcut with specified-but-null baseElement
+	if (arguments.length === 2 && !baseElement) {
+		throw new ElementNotFoundError('Expected element not found because the base is specified but null');
+	}
+
+	const element = (baseElement ?? document).querySelector<Selected>(String(selectors));
+	if (element) {
+		return element;
+	}
+
+	throw new ElementNotFoundError(`Expected element not found: ${String(selectors)}`);
+}
+
 /**
  * @param selectors      One or more CSS selectors separated by commas
  * @param [baseElement]  The element to look inside of
@@ -117,4 +151,4 @@ function $$<Selected extends Element>(
 	return [...elements]; // Convert to array
 }
 
-export {$, $$, lastElement, elementExists};
+export {$, $$, lastElement, elementExists, expectElement};

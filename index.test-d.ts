@@ -1,5 +1,5 @@
 import {expectType} from 'tsd';
-import {$, $$, elementExists, lastElement} from './index.js';
+import {$, $$, elementExists, lastElement, expectElement} from './index.js';
 
 // `select-dom` defaults to HTMLElement where possible because it's the most common use case, even if technically this should not be HTMLElement.
 
@@ -10,6 +10,14 @@ expectType<HTMLElement | undefined>($('.wow'));
 expectType<HTMLAnchorElement | undefined>($('a.wow'));
 expectType<HTMLBaseElement | undefined>($('base'));
 expectType<SVGGElement | undefined>($('g'));
+
+/**
+ * EXPECT
+ */
+expectType<HTMLElement>(expectElement('.wow'));
+expectType<HTMLAnchorElement>(expectElement('a.wow'));
+expectType<HTMLBaseElement>(expectElement('base'));
+expectType<SVGGElement>(expectElement('g'));
 
 /**
  * LAST
