@@ -138,17 +138,19 @@ function $$<Selected extends Element>(
 	// Can be: select.all('selectors') or select.all('selectors', singleElementOrDocument)
 	if (!baseElements || isQueryable(baseElements)) {
 		const elements = (baseElements ?? document).querySelectorAll<Selected>(String(selectors));
-		return Array.prototype.slice.call(elements) as Selected[];
+		return Array.from(elements) as Selected[];
 	}
 
-	const elements = new Set<Selected>();
+	const elements = Selected[];
 	for (const baseElement of baseElements) {
 		for (const element of baseElement.querySelectorAll<Selected>(String(selectors))) {
-			elements.add(element);
+			if (!elements.includes(element)) {
+				elements.push(element);
+			}
 		}
 	}
 
-	return [...elements]; // Convert to array
+	return elements;
 }
 
 export {$, $$, lastElement, elementExists, expectElement};
