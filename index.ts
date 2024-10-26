@@ -16,15 +16,15 @@ function isQueryable(object: BaseElements): object is ParentNode {
  * @return               The element found, if any
  */
 function $<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
-	selectors: Selector | Selector[],
+	selectors: Selector | readonly Selector[],
 	baseElement?: ParentNode
 ): Selected | undefined;
 function $<Selected extends Element = HTMLElement>(
-	selectors: string | string[],
+	selectors: string | readonly string[],
 	baseElement?: ParentNode
 ): Selected | undefined;
 function $<Selected extends Element>(
-	selectors: string | string[],
+	selectors: string | readonly string[],
 	baseElement?: ParentNode,
 ): Selected | undefined {
 	// Shortcut with specified-but-null baseElement
@@ -45,15 +45,15 @@ export class ElementNotFoundError extends Error {
  * @return               The element found, or an error
  */
 function expectElement<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
-	selectors: Selector | Selector[],
+	selectors: Selector | readonly Selector[],
 	baseElement?: ParentNode
 ): Selected;
 function expectElement<Selected extends Element = HTMLElement>(
-	selectors: string | string[],
+	selectors: string | readonly string[],
 	baseElement?: ParentNode
 ): Selected;
 function expectElement<Selected extends Element>(
-	selectors: string | string[],
+	selectors: string | readonly string[],
 	baseElement?: ParentNode,
 ): Selected {
 	// Shortcut with specified-but-null baseElement
@@ -75,15 +75,15 @@ function expectElement<Selected extends Element>(
  * @return               The element found, if any
  */
 function lastElement<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
-	selectors: Selector | Selector[],
+	selectors: Selector | readonly Selector[],
 	baseElement?: ParentNode
 ): Selected | undefined;
 function lastElement<Selected extends Element = HTMLElement>(
-	selectors: string | string[],
+	selectors: string | readonly string[],
 	baseElement?: ParentNode
 ): Selected | undefined;
 function lastElement<Selected extends Element>(
-	selectors: string | string[],
+	selectors: string | readonly string[],
 	baseElement?: ParentNode,
 ): Selected | undefined {
 	// Shortcut with specified-but-null baseElement
@@ -102,7 +102,7 @@ function lastElement<Selected extends Element>(
  * @return               Whether it's been found
  */
 function elementExists(
-	selectors: string | string[],
+	selectors: string | readonly string[],
 	baseElement?: ParentNode,
 ): boolean {
 	// Shortcut with specified-but-null baseElement
@@ -119,15 +119,15 @@ function elementExists(
  * @return                An array of elements found
  */
 function $$<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
-	selectors: Selector | Selector[],
+	selectors: Selector | readonly Selector[],
 	baseElements?: BaseElements
 ): Selected[];
 function $$<Selected extends Element = HTMLElement>(
-	selectors: string | string[],
+	selectors: string | readonly string[],
 	baseElements?: BaseElements
 ): Selected[];
 function $$<Selected extends Element>(
-	selectors: string | string[],
+	selectors: string | readonly string[],
 	baseElements?: BaseElements,
 ): Selected[] {
 	// Shortcut with specified-but-null baseElements
