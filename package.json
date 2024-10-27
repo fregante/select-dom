@@ -1,6 +1,6 @@
 {
 	"name": "select-dom",
-	"version": "9.0.1",
+	"version": "9.1.0",
 	"description": "Extra lightweight DOM selector helper",
 	"keywords": [
 		"alternative",
