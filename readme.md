@@ -6,8 +6,6 @@
 
 > Lightweight `querySelector`/`All` wrapper that outputs an Array
 
-Version 7+ only supports browsers with [iterable `NodeList`s](https://developer.mozilla.org/en-US/docs/Web/API/NodeList/entries). If you need IE support, stick to [`select-dom@6`](https://github.com/fregante/select-dom/tree/v6.0.4) or lower.
-
 ## Install
 
 ```bash
@@ -15,8 +13,10 @@ npm install select-dom
 ```
 
 ```js
-// This module is only offered as a ES Module
 import {$, $$, lastElement, elementExists} from 'select-dom';
+
+// And a stricter version
+import {$, $optional} from 'select-dom/strict.js';
 ```
 
 ## API
@@ -26,7 +26,6 @@ import {$, $$, lastElement, elementExists} from 'select-dom';
 ### `$(selector[, baseElement = document])`
 
 Maps to `baseElement.querySelector(selector)`, except it returns `undefined` if it's not found
-
 ```js
 $('.foo a[href=bar]');
 // => <Element>
@@ -71,6 +70,17 @@ $$('.foo', baseElement);
 $$('.foo', [baseElement1, baseElement2]);
 // => [<Element>, <Element>, <Element>]
 // This is similar to jQuery([baseElement1, baseElement2]).find('.foo')
+```
+
+## /strict.js
+
+The strict export will throw an error if the element is not found, instead of returning `undefined`. This is also reflected in the types, which are non-nullable:
+
+```ts
+import {$, $optional} from 'select-dom/strict.js';
+
+const must: HTMLAnchorElement = $('.foo a[href=bar]'); //
+const optional: HTMLAnchorElement | undefined = $optional('.foo a[href=bar]');
 ```
 
 ## Related

@@ -1,6 +1,7 @@
 {
 	"extends": "@sindresorhus/tsconfig",
 	"files": [
-		"index.ts"
+		"index.ts",
+		"strict.ts"
 	]
 }
