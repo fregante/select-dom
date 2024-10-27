@@ -2,4 +2,6 @@ node_modules
 npm-debug.log
 index.js
 index.d.ts
+strict.js
+strict.d.ts
 *.map
