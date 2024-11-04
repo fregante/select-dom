@@ -77,10 +77,14 @@ $$('.foo', [baseElement1, baseElement2]);
 The strict export will throw an error if the element is not found, instead of returning `undefined`. This is also reflected in the types, which are non-nullable:
 
 ```ts
-import {$, $optional} from 'select-dom/strict.js';
+import {$, $optional, $$, $$optional} from 'select-dom/strict.js';
 
 const must: HTMLAnchorElement = $('.foo a[href=bar]'); //
 const optional: HTMLAnchorElement | undefined = $optional('.foo a[href=bar]');
+
+
+const oneOrMore: HTMLAnchorElement[] = $$('.foo a[href=bar]'); //
+const zeroOrMore: HTMLAnchorElement[] = $$optional('.foo a[href=bar]');
 ```
 
 ## Related
