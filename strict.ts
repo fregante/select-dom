@@ -1,1 +1,6 @@
-export {$ as $optional, expectElement as $} from './index.js';
+export {
+	$ as $optional,
+	$$ as $$optional,
+	expectElement as $,
+	expectElements as $$,
+} from './index.js';
