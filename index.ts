@@ -114,6 +114,23 @@ function elementExists(
 }
 
 /**
+ * @param selectors      One or more CSS selectors separated by commas
+ * @param [baseElement]  The element to look inside of
+ * @return               The number of elements found
+ */
+function countElements(
+	selectors: string | readonly string[],
+	baseElement?: ParentNode,
+): number {
+	// Shortcut with specified-but-null baseElement
+	if (arguments.length === 2 && !baseElement) {
+		return 0;
+	}
+
+	return (baseElement ?? document).querySelectorAll(String(selectors)).length;
+}
+
+/**
  * @param selectors       One or more CSS selectors separated by commas
  * @param [baseElements]  The element or list of elements to look inside of
  * @return                An array of elements found
@@ -181,4 +198,4 @@ function expectElements<Selected extends Element>(
 	throw new ElementNotFoundError(`Expected elements not found: ${String(selectors)}`);
 }
 
-export {$, $$, lastElement, elementExists, expectElement, expectElements};
+export {$, $$, lastElement, elementExists, expectElement, expectElements, countElements};

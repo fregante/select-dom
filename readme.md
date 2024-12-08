@@ -53,6 +53,15 @@ elementExists('.foo a[href=bar]', baseElement);
 // => true/false
 ```
 
+### `countElements(selector[, baseElement = document])`
+
+Counts the number of elements found on the page or in the base element. Just a shortcut over `$$(selector).length`
+
+```js
+countElements('a');
+// => 3
+```
+
 ### `$$(selector[, baseElements = document])`
 
 Maps to `baseElements.querySelectorAll(selector)` plus:

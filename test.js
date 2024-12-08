@@ -101,3 +101,9 @@ test('selects all elements within an array of ancestors without duplicates', t =
 	const li = document.querySelector('ul').querySelectorAll('li');
 	t.deepEqual($$('li', [$('ul'), $('ul')]), [...li]);
 });
+
+test('counts elements', t => {
+	t.plan(1);
+
+	t.equal($$('ul li').length, 5);
+});
