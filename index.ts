@@ -190,7 +190,7 @@ function expectElements<Selected extends Element>(
 		throw new ElementNotFoundError('Expected elements not found because the base is specified but null');
 	}
 
-	const elements = $$<Selected>(selectors, baseElements);
+	const elements = arguments.length === 2 ? $$<Selected>(selectors, baseElements) : $$<Selected>(selectors);
 	if (elements.length > 0) {
 		return elements;
 	}
