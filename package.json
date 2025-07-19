@@ -19,7 +19,7 @@
 	"type": "module",
 	"exports": {
 		".": "./index.js",
-		"./strict.js": "./strict.js"
+		"./strict": "./strict.js"
 	},
 	"main": "./index.js",
 	"types": "./index.d.ts",
