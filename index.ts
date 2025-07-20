@@ -226,7 +226,7 @@ function expectLastElement<Selected extends Element>(
 		return all[all.length - 1]!;
 	}
 
-	throw new ElementNotFoundError(`Expected elements not found: ${String(selectors)}`);
+	throw new ElementNotFoundError(`Expected element not found: ${String(selectors)}`);
 }
 
 export {$, $$, lastElement, elementExists, expectElement, expectElements, expectLastElement, countElements};
