@@ -88,11 +88,11 @@ The strict export will throw an error if the element is not found, instead of re
 ```ts
 import {$, $optional, $$, $$optional} from 'select-dom/strict.js';
 
-const must: HTMLAnchorElement = $('.foo a[href=bar]'); //
+const must: HTMLAnchorElement = $('.foo a[href=bar]');
 const optional: HTMLAnchorElement | undefined = $optional('.foo a[href=bar]');
 
 
-const oneOrMore: HTMLAnchorElement[] = $$('.foo a[href=bar]'); //
+const oneOrMore: HTMLAnchorElement[] = $$('.foo a[href=bar]');
 const zeroOrMore: HTMLAnchorElement[] = $$optional('.foo a[href=bar]');
 ```
 
