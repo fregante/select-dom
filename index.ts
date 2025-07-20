@@ -198,4 +198,45 @@ function expectElements<Selected extends Element>(
 	throw new ElementNotFoundError(`Expected elements not found: ${String(selectors)}`);
 }
 
-export {$, $$, lastElement, elementExists, expectElement, expectElements, countElements};
+/**
+ * @param selectors      One or more CSS selectors separated by commas
+ * @param [baseElement]  The element to look inside of
+ * @return               The element found, or an error
+ */
+function expectLastElement<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
+	selectors: Selector | readonly Selector[],
+	baseElement?: ParentNode
+): Selected;
+function expectLastElement<Selected extends Element = HTMLElement>(
+	selectors: string | readonly string[],
+	baseElement?: ParentNode
+): Selected;
+function expectLastElement<Selected extends Element>(
+	selectors: string | readonly string[],
+	baseElement?: ParentNode,
+): Selected {
+	// Shortcut with specified-but-null baseElements
+	if (arguments.length === 2 && !baseElement) {
+		throw new ElementNotFoundError('Expected element not found because the base is specified but null');
+	}
+
+	const all = (baseElement ?? document).querySelectorAll<Selected>(String(selectors));
+	if (all.length > 0) {
+		// eslint-disable-next-line unicorn/prefer-at -- Not an Array, not worth converting it
+		return all[all.length - 1]!;
+	}
+
+	throw new ElementNotFoundError(`Expected element not found: ${String(selectors)}`);
+}
+
+export {
+	$,
+	$$,
+	lastElement,
+	elementExists,
+	countElements,
+
+	expectElement,
+	expectElements,
+	expectLastElement,
+};
