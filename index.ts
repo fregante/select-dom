@@ -229,4 +229,14 @@ function expectLastElement<Selected extends Element>(
 	throw new ElementNotFoundError(`Expected element not found: ${String(selectors)}`);
 }
 
-export {$, $$, lastElement, elementExists, expectElement, expectElements, expectLastElement, countElements};
+export {
+	$,
+	$$,
+	lastElement,
+	elementExists,
+	countElements,
+
+	expectElement,
+	expectElements,
+	expectLastElement,
+};
