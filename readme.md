@@ -13,7 +13,7 @@ npm install select-dom
 ```
 
 ```js
-import {$, $$, lastElement, elementExists} from 'select-dom';
+import {$, $$, lastElement, elementExists, assertElementExists} from 'select-dom';
 
 // And a stricter version
 import {$, $optional} from 'select-dom/strict.js';
@@ -51,6 +51,20 @@ elementExists('.foo a[href=bar]');
 
 elementExists('.foo a[href=bar]', baseElement);
 // => true/false
+```
+
+### `assertElementExists(selector[, baseElement = document])`
+
+Like `elementExists()`, but instead of returning `true`/`false`, it returns `void` or throws an error if the element is not found.
+
+```js
+assertElementExists('.foo a[href=bar]');
+// => void (if element exists)
+// => throws ElementNotFoundError (if element doesn't exist)
+
+assertElementExists('.foo a[href=bar]', baseElement);
+// => void (if element exists)
+// => throws ElementNotFoundError (if element doesn't exist)
 ```
 
 ### `countElements(selector[, baseElement = document])`

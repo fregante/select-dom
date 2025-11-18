@@ -116,6 +116,25 @@ function elementExists(
 /**
  * @param selectors      One or more CSS selectors separated by commas
  * @param [baseElement]  The element to look inside of
+ * @return               void or throws an error
+ */
+function assertElementExists(
+	selectors: string | readonly string[],
+	baseElement?: ParentNode,
+): void {
+	// Shortcut with specified-but-null baseElement
+	if (arguments.length === 2 && !baseElement) {
+		throw new ElementNotFoundError('Element not found because the base is specified but null');
+	}
+
+	if (!((baseElement ?? document).querySelector(String(selectors)))) {
+		throw new ElementNotFoundError(`Element not found: ${String(selectors)}`);
+	}
+}
+
+/**
+ * @param selectors      One or more CSS selectors separated by commas
+ * @param [baseElement]  The element to look inside of
  * @return               The number of elements found
  */
 function countElements(
@@ -234,6 +253,7 @@ export {
 	$$,
 	lastElement,
 	elementExists,
+	assertElementExists,
 	countElements,
 
 	expectElement,
