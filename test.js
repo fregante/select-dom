@@ -1,5 +1,5 @@
 import test from 'tape';
-import {$, $$, lastElement, elementExists, expectElement, expectLastElement, ElementNotFoundError} from './index.js';
+import {$, $$, lastElement, elementExists, assertElementExists, expectElement, expectLastElement, ElementNotFoundError} from './index.js';
 
 document.body.innerHTML = `
 	<ul>
@@ -90,6 +90,21 @@ test('tests existence of one element within an ancestor', t => {
 	t.true(elementExists('li', $('ul')));
 	t.false(elementExists('ul', $('li')));
 	t.false(elementExists('ul', $('lololol')));
+});
+
+test('asserts existence of one element', t => {
+	t.plan(2);
+
+	t.doesNotThrow(() => assertElementExists('ul li'));
+	t.throws(() => assertElementExists('lololol'), error => error instanceof ElementNotFoundError);
+});
+
+test('asserts existence of one element within an ancestor', t => {
+	t.plan(3);
+
+	t.doesNotThrow(() => assertElementExists('li', $('ul')));
+	t.throws(() => assertElementExists('ul', $('li')), error => error instanceof ElementNotFoundError);
+	t.throws(() => assertElementExists('ul', $('lololol')), error => error instanceof ElementNotFoundError);
 });
 
 test('selects all elements', t => {

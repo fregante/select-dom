@@ -1,5 +1,5 @@
 import {expectType} from 'tsd';
-import {$, $$, elementExists, lastElement, expectElement, expectLastElement} from './index.js';
+import {$, $$, elementExists, assertElementExists, lastElement, expectElement, expectLastElement} from './index.js';
 
 // `select-dom` defaults to HTMLElement where possible because it's the most common use case, even if technically this should not be HTMLElement.
 
@@ -41,6 +41,13 @@ expectType<SVGGElement>(expectLastElement('g'));
 expectType<boolean>(elementExists('.wow'));
 expectType<boolean>(elementExists('base'));
 expectType<boolean>(elementExists('g'));
+
+/**
+ * ASSERT EXISTS
+ */
+expectType<void>(assertElementExists('.wow'));
+expectType<void>(assertElementExists('base'));
+expectType<void>(assertElementExists('g'));
 
 /**
  * ALL
