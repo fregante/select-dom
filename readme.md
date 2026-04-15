@@ -18,7 +18,7 @@ import {$, $$, lastElement, elementExists, assertElementExists, $optional, $$opt
 
 ## API
 
-**Note:** if a falsy value is passed as `baseElement`, you'll always get an empty result ([bd578b9](https://github.com/fregante/select-dom/commit/bd578b975e35d9f802cb43a900a6d3c83095c76a))
+**Note:** if a falsy value is passed as `baseElement`, `$`, `$$`, `lastElement` throw `ElementNotFoundError`, while `$optional`, `$$optional`, `lastElementOptional` return `undefined`/`[]` ([bd578b9](https://github.com/fregante/select-dom/commit/bd578b975e35d9f802cb43a900a6d3c83095c76a))
 
 ### `$(selector[, baseElement = document])`
 
@@ -44,7 +44,7 @@ Like `$()`, except that it returns the last matching item on the page instead of
 
 ### `elementExists(selector[, baseElement = document])`
 
-Tests the existence of one or more elements matching the selector. It's like `$()`, except it returns a `boolean`.
+Tests the existence of one or more elements matching the selector. It's like `$optional()`, except it returns a `boolean`.
 
 ```js
 elementExists('.foo a[href=bar]');
@@ -70,7 +70,7 @@ assertElementExists('.foo a[href=bar]', baseElement);
 
 ### `countElements(selector[, baseElement = document])`
 
-Counts the number of elements found on the page or in the base element. Just a shortcut over `$$(selector).length`
+Counts the number of elements found on the page or in the base element. Just a shortcut over `$$optional(selector).length`
 
 ```js
 countElements('a');

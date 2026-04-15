@@ -1,5 +1,5 @@
 import test from 'tape';
-import {$, $$, $optional, lastElement, elementExists, assertElementExists, expectElement, expectLastElement, ElementNotFoundError} from './index.js';
+import {$, $$, $optional, lastElement, elementExists, assertElementExists, ElementNotFoundError} from './index.js';
 
 document.body.innerHTML = `
 	<ul>
@@ -31,18 +31,18 @@ test('expects at least one element', t => {
 	t.plan(2);
 
 	const li = document.querySelector('ul li');
-	t.equal(expectElement('ul li'), li);
+	t.equal($('ul li'), li);
 
-	t.throws(() => expectElement('lololol'));
+	t.throws(() => $('lololol'));
 });
 
 test('expects one element within an ancestor', t => {
 	t.plan(2);
 
 	const li = document.querySelector('ul li');
-	t.equal(expectElement('li', expectElement('ul')), li);
+	t.equal($('li', $('ul')), li);
 
-	t.throws(() => expectElement('ul', expectElement('li')), error => error instanceof ElementNotFoundError);
+	t.throws(() => $('ul', $('li')), error => error instanceof ElementNotFoundError);
 });
 
 test('selects the last element', t => {
@@ -63,18 +63,18 @@ test('expects a last element', t => {
 	t.plan(2);
 
 	const li = [...document.querySelectorAll('ul li')].pop();
-	t.equal(expectLastElement('ul li'), li);
+	t.equal(lastElement('ul li'), li);
 
-	t.throws(() => expectLastElement('lololol'));
+	t.throws(() => lastElement('lololol'));
 });
 
 test('expects a last element within an ancestor', t => {
 	t.plan(2);
 
 	const li = [...document.querySelectorAll('ul li')].pop();
-	t.equal(expectLastElement('li', expectLastElement('ul')), li);
+	t.equal(lastElement('li', lastElement('ul')), li);
 
-	t.throws(() => expectLastElement('ul', expectLastElement('li')), error => error instanceof ElementNotFoundError);
+	t.throws(() => lastElement('ul', lastElement('li')), error => error instanceof ElementNotFoundError);
 });
 
 test('tests existence of one element', t => {
