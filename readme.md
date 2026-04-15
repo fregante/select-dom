@@ -13,8 +13,7 @@ npm install select-dom
 ```
 
 ```js
-import {$, $$, lastElement, elementExists, assertElementExists} from 'select-dom';
-import {$, $optional, $$, $$optional, lastElement, lastElementOptional} from 'select-dom';
+import {$, $$, lastElement, elementExists, assertElementExists, $optional, $$optional, lastElementOptional} from 'select-dom';
 ```
 
 ## API
@@ -98,17 +97,17 @@ $$('.foo', [baseElement1, baseElement2]);
 The `$optional`, `$$optional`, and `lastElementOptional` exports are aliases for `$`, `$$`, and `lastElement`. They're useful when you want to distinguish between optional and throwing selectors in your code:
 
 ```ts
-import {expectElement as $, $ as $optional, $$, $$optional, lastElement, lastElementOptional} from 'select-dom';
+import {expectElement, expectElements, expectLastElement, $optional, $$optional, lastElementOptional} from 'select-dom';
 
-const must: HTMLAnchorElement = $('.foo a[href=bar]');
+const must: HTMLAnchorElement = expectElement('.foo a[href=bar]');
 const optional: HTMLAnchorElement | undefined = $optional('.foo a[href=bar]');
 
 
-const oneOrMore: HTMLAnchorElement[] = $$('.foo a[href=bar]');
+const oneOrMore: HTMLAnchorElement[] = expectElements('.foo a[href=bar]');
 const zeroOrMore: HTMLAnchorElement[] = $$optional('.foo a[href=bar]');
 
 
-const last: HTMLAnchorElement = lastElement('.foo a[href=bar]');
+const last: HTMLAnchorElement = expectLastElement('.foo a[href=bar]');
 const lastOptional: HTMLAnchorElement | undefined = lastElementOptional('.foo a[href=bar]');
 ```
 
