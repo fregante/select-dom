@@ -22,7 +22,7 @@ import {$, $$, lastElement, elementExists, assertElementExists, $optional, $$opt
 
 ### `$(selector[, baseElement = document])`
 
-Maps to `baseElement.querySelector(selector)`, except it returns `undefined` if it's not found
+Maps to `baseElement.querySelector(selector)`, except it throws `ElementNotFoundError` if it's not found. For a non-throwing version, use `$optional`.
 ```js
 $('.foo a[href=bar]');
 // => <Element>
@@ -31,12 +31,16 @@ $('.foo a[href=bar]', baseElement);
 // => <Element>
 
 $('.non-existent', baseElement);
-// => undefined
+// => throws ElementNotFoundError
 ```
+
+### `$optional(selector[, baseElement = document])`
+
+Like `$()`, but returns `undefined` instead of throwing when the element is not found.
 
 ### `lastElement(selector[, baseElement = document])`
 
-Like `$()`, except that it returns the last matching item on the page instead of the first one.
+Like `$()`, except that it returns the last matching item on the page instead of the first one. Throws if no element is found. For a non-throwing version, use `lastElementOptional`.
 
 ### `elementExists(selector[, baseElement = document])`
 
@@ -79,6 +83,7 @@ Maps to `baseElements.querySelectorAll(selector)` plus:
 
 - it always returns an array
 - `baseElements` can be a list of elements to query
+- throws `ElementNotFoundError` if no elements are found. For a non-throwing version, use `$$optional`.
 
 ```js
 $$('.foo');
@@ -94,20 +99,20 @@ $$('.foo', [baseElement1, baseElement2]);
 
 ## Optional vs throwing selectors
 
-The `$optional`, `$$optional`, and `lastElementOptional` exports are aliases for `$`, `$$`, and `lastElement`. They're useful when you want to distinguish between optional and throwing selectors in your code:
+`$`, `$$`, and `lastElement` throw when no element is found. Their `*optional` counterparts return `undefined` or `[]` instead:
 
 ```ts
-import {expectElement, expectElements, expectLastElement, $optional, $$optional, lastElementOptional} from 'select-dom';
+import {$, $$, lastElement, $optional, $$optional, lastElementOptional} from 'select-dom';
 
-const must: HTMLAnchorElement = expectElement('.foo a[href=bar]');
+const must: HTMLAnchorElement = $('.foo a[href=bar]');
 const optional: HTMLAnchorElement | undefined = $optional('.foo a[href=bar]');
 
 
-const oneOrMore: HTMLAnchorElement[] = expectElements('.foo a[href=bar]');
+const oneOrMore: HTMLAnchorElement[] = $$('.foo a[href=bar]');
 const zeroOrMore: HTMLAnchorElement[] = $$optional('.foo a[href=bar]');
 
 
-const last: HTMLAnchorElement = expectLastElement('.foo a[href=bar]');
+const last: HTMLAnchorElement = lastElement('.foo a[href=bar]');
 const lastOptional: HTMLAnchorElement | undefined = lastElementOptional('.foo a[href=bar]');
 ```
 

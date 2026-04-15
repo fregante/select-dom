@@ -253,9 +253,10 @@ export {
 	$$ as $$optional,
 	lastElement as lastElementOptional,
 
-	$,
-	$$,
-	lastElement,
+	expectElement as $,
+	expectElements as $$,
+	expectLastElement as lastElement,
+
 	elementExists,
 	assertElementExists,
 	countElements,
