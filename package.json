@@ -18,16 +18,13 @@
 	"author": "Federico Brigante <me@fregante.com> (https://fregante.com)",
 	"type": "module",
 	"exports": {
-		".": "./index.js",
-		"./strict.js": "./strict.js"
+		".": "./index.js"
 	},
 	"main": "./index.js",
 	"types": "./index.d.ts",
 	"files": [
 		"index.js",
-		"index.d.ts",
-		"strict.js",
-		"strict.d.ts"
+		"index.d.ts"
 	],
 	"scripts": {
 		"build": "tsc",

@@ -14,9 +14,7 @@ npm install select-dom
 
 ```js
 import {$, $$, lastElement, elementExists, assertElementExists} from 'select-dom';
-
-// And a stricter version
-import {$, $optional} from 'select-dom/strict.js';
+import {$, $optional, $$, $$optional, lastElement, lastElementOptional} from 'select-dom';
 ```
 
 ## API
@@ -95,12 +93,12 @@ $$('.foo', [baseElement1, baseElement2]);
 // This is similar to jQuery([baseElement1, baseElement2]).find('.foo')
 ```
 
-## /strict.js
+## Optional vs throwing selectors
 
-The strict export will throw an error if the element is not found, instead of returning `undefined`. This is also reflected in the types, which are non-nullable:
+The `$optional`, `$$optional`, and `lastElementOptional` exports are aliases for `$`, `$$`, and `lastElement`. They're useful when you want to distinguish between optional and throwing selectors in your code:
 
 ```ts
-import {$, $optional, $$, $$optional, lastElement, lastElementOptional} from 'select-dom/strict.js';
+import {expectElement as $, $ as $optional, $$, $$optional, lastElement, lastElementOptional} from 'select-dom';
 
 const must: HTMLAnchorElement = $('.foo a[href=bar]');
 const optional: HTMLAnchorElement | undefined = $optional('.foo a[href=bar]');

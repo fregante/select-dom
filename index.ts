@@ -249,6 +249,10 @@ function expectLastElement<Selected extends Element>(
 }
 
 export {
+	$ as $optional,
+	$$ as $$optional,
+	lastElement as lastElementOptional,
+
 	$,
 	$$,
 	lastElement,
