@@ -102,7 +102,7 @@ $$('.foo', [baseElement1, baseElement2]);
 `$`, `$$`, and `lastElement` throw when no element is found. Their `*optional` counterparts return `undefined` or `[]` instead:
 
 ```ts
-import {$, $$, lastElement, $optional, $$optional, lastElementOptional} from 'select-dom';
+import {$, $optional, $$, $$optional, lastElement, lastElementOptional} from 'select-dom';
 
 const must: HTMLAnchorElement = $('.foo a[href=bar]');
 const optional: HTMLAnchorElement | undefined = $optional('.foo a[href=bar]');
