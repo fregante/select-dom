@@ -15,15 +15,15 @@ function isQueryable(object: BaseElements): object is ParentNode {
  * @param [baseElement]  The element to look inside of
  * @return               The element found, if any
  */
-function $<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
+function $optional<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
 	selectors: Selector | readonly Selector[],
 	baseElement?: ParentNode
 ): Selected | undefined;
-function $<Selected extends Element = HTMLElement>(
+function $optional<Selected extends Element = HTMLElement>(
 	selectors: string | readonly string[],
 	baseElement?: ParentNode
 ): Selected | undefined;
-function $<Selected extends Element>(
+function $optional<Selected extends Element>(
 	selectors: string | readonly string[],
 	baseElement?: ParentNode,
 ): Selected | undefined {
@@ -44,15 +44,15 @@ export class ElementNotFoundError extends Error {
  * @param [baseElement]  The element to look inside of
  * @return               The element found, or an error
  */
-function expectElement<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
+function $<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
 	selectors: Selector | readonly Selector[],
 	baseElement?: ParentNode
 ): Selected;
-function expectElement<Selected extends Element = HTMLElement>(
+function $<Selected extends Element = HTMLElement>(
 	selectors: string | readonly string[],
 	baseElement?: ParentNode
 ): Selected;
-function expectElement<Selected extends Element>(
+function $<Selected extends Element>(
 	selectors: string | readonly string[],
 	baseElement?: ParentNode,
 ): Selected {
@@ -74,15 +74,15 @@ function expectElement<Selected extends Element>(
  * @param [baseElement]  The element to look inside of
  * @return               The element found, if any
  */
-function lastElement<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
+function lastElementOptional<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
 	selectors: Selector | readonly Selector[],
 	baseElement?: ParentNode
 ): Selected | undefined;
-function lastElement<Selected extends Element = HTMLElement>(
+function lastElementOptional<Selected extends Element = HTMLElement>(
 	selectors: string | readonly string[],
 	baseElement?: ParentNode
 ): Selected | undefined;
-function lastElement<Selected extends Element>(
+function lastElementOptional<Selected extends Element>(
 	selectors: string | readonly string[],
 	baseElement?: ParentNode,
 ): Selected | undefined {
@@ -154,15 +154,15 @@ function countElements(
  * @param [baseElements]  The element or list of elements to look inside of
  * @return                An array of elements found
  */
-function $$<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
+function $$optional<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
 	selectors: Selector | readonly Selector[],
 	baseElements?: BaseElements
 ): Selected[];
-function $$<Selected extends Element = HTMLElement>(
+function $$optional<Selected extends Element = HTMLElement>(
 	selectors: string | readonly string[],
 	baseElements?: BaseElements
 ): Selected[];
-function $$<Selected extends Element>(
+function $$optional<Selected extends Element>(
 	selectors: string | readonly string[],
 	baseElements?: BaseElements,
 ): Selected[] {
@@ -192,15 +192,15 @@ function $$<Selected extends Element>(
  * @param [baseElements]  The element or list of elements to look inside of
  * @return                An array of elements found
  */
-function expectElements<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
+function $$<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
 	selectors: Selector | readonly Selector[],
 	baseElements?: BaseElements
 ): Selected[];
-function expectElements<Selected extends Element = HTMLElement>(
+function $$<Selected extends Element = HTMLElement>(
 	selectors: string | readonly string[],
 	baseElements?: BaseElements
 ): Selected[];
-function expectElements<Selected extends Element>(
+function $$<Selected extends Element>(
 	selectors: string | readonly string[],
 	baseElements?: BaseElements,
 ): Selected[] {
@@ -209,7 +209,7 @@ function expectElements<Selected extends Element>(
 		throw new ElementNotFoundError('Expected elements not found because the base is specified but null');
 	}
 
-	const elements = arguments.length === 2 ? $$<Selected>(selectors, baseElements) : $$<Selected>(selectors);
+	const elements = arguments.length === 2 ? $$optional<Selected>(selectors, baseElements) : $$optional<Selected>(selectors);
 	if (elements.length > 0) {
 		return elements;
 	}
@@ -222,15 +222,15 @@ function expectElements<Selected extends Element>(
  * @param [baseElement]  The element to look inside of
  * @return               The element found, or an error
  */
-function expectLastElement<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
+function lastElement<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
 	selectors: Selector | readonly Selector[],
 	baseElement?: ParentNode
 ): Selected;
-function expectLastElement<Selected extends Element = HTMLElement>(
+function lastElement<Selected extends Element = HTMLElement>(
 	selectors: string | readonly string[],
 	baseElement?: ParentNode
 ): Selected;
-function expectLastElement<Selected extends Element>(
+function lastElement<Selected extends Element>(
 	selectors: string | readonly string[],
 	baseElement?: ParentNode,
 ): Selected {
@@ -252,11 +252,10 @@ export {
 	$,
 	$$,
 	lastElement,
+	$optional,
+	$$optional,
+	lastElementOptional,
 	elementExists,
 	assertElementExists,
 	countElements,
-
-	expectElement,
-	expectElements,
-	expectLastElement,
 };

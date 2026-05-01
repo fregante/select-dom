@@ -13,19 +13,16 @@ npm install select-dom
 ```
 
 ```js
-import {$, $$, lastElement, elementExists, assertElementExists} from 'select-dom';
-
-// And a stricter version
-import {$, $optional} from 'select-dom/strict.js';
+import {$, $$, lastElement, elementExists, assertElementExists, $optional, $$optional, lastElementOptional} from 'select-dom';
 ```
 
 ## API
 
-**Note:** if a falsy value is passed as `baseElement`, you'll always get an empty result ([bd578b9](https://github.com/fregante/select-dom/commit/bd578b975e35d9f802cb43a900a6d3c83095c76a))
+**Note:** if a falsy value is passed as `baseElement`, `$`, `$$`, `lastElement` throw `ElementNotFoundError`, while `$optional`, `$$optional`, `lastElementOptional` return `undefined`/`[]` ([bd578b9](https://github.com/fregante/select-dom/commit/bd578b975e35d9f802cb43a900a6d3c83095c76a))
 
 ### `$(selector[, baseElement = document])`
 
-Maps to `baseElement.querySelector(selector)`, except it returns `undefined` if it's not found
+Maps to `baseElement.querySelector(selector)`, except it throws `ElementNotFoundError` if it's not found. For a non-throwing version, use `$optional`.
 ```js
 $('.foo a[href=bar]');
 // => <Element>
@@ -34,16 +31,20 @@ $('.foo a[href=bar]', baseElement);
 // => <Element>
 
 $('.non-existent', baseElement);
-// => undefined
+// => throws ElementNotFoundError
 ```
+
+### `$optional(selector[, baseElement = document])`
+
+Like `$()`, but returns `undefined` instead of throwing when the element is not found.
 
 ### `lastElement(selector[, baseElement = document])`
 
-Like `$()`, except that it returns the last matching item on the page instead of the first one.
+Like `$()`, except that it returns the last matching item on the page instead of the first one. Throws if no element is found. For a non-throwing version, use `lastElementOptional`.
 
 ### `elementExists(selector[, baseElement = document])`
 
-Tests the existence of one or more elements matching the selector. It's like `$()`, except it returns a `boolean`.
+Tests the existence of one or more elements matching the selector. It's like `$optional()`, except it returns a `boolean`.
 
 ```js
 elementExists('.foo a[href=bar]');
@@ -69,7 +70,7 @@ assertElementExists('.foo a[href=bar]', baseElement);
 
 ### `countElements(selector[, baseElement = document])`
 
-Counts the number of elements found on the page or in the base element. Just a shortcut over `$$(selector).length`
+Counts the number of elements found on the page or in the base element. Just a shortcut over `$$optional(selector).length`
 
 ```js
 countElements('a');
@@ -82,6 +83,7 @@ Maps to `baseElements.querySelectorAll(selector)` plus:
 
 - it always returns an array
 - `baseElements` can be a list of elements to query
+- throws `ElementNotFoundError` if no elements are found. For a non-throwing version, use `$$optional`.
 
 ```js
 $$('.foo');
@@ -95,12 +97,12 @@ $$('.foo', [baseElement1, baseElement2]);
 // This is similar to jQuery([baseElement1, baseElement2]).find('.foo')
 ```
 
-## /strict.js
+## Optional vs throwing selectors
 
-The strict export will throw an error if the element is not found, instead of returning `undefined`. This is also reflected in the types, which are non-nullable:
+`$`, `$$`, and `lastElement` throw when no element is found. Their `*optional` counterparts return `undefined` or `[]` instead:
 
 ```ts
-import {$, $optional, $$, $$optional, lastElement, lastElementOptional} from 'select-dom/strict.js';
+import {$, $optional, $$, $$optional, lastElement, lastElementOptional} from 'select-dom';
 
 const must: HTMLAnchorElement = $('.foo a[href=bar]');
 const optional: HTMLAnchorElement | undefined = $optional('.foo a[href=bar]');

@@ -1,39 +1,23 @@
 import {expectType} from 'tsd';
-import {$, $$, elementExists, assertElementExists, lastElement, expectElement, expectLastElement} from './index.js';
+import {$, $$, $optional, $$optional, elementExists, assertElementExists, lastElement, lastElementOptional} from './index.js';
 
 // `select-dom` defaults to HTMLElement where possible because it's the most common use case, even if technically this should not be HTMLElement.
 
 /**
- * SELECT
+ * SELECT (throws if not found)
  */
-expectType<HTMLElement | undefined>($('.wow'));
-expectType<HTMLAnchorElement | undefined>($('a.wow'));
-expectType<HTMLBaseElement | undefined>($('base'));
-expectType<SVGGElement | undefined>($('g'));
+expectType<HTMLElement>($('.wow'));
+expectType<HTMLAnchorElement>($('a.wow'));
+expectType<HTMLBaseElement>($('base'));
+expectType<SVGGElement>($('g'));
 
 /**
- * EXPECT
+ * LAST (throws if not found)
  */
-expectType<HTMLElement>(expectElement('.wow'));
-expectType<HTMLAnchorElement>(expectElement('a.wow'));
-expectType<HTMLBaseElement>(expectElement('base'));
-expectType<SVGGElement>(expectElement('g'));
-
-/**
- * LAST
- */
-expectType<HTMLElement | undefined>(lastElement('.wow'));
-expectType<HTMLAnchorElement | undefined>(lastElement('a.wow'));
-expectType<HTMLBaseElement | undefined>(lastElement('base'));
-expectType<SVGGElement | undefined>(lastElement('g'));
-
-/**
- * EXPECT LAST
- */
-expectType<HTMLElement>(expectLastElement('.wow'));
-expectType<HTMLAnchorElement>(expectLastElement('a.wow'));
-expectType<HTMLBaseElement>(expectLastElement('base'));
-expectType<SVGGElement>(expectLastElement('g'));
+expectType<HTMLElement>(lastElement('.wow'));
+expectType<HTMLAnchorElement>(lastElement('a.wow'));
+expectType<HTMLBaseElement>(lastElement('base'));
+expectType<SVGGElement>(lastElement('g'));
 
 /**
  * EXISTS
@@ -50,9 +34,19 @@ expectType<void>(assertElementExists('base'));
 expectType<void>(assertElementExists('g'));
 
 /**
- * ALL
+ * ALL (throws if none found)
  */
 expectType<HTMLElement[]>($$('.wow'));
 expectType<HTMLBaseElement[]>($$('base'));
 expectType<SVGGElement[]>($$('g'));
 expectType<HTMLAnchorElement[]>($$('a.wow'));
+
+/**
+ * OPTIONAL (return undefined/empty instead of throwing)
+ */
+expectType<HTMLElement | undefined>($optional('.wow'));
+expectType<HTMLAnchorElement | undefined>($optional('a.wow'));
+expectType<HTMLElement[]>($$optional('.wow'));
+expectType<HTMLAnchorElement[]>($$optional('a.wow'));
+expectType<HTMLElement | undefined>(lastElementOptional('.wow'));
+expectType<HTMLAnchorElement | undefined>(lastElementOptional('a.wow'));
