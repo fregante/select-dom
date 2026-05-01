@@ -40,6 +40,9 @@ import {
 $('.foo a[href=bar]');
 // => <Element>
 
+$('.non-existent');
+// throws ElementNotFoundError
+
 $optional('.non-existent');
 // => undefined
 ```
@@ -56,11 +59,14 @@ $$('.foo');
 $$('.foo', baseElement);
 // => [<Element>, <Element>, <Element>]
 
-$$optional('.non-existent');
-// => []
-
 $$('.foo', [baseElement1, baseElement2]);
 // => [<Element>, <Element>, <Element>]
+
+$$('.non-existent');
+// throws ElementNotFoundError
+
+$$optional('.non-existent');
+// => []
 ```
 
 ### `lastElement`
@@ -71,6 +77,9 @@ Like `$`/`$optional`, except they return the last matching element instead of th
 ```js
 lastElement('.foo');
 // => <Element>
+
+lastElement('.non-existent');
+// throws ElementNotFoundError
 
 lastElementOptional('.non-existent');
 // => undefined
@@ -87,6 +96,9 @@ $closest('button', event.target);
 
 $closest('button', button.firstChild); // text nodes are supported
 // => <button>
+
+$closest('.non-existent', element);
+// throws ElementNotFoundError
 
 $closestOptional('.non-existent', element);
 // => undefined
