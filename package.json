@@ -1,6 +1,6 @@
 {
 	"name": "select-dom",
-	"version": "10.0.0-0",
+	"version": "10.0.0",
 	"description": "Lightweight querySelector/All/closest wrapper that returns an array and optionally throws if elements are not found",
 	"keywords": [
 		"alternative",
