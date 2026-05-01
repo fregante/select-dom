@@ -1,5 +1,5 @@
 import test from 'tape';
-import {$, $$, $optional, lastElement, elementExists, assertElementExists, ElementNotFoundError} from './index.js';
+import {$, $$, $optional, $closest, $closestOptional, lastElement, elementExists, assertElementExists, ElementNotFoundError} from './index.js';
 
 document.body.innerHTML = `
 	<ul>
@@ -139,4 +139,63 @@ test('counts elements', t => {
 	t.plan(1);
 
 	t.equal($$('ul li').length, 5);
+});
+
+test('$closest finds closest ancestor', t => {
+	t.plan(1);
+
+	const li = $('ul li');
+	t.equal($closest('ul', li), $('ul'));
+});
+
+test('$closest finds self', t => {
+	t.plan(1);
+
+	const ul = $('ul');
+	t.equal($closest('ul', ul), ul);
+});
+
+test('$closest works with text node', t => {
+	t.plan(1);
+
+	const li = $('ul li');
+	t.equal($closest('ul', li.firstChild), $('ul'));
+});
+
+test('$closest throws if not found', t => {
+	t.plan(1);
+
+	t.throws(() => $closest('section', $('ul li')), error => error instanceof ElementNotFoundError);
+});
+
+test('$closest throws with null base', t => {
+	t.plan(1);
+
+	t.throws(() => $closest('ul', $optional('lololol')), error => error instanceof ElementNotFoundError);
+});
+
+test('$closestOptional finds closest ancestor', t => {
+	t.plan(1);
+
+	const li = $('ul li');
+	t.equal($closestOptional('ul', li), $('ul'));
+});
+
+test('$closestOptional works with text node', t => {
+	t.plan(1);
+
+	const li = $('ul li');
+	t.equal($closestOptional('ul', li.firstChild), $('ul'));
+});
+
+test('$closestOptional returns undefined if not found', t => {
+	t.plan(1);
+
+	t.equal($closestOptional('section', $('ul li')), undefined);
+});
+
+test('$closestOptional returns undefined with null base', t => {
+	t.plan(1);
+
+	t.equal($closestOptional('ul', $optional('lololol')), undefined);
 });

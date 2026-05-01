@@ -218,6 +218,61 @@ function $$<Selected extends Element>(
 }
 
 /**
+ * @param selectors   One or more CSS selectors separated by commas
+ * @param baseElement The element to start searching from (text nodes are supported)
+ * @return            The closest ancestor element found, if any
+ */
+function $closestOptional<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
+	selectors: Selector | readonly Selector[],
+	baseElement?: Node
+): Selected | undefined;
+function $closestOptional<Selected extends Element = HTMLElement>(
+	selectors: string | readonly string[],
+	baseElement?: Node
+): Selected | undefined;
+function $closestOptional<Selected extends Element>(
+	selectors: string | readonly string[],
+	baseElement?: Node,
+): Selected | undefined {
+	if (!baseElement) {
+		return undefined;
+	}
+
+	const element = baseElement instanceof Element ? baseElement : baseElement.parentElement;
+	return element?.closest<Selected>(String(selectors)) ?? undefined;
+}
+
+/**
+ * @param selectors   One or more CSS selectors separated by commas
+ * @param baseElement The element to start searching from (text nodes are supported)
+ * @return            The closest ancestor element found, or an error
+ */
+function $closest<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
+	selectors: Selector | readonly Selector[],
+	baseElement?: Node
+): Selected;
+function $closest<Selected extends Element = HTMLElement>(
+	selectors: string | readonly string[],
+	baseElement?: Node
+): Selected;
+function $closest<Selected extends Element>(
+	selectors: string | readonly string[],
+	baseElement?: Node,
+): Selected {
+	if (!baseElement) {
+		throw new ElementNotFoundError('Expected closest element not found because the base is specified but null');
+	}
+
+	const element = baseElement instanceof Element ? baseElement : baseElement.parentElement;
+	const found = element?.closest<Selected>(String(selectors));
+	if (found) {
+		return found;
+	}
+
+	throw new ElementNotFoundError(`Expected closest element not found: ${String(selectors)}`);
+}
+
+/**
  * @param selectors      One or more CSS selectors separated by commas
  * @param [baseElement]  The element to look inside of
  * @return               The element found, or an error
@@ -251,9 +306,11 @@ function lastElement<Selected extends Element>(
 export {
 	$,
 	$$,
+	$closest,
 	lastElement,
 	$optional,
 	$$optional,
+	$closestOptional,
 	lastElementOptional,
 	elementExists,
 	assertElementExists,

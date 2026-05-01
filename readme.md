@@ -13,7 +13,7 @@ npm install select-dom
 ```
 
 ```js
-import {$, $$, lastElement, elementExists, assertElementExists, $optional, $$optional, lastElementOptional} from 'select-dom';
+import {$, $$, lastElement, elementExists, assertElementExists, $optional, $$optional, lastElementOptional, $closest, $closestOptional} from 'select-dom';
 ```
 
 ## API
@@ -67,6 +67,25 @@ assertElementExists('.foo a[href=bar]', baseElement);
 // => void (if element exists)
 // => throws ElementNotFoundError (if element doesn't exist)
 ```
+
+### `$closest(selector, baseElement)`
+
+Maps to `baseElement.closest(selector)`, except it throws `ElementNotFoundError` if it's not found. Unlike the native `.closest()`, `baseElement` can be any `Node` including text nodes. For a non-throwing version, use `$closestOptional`.
+
+```js
+$closest('button', event.target);
+// => <button>
+
+$closest('button', button.firstChild); // text nodes are supported
+// => <button>
+
+$closest('.non-existent', element);
+// => throws ElementNotFoundError
+```
+
+### `$closestOptional(selector, baseElement)`
+
+Like `$closest()`, but returns `undefined` instead of throwing when the element is not found.
 
 ### `countElements(selector[, baseElement = document])`
 
