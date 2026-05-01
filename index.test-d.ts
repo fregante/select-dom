@@ -1,5 +1,5 @@
 import {expectType} from 'tsd';
-import {$, $$, $optional, $$optional, elementExists, assertElementExists, lastElement, lastElementOptional} from './index.js';
+import {$, $$, $optional, $$optional, elementExists, assertElementExists, lastElement, lastElementOptional, $closest, $closestOptional} from './index.js';
 
 // `select-dom` defaults to HTMLElement where possible because it's the most common use case, even if technically this should not be HTMLElement.
 
@@ -50,3 +50,17 @@ expectType<HTMLElement[]>($$optional('.wow'));
 expectType<HTMLAnchorElement[]>($$optional('a.wow'));
 expectType<HTMLElement | undefined>(lastElementOptional('.wow'));
 expectType<HTMLAnchorElement | undefined>(lastElementOptional('a.wow'));
+
+/**
+ * CLOSEST (throws if not found)
+ */
+expectType<HTMLElement>($closest('.wow', document.body));
+expectType<HTMLAnchorElement>($closest('a.wow', document.body));
+expectType<HTMLBaseElement>($closest('base', document.body));
+expectType<SVGGElement>($closest('g', document.body));
+
+/**
+ * CLOSEST OPTIONAL (returns undefined if not found)
+ */
+expectType<HTMLElement | undefined>($closestOptional('.wow', document.body));
+expectType<HTMLAnchorElement | undefined>($closestOptional('a.wow', document.body));
