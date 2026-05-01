@@ -220,7 +220,7 @@ function $$<Selected extends Element>(
 /**
  * @param selectors   One or more CSS selectors separated by commas
  * @param baseElement The element to start searching from (text nodes are supported)
- * @return            The closest ancestor element found, if any
+ * @return            The closest matching element (including self) found, if any
  */
 function $closestOptional<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
 	selectors: Selector | readonly Selector[],
@@ -245,7 +245,7 @@ function $closestOptional<Selected extends Element>(
 /**
  * @param selectors   One or more CSS selectors separated by commas
  * @param baseElement The element to start searching from (text nodes are supported)
- * @return            The closest ancestor element found, or an error
+ * @return            The closest matching element (including self) found, or an error
  */
 function $closest<Selector extends string, Selected extends Element = ParseSelector<Selector, HTMLElement>>(
 	selectors: Selector | readonly Selector[],
@@ -260,7 +260,7 @@ function $closest<Selected extends Element>(
 	baseElement?: Node,
 ): Selected {
 	if (!baseElement) {
-		throw new ElementNotFoundError('Expected closest element not found because the base is specified but null');
+		throw new ElementNotFoundError('Expected closest element not found: base element is null or undefined');
 	}
 
 	const element = baseElement instanceof Element ? baseElement : baseElement.parentElement;
