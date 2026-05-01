@@ -4,7 +4,7 @@
 [badge-downloads]: https://img.shields.io/npm/dt/select-dom.svg
 [link-npm]: https://www.npmjs.com/package/select-dom
 
-> Lightweight `querySelector`/`All` wrapper that outputs an Array
+> Lightweight `querySelector`/`All`/`closest` wrapper that returns an array and optionally throws if elements are not found
 
 ## Install
 
