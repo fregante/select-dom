@@ -13,7 +13,18 @@ npm install select-dom
 ```
 
 ```js
-import {$, $$, lastElement, elementExists, assertElementExists, $optional, $$optional, lastElementOptional, $closest, $closestOptional} from 'select-dom';
+import {
+	$,
+	$$,
+	lastElement,
+	elementExists,
+	assertElementExists,
+	$optional,
+	$$optional,
+	lastElementOptional,
+	$closest,
+	$closestOptional,
+} from 'select-dom';
 ```
 
 ## API
