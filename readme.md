@@ -4,7 +4,7 @@
 [badge-downloads]: https://img.shields.io/npm/dt/select-dom.svg
 [link-npm]: https://www.npmjs.com/package/select-dom
 
-> Lightweight `querySelector`/`All` wrapper that outputs an Array
+> Lightweight `querySelector`/`All`/`closest` wrapper that returns an array and optionally throws if elements are not found
 
 ## Install
 
@@ -31,89 +31,26 @@ import {
 
 **Note:** if a falsy value is passed as `baseElement`, `$`, `$$`, `lastElement` throw `ElementNotFoundError`, while `$optional`, `$$optional`, `lastElementOptional` return `undefined`/`[]` ([bd578b9](https://github.com/fregante/select-dom/commit/bd578b975e35d9f802cb43a900a6d3c83095c76a))
 
-### `$(selector[, baseElement = document])`
+### `$`
+### `$optional`
 
-Maps to `baseElement.querySelector(selector)`, except it throws `ElementNotFoundError` if it's not found. For a non-throwing version, use `$optional`.
+`$` maps to `baseElement.querySelector(selector)`, except it throws `ElementNotFoundError` if no element is found. `$optional` returns `undefined` instead of throwing.
+
 ```js
 $('.foo a[href=bar]');
 // => <Element>
 
-$('.foo a[href=bar]', baseElement);
-// => <Element>
+$('.non-existent');
+// throws ElementNotFoundError
 
-$('.non-existent', baseElement);
-// => throws ElementNotFoundError
+$optional('.non-existent');
+// => undefined
 ```
 
-### `$optional(selector[, baseElement = document])`
+### `$$`
+### `$$optional`
 
-Like `$()`, but returns `undefined` instead of throwing when the element is not found.
-
-### `lastElement(selector[, baseElement = document])`
-
-Like `$()`, except that it returns the last matching item on the page instead of the first one. Throws if no element is found. For a non-throwing version, use `lastElementOptional`.
-
-### `elementExists(selector[, baseElement = document])`
-
-Tests the existence of one or more elements matching the selector. It's like `$optional()`, except it returns a `boolean`.
-
-```js
-elementExists('.foo a[href=bar]');
-// => true/false
-
-elementExists('.foo a[href=bar]', baseElement);
-// => true/false
-```
-
-### `assertElementExists(selector[, baseElement = document])`
-
-Like `elementExists()`, but instead of returning `true`/`false`, it returns `void` or throws an error if the element is not found.
-
-```js
-assertElementExists('.foo a[href=bar]');
-// => void (if element exists)
-// => throws ElementNotFoundError (if element doesn't exist)
-
-assertElementExists('.foo a[href=bar]', baseElement);
-// => void (if element exists)
-// => throws ElementNotFoundError (if element doesn't exist)
-```
-
-### `$closest(selector, baseElement)`
-
-Maps to `baseElement.closest(selector)`, except it throws `ElementNotFoundError` if it's not found. Unlike the native `.closest()`, `baseElement` can be any `Node` including text nodes. For a non-throwing version, use `$closestOptional`.
-
-```js
-$closest('button', event.target);
-// => <button>
-
-$closest('button', button.firstChild); // text nodes are supported
-// => <button>
-
-$closest('.non-existent', element);
-// => throws ElementNotFoundError
-```
-
-### `$closestOptional(selector, baseElement)`
-
-Like `$closest()`, but returns `undefined` instead of throwing when the element is not found.
-
-### `countElements(selector[, baseElement = document])`
-
-Counts the number of elements found on the page or in the base element. Just a shortcut over `$$optional(selector).length`
-
-```js
-countElements('a');
-// => 3
-```
-
-### `$$(selector[, baseElements = document])`
-
-Maps to `baseElements.querySelectorAll(selector)` plus:
-
-- it always returns an array
-- `baseElements` can be a list of elements to query
-- throws `ElementNotFoundError` if no elements are found. For a non-throwing version, use `$$optional`.
+`$$` maps to `baseElements.querySelectorAll(selector)` and always returns an array. `baseElements` can also be an array of elements to search within. Throws `ElementNotFoundError` if no elements are found. `$$optional` returns `[]` instead of throwing.
 
 ```js
 $$('.foo');
@@ -124,26 +61,75 @@ $$('.foo', baseElement);
 
 $$('.foo', [baseElement1, baseElement2]);
 // => [<Element>, <Element>, <Element>]
-// This is similar to jQuery([baseElement1, baseElement2]).find('.foo')
+
+$$('.non-existent');
+// throws ElementNotFoundError
+
+$$optional('.non-existent');
+// => []
 ```
 
-## Optional vs throwing selectors
+### `lastElement`
+### `lastElementOptional`
 
-`$`, `$$`, and `lastElement` throw when no element is found. Their `*optional` counterparts return `undefined` or `[]` instead:
+Like `$`/`$optional`, except they return the last matching element instead of the first.
 
-```ts
-import {$, $optional, $$, $$optional, lastElement, lastElementOptional} from 'select-dom';
+```js
+lastElement('.foo');
+// => <Element>
 
-const must: HTMLAnchorElement = $('.foo a[href=bar]');
-const optional: HTMLAnchorElement | undefined = $optional('.foo a[href=bar]');
+lastElement('.non-existent');
+// throws ElementNotFoundError
 
+lastElementOptional('.non-existent');
+// => undefined
+```
 
-const oneOrMore: HTMLAnchorElement[] = $$('.foo a[href=bar]');
-const zeroOrMore: HTMLAnchorElement[] = $$optional('.foo a[href=bar]');
+### `$closest`
+### `$closestOptional`
 
+Like `element.closest(selector)`, except `baseElement` can be any `Node` including text nodes. `$closest` throws `ElementNotFoundError` if not found; `$closestOptional` returns `undefined`.
 
-const last: HTMLAnchorElement = lastElement('.foo a[href=bar]');
-const lastOptional: HTMLAnchorElement | undefined = lastElementOptional('.foo a[href=bar]');
+```js
+$closest('button', event.target);
+// => <button>
+
+$closest('button', button.firstChild); // text nodes are supported
+// => <button>
+
+$closest('.non-existent', element);
+// throws ElementNotFoundError
+
+$closestOptional('.non-existent', element);
+// => undefined
+```
+
+### `elementExists`
+
+Tests the existence of one or more elements. Like `$optional()`, but returns a `boolean`.
+
+```js
+elementExists('.foo a[href=bar]');
+// => true/false
+```
+
+### `assertElementExists`
+
+Like `elementExists()`, but throws `ElementNotFoundError` instead of returning `false`.
+
+```js
+assertElementExists('.foo a[href=bar]');
+// => void (if element exists)
+// => throws ElementNotFoundError (if element doesn't exist)
+```
+
+### `countElements`
+
+Counts the number of elements found. Shortcut for `$$optional(selector).length`.
+
+```js
+countElements('a');
+// => 3
 ```
 
 ## Related
