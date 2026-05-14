@@ -18,13 +18,22 @@
 	"author": "Federico Brigante <me@fregante.com> (https://fregante.com)",
 	"type": "module",
 	"exports": {
-		".": "./index.js"
+		".": {
+			"types": "./index.d.ts",
+			"default": "./index.js"
+		},
+		"./eslint-plugin": {
+			"types": "./eslint-plugin.d.ts",
+			"default": "./eslint-plugin.js"
+		}
 	},
 	"main": "./index.js",
 	"types": "./index.d.ts",
 	"files": [
 		"index.js",
-		"index.d.ts"
+		"index.d.ts",
+		"eslint-plugin.js",
+		"eslint-plugin.d.ts"
 	],
 	"scripts": {
 		"build": "tsc",
