@@ -90,12 +90,12 @@ const preferSelectDom = {
 					messageId: 'useSelectDom',
 					data: {replacement, method: methodName},
 					fix(fixer) {
-						const arguments_ = node.arguments.map(argument => sourceCode.getText(argument));
+						const callArguments = node.arguments.map(argument => sourceCode.getText(argument));
 						if (!isGlobalDocument) {
-							arguments_.push(sourceCode.getText(object));
+							callArguments.push(sourceCode.getText(object));
 						}
 
-						return fixer.replaceText(node, `${replacement}(${arguments_.join(', ')})`);
+						return fixer.replaceText(node, `${replacement}(${callArguments.join(', ')})`);
 					},
 				});
 			},
