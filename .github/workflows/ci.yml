@@ -24,11 +24,11 @@ jobs:
 
   Test:
     runs-on: ubuntu-latest
+    # Browser tape-run remains disabled in CI; this job now covers the ESLint RuleTester suite.
     # https://github.com/tape-testing/tape-run/issues/94
-    if: false
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
       - run: npm install
       - run: npm run build
-      - run: npm run test:tape
+      - run: npm run test:eslint-plugin

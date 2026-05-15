@@ -27,6 +27,8 @@ import {
 } from 'select-dom';
 ```
 
+The package also includes an ESLint plugin entry point at `select-dom/eslint-plugin`; [read documentation](#eslint).
+
 ## API
 
 **Note:** if a falsy value is passed as `baseElement`, `$`, `$$`, `lastElement` throw `ElementNotFoundError`, while `$optional`, `$$optional`, `lastElementOptional` return `undefined`/`[]` ([bd578b9](https://github.com/fregante/select-dom/commit/bd578b975e35d9f802cb43a900a6d3c83095c76a))
@@ -130,6 +132,44 @@ Counts the number of elements found. Shortcut for `$$optional(selector).length`.
 ```js
 countElements('a');
 // => 3
+```
+
+## ESLint
+
+`select-dom/eslint-plugin` includes the `select-dom/prefer` rule, which autofixes `.querySelector()`, `.querySelectorAll()`, and `.closest()` calls to the matching `select-dom` helpers.
+
+```js
+import selectDom from 'select-dom/eslint-plugin';
+
+export default [
+	{
+		plugins: {
+			'select-dom': selectDom,
+		},
+		rules: {
+			'select-dom/prefer': 'error',
+		},
+	},
+];
+```
+
+By default, the rule reports all supported calls. To keep readability exceptions like `element.firstChild.querySelector(selector)`, enable `allowReadabilityExceptions`.
+
+```js
+import selectDom from 'select-dom/eslint-plugin';
+
+export default [
+	{
+		plugins: {
+			'select-dom': selectDom,
+		},
+		rules: {
+			'select-dom/prefer': ['error', {
+				allowReadabilityExceptions: true,
+			}],
+		},
+	},
+];
 ```
 
 ## Related

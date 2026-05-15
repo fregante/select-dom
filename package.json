@@ -18,18 +18,28 @@
 	"author": "Federico Brigante <me@fregante.com> (https://fregante.com)",
 	"type": "module",
 	"exports": {
-		".": "./index.js"
+		".": {
+			"types": "./index.d.ts",
+			"default": "./index.js"
+		},
+		"./eslint-plugin": {
+			"types": "./eslint-plugin.d.ts",
+			"default": "./eslint-plugin.js"
+		}
 	},
 	"main": "./index.js",
 	"types": "./index.d.ts",
 	"files": [
 		"index.js",
-		"index.d.ts"
+		"index.d.ts",
+		"eslint-plugin.js",
+		"eslint-plugin.d.ts"
 	],
 	"scripts": {
 		"build": "tsc",
 		"prepack": "tsc --sourceMap false",
-		"test": "tsc && tsd && xo && npm run test:tape",
+		"test": "tsc && tsd && xo && npm run test:eslint-plugin && npm run test:tape",
+		"test:eslint-plugin": "node --test eslint-plugin.test.js",
 		"test:tape": "browserify -p esmify test.js | tape-run",
 		"watch": "tsc --watch"
 	},
@@ -42,6 +52,7 @@
 		"typed-query-selector": "^2.11.0"
 	},
 	"devDependencies": {
+		"@typescript-eslint/parser": "^6.21.0",
 		"@sindresorhus/tsconfig": "^5.0.0",
 		"browserify": "^17.0.0",
 		"esmify": "^2.1.1",
