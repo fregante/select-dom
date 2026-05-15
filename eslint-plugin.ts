@@ -111,11 +111,12 @@ function getImportEdit(
 			const defaultSpecifiers = selectDomImport.specifiers
 				.filter(specifier => specifier.type !== AST_NODE_TYPES.ImportSpecifier)
 				.map(specifier => sourceCode.getText(specifier));
-			const namedSpecifiers = selectDomImport.specifiers
-				.filter((specifier): specifier is TSESTree.ImportSpecifier => specifier.type === AST_NODE_TYPES.ImportSpecifier)
-				.map(specifier => sourceCode.getText(specifier));
-
-			namedSpecifiers.push(method);
+			const namedSpecifiers = [
+				...selectDomImport.specifiers
+					.filter((specifier): specifier is TSESTree.ImportSpecifier => specifier.type === AST_NODE_TYPES.ImportSpecifier)
+					.map(specifier => sourceCode.getText(specifier)),
+				method,
+			];
 
 			return {
 				range: selectDomImport.range,
@@ -138,9 +139,10 @@ function getImportEdit(
 	}
 
 	const firstStatement = program.body[0];
+	const insertionIndex = firstStatement?.range[0] ?? 0;
 
 	return {
-		range: [firstStatement?.range[0] ?? 0, firstStatement?.range[0] ?? 0],
+		range: [insertionIndex, insertionIndex],
 		text: `${importText}\n`,
 	};
 }
