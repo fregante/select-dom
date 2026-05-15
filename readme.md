@@ -146,7 +146,9 @@ export default [
 		plugins: {
 			'select-dom': selectDom,
 		},
-		extends: ['select-dom/prefer'],
+		rules: {
+			'select-dom/prefer': 'error',
+		},
 	},
 ];
 ```
@@ -161,7 +163,6 @@ export default [
 		plugins: {
 			'select-dom': selectDom,
 		},
-		extends: ['select-dom/prefer'],
 		rules: {
 			'select-dom/prefer': ['error', {
 				allowReadabilityExceptions: true,

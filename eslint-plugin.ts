@@ -1,81 +1,169 @@
+import type {TSESLint, TSESTree} from '@typescript-eslint/utils';
+import {AST_NODE_TYPES} from '@typescript-eslint/utils';
+
 export type PreferSelectDomRuleOptions = {
 	allowReadabilityExceptions?: boolean;
 };
 
-type TextNode = {
+type MessageIds = 'useSelectDom';
+type Options = [PreferSelectDomRuleOptions?];
+
+const querySelectorListener = 'CallExpression[callee.type=MemberExpression]:matches([callee.property.name=querySelector], [callee.property.name=querySelectorAll])';
+const closestListener = 'CallExpression[callee.type=MemberExpression][callee.property.name=closest]';
+
+const importSource = 'select-dom';
+
+function getParentSkippingChainExpression(node: TSESTree.Node): TSESTree.Node | undefined {
+	return node.parent?.type === AST_NODE_TYPES.ChainExpression
+		? node.parent.parent
+		: node.parent;
+}
+
+function getMemberExpression(node: TSESTree.CallExpression): TSESTree.MemberExpression | undefined {
+	return node.callee.type === AST_NODE_TYPES.MemberExpression ? node.callee : undefined;
+}
+
+function getGlobalDocumentScope(
+	sourceCode: TSESLint.SourceCode,
+	node: TSESTree.Node,
+	object: TSESTree.Expression,
+): boolean {
+	if (
+		object.type !== AST_NODE_TYPES.Identifier
+		|| object.name !== 'document'
+	) {
+		return false;
+	}
+
+	let scope = sourceCode.getScope?.(node);
+	while (scope) {
+		if (scope.variables.some(variable => variable.name === 'document')) {
+			return false;
+		}
+
+		scope = scope.upper ?? undefined;
+	}
+
+	return true;
+}
+
+function getLastImportDeclaration(program: TSESTree.Program): TSESTree.ImportDeclaration | undefined {
+	let lastImportDeclaration: TSESTree.ImportDeclaration | undefined;
+
+	for (const statement of program.body) {
+		if (statement.type === AST_NODE_TYPES.ImportDeclaration) {
+			lastImportDeclaration = statement;
+		}
+	}
+
+	return lastImportDeclaration;
+}
+
+type TextEdit = {
+	range: TSESTree.Range;
 	text: string;
 };
 
-type Scope = {
-	variables: Array<{
-		name: string;
-	}>;
-	upper?: Scope;
-};
+function applyTextEdits(source: string, edits: TextEdit[]): string {
+	return [...edits]
+		.sort((a, b) => b.range[0] - a.range[0])
+		.reduce(
+			(text, edit) => text.slice(0, edit.range[0]) + edit.text + text.slice(edit.range[1]),
+			source,
+		);
+}
 
-type ParentNode = {
-	type?: string;
-	parent?: ParentNode;
-};
+function getImportEdit(
+	sourceCode: TSESLint.SourceCode,
+	method: string,
+): TextEdit | undefined {
+	const program = sourceCode.ast;
+	const selectDomImport = program.body.find(
+		statement =>
+			statement.type === AST_NODE_TYPES.ImportDeclaration
+			&& statement.importKind !== 'type'
+			&& statement.source.value === importSource,
+	);
 
-type ReceiverNode = TextNode & (
-	| {
-		type: 'Identifier';
-		name: string;
+	if (selectDomImport?.type === AST_NODE_TYPES.ImportDeclaration) {
+		const hasMatchingLocalImport = selectDomImport.specifiers.some(
+			specifier =>
+				specifier.type === AST_NODE_TYPES.ImportSpecifier
+				&& specifier.local.name === method,
+		);
+
+		if (hasMatchingLocalImport) {
+			return;
+		}
+
+		const hasNamespaceImport = selectDomImport.specifiers.some(
+			specifier => specifier.type === AST_NODE_TYPES.ImportNamespaceSpecifier,
+		);
+
+		if (!hasNamespaceImport) {
+			const defaultSpecifiers = selectDomImport.specifiers
+				.filter(specifier => specifier.type !== AST_NODE_TYPES.ImportSpecifier)
+				.map(specifier => sourceCode.getText(specifier));
+			const namedSpecifiers = selectDomImport.specifiers
+				.filter((specifier): specifier is TSESTree.ImportSpecifier => specifier.type === AST_NODE_TYPES.ImportSpecifier)
+				.map(specifier => sourceCode.getText(specifier));
+
+			namedSpecifiers.push(method);
+
+			return {
+				range: selectDomImport.range,
+				text: `import ${[
+					...defaultSpecifiers,
+					`{${namedSpecifiers.join(', ')}}`,
+				].join(', ')} from '${importSource}';`,
+			};
+		}
 	}
-	| {
-		type: 'ThisExpression';
+
+	const importText = `import {${method}} from '${importSource}';`;
+	const lastImportDeclaration = getLastImportDeclaration(program);
+
+	if (lastImportDeclaration) {
+		return {
+			range: [lastImportDeclaration.range[1], lastImportDeclaration.range[1]],
+			text: `\n${importText}`,
+		};
 	}
-	| {
-		type: string;
+
+	const firstStatement = program.body[0];
+
+	return {
+		range: [firstStatement?.range[0] ?? 0, firstStatement?.range[0] ?? 0],
+		text: `${importText}\n`,
+	};
+}
+
+function getFixedOutput(
+	sourceCode: TSESLint.SourceCode,
+	node: TSESTree.Node,
+	replacementText: string,
+	method: string,
+): string | undefined {
+	if (sourceCode.ast.sourceType !== 'module') {
+		return;
 	}
-);
 
-type CallExpressionNode = {
-	callee: {
-		object: ReceiverNode;
-		property: {
-			name: 'closest' | 'querySelector' | 'querySelectorAll';
-		};
-	};
-	arguments: TextNode[];
-	parent?: ParentNode;
-};
+	const edits: TextEdit[] = [
+		{
+			range: node.range,
+			text: replacementText,
+		},
+	];
+	const importEdit = getImportEdit(sourceCode, method);
+	if (importEdit) {
+		edits.push(importEdit);
+	}
 
-type Fixer = {
-	replaceText(node: CallExpressionNode | ParentNode, text: string): unknown;
-};
+	return applyTextEdits(sourceCode.text, edits);
+}
 
-type RuleContext = {
-	options?: [PreferSelectDomRuleOptions?];
-	sourceCode: {
-		getText(node: TextNode | ReceiverNode): string;
-		getScope(node: CallExpressionNode): Scope | undefined;
-	};
-	report(descriptor: {
-		node: CallExpressionNode;
-		messageId: 'useSelectDom';
-		data: {
-			replacement: string;
-			method: string;
-		};
-		fix(fixer: Fixer): unknown;
-	}): void;
-};
-
-type RuleModule = {
-	meta: {
-		type: 'suggestion';
-		fixable: 'code';
-		messages: {
-			useSelectDom: string;
-		};
-		schema: Array<Record<string, unknown>>;
-	};
-	create(context: RuleContext): Record<string, (node: CallExpressionNode) => void>;
-};
-
-const preferSelectDom: RuleModule = {
+const preferSelectDom: TSESLint.RuleModule<MessageIds, Options> = {
+	defaultOptions: [{}],
 	meta: {
 		type: 'suggestion',
 		fixable: 'code',
@@ -96,82 +184,97 @@ const preferSelectDom: RuleModule = {
 	},
 	create(context) {
 		const {sourceCode} = context;
-		const [{allowReadabilityExceptions = false} = {}] = context.options ?? [];
-		const listeners: Record<string, (node: CallExpressionNode) => void> = {};
+		const [{allowReadabilityExceptions = false} = {}] = context.options;
+		const listeners: TSESLint.RuleListener = {};
 
-		// X.closest(sel) → $closest(sel, x) or $closestOptional(sel, x)
-		listeners['CallExpression[callee.type=MemberExpression][callee.property.name=closest]'] = node => {
-			const {object} = node.callee;
+		listeners[closestListener] = (node: TSESTree.Node) => {
+			if (node.type !== AST_NODE_TYPES.CallExpression) {
+				return;
+			}
 
-			// Determine parent, skipping over ChainExpression wrappers
-			const parent = node.parent?.type === 'ChainExpression' ? node.parent.parent : node.parent;
+			const memberExpression = getMemberExpression(node);
+			if (!memberExpression) {
+				return;
+			}
 
-			const isNonNull = parent?.type === 'TSNonNullExpression';
+			const parent = getParentSkippingChainExpression(node);
+			const isNonNull = parent?.type === AST_NODE_TYPES.TSNonNullExpression;
 			const replacement = isNonNull ? '$closest' : '$closestOptional';
-
-			// The node to replace: for non-null, replace the whole `x.closest(sel)!`; otherwise just the call
 			const nodeToReplace = isNonNull ? parent : node;
+			const selector = node.arguments[0];
+			if (!selector) {
+				return;
+			}
 
 			context.report({
 				node,
 				messageId: 'useSelectDom',
 				data: {replacement, method: 'closest'},
 				fix(fixer) {
-					const selector = sourceCode.getText(node.arguments[0]!);
-					const objectText = sourceCode.getText(object);
-					return fixer.replaceText(nodeToReplace, `${replacement}(${selector}, ${objectText})`);
+					const objectText = sourceCode.getText(memberExpression.object);
+					const output = getFixedOutput(
+						sourceCode,
+						nodeToReplace,
+						`${replacement}(${sourceCode.getText(selector)}, ${objectText})`,
+						replacement,
+					);
+
+					return output
+						? fixer.replaceTextRange([0, sourceCode.text.length], output)
+						: null;
 				},
 			});
 		};
 
-		listeners['CallExpression[callee.type=MemberExpression]:matches([callee.property.name=querySelector], [callee.property.name=querySelectorAll])'] = node => {
-			const {object} = node.callee;
+		listeners[querySelectorListener] = (node: TSESTree.Node) => {
+			if (node.type !== AST_NODE_TYPES.CallExpression) {
+				return;
+			}
+
+			const memberExpression = getMemberExpression(node);
+			if (!memberExpression) {
+				return;
+			}
+
+			const {object} = memberExpression;
 			if (
 				allowReadabilityExceptions
-				&& object.type !== 'Identifier'
-				&& object.type !== 'ThisExpression'
+				&& object.type !== AST_NODE_TYPES.Identifier
+				&& object.type !== AST_NODE_TYPES.ThisExpression
 			) {
 				return;
 			}
 
-			const methodName = node.callee.property.name;
-			const isQueryAll = methodName === 'querySelectorAll';
-			const replacement = isQueryAll ? '$$' : '$';
+			const {property} = memberExpression;
+			if (
+				memberExpression.computed
+				|| property.type !== AST_NODE_TYPES.Identifier
+			) {
+				return;
+			}
 
-			// Treat `document` as global only if it's not shadowed by a local variable
-			const isGlobalDocument = (() => {
-				if (
-					object.type !== 'Identifier'
-					|| !('name' in object)
-					|| object.name !== 'document'
-				) {
-					return false;
-				}
-
-				// Walk up the scope chain to check for a local `document` binding
-				let scope = sourceCode.getScope(node);
-				while (scope) {
-					if (scope.variables.some(variable => variable.name === 'document')) {
-						return false;
-					}
-
-					scope = scope.upper;
-				}
-
-				return true;
-			})();
+			const {name: method} = property;
+			const replacement = method === 'querySelectorAll' ? '$$' : '$';
+			const callArguments = node.arguments.map(argument => sourceCode.getText(argument));
+			if (!getGlobalDocumentScope(sourceCode, node, object)) {
+				callArguments.push(sourceCode.getText(object));
+			}
 
 			context.report({
 				node,
 				messageId: 'useSelectDom',
-				data: {replacement, method: methodName},
+				data: {replacement, method},
 				fix(fixer) {
-					const callArguments = node.arguments.map(argument => sourceCode.getText(argument));
-					if (!isGlobalDocument) {
-						callArguments.push(sourceCode.getText(object));
-					}
+					const output = getFixedOutput(
+						sourceCode,
+						node,
+						`${replacement}(${callArguments.join(', ')})`,
+						replacement,
+					);
 
-					return fixer.replaceText(node, `${replacement}(${callArguments.join(', ')})`);
+					return output
+						? fixer.replaceTextRange([0, sourceCode.text.length], output)
+						: null;
 				},
 			});
 		};
@@ -180,14 +283,11 @@ const preferSelectDom: RuleModule = {
 	},
 };
 
-const plugin = {
-	configs: {
-		prefer: {
-			rules: {
-				'select-dom/prefer': 'error',
-			},
-		},
-	},
+const plugin: {
+	rules: {
+		prefer: unknown;
+	};
+} = {
 	rules: {
 		prefer: preferSelectDom,
 	},
