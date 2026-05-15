@@ -24,6 +24,7 @@ jobs:
 
   Test:
     runs-on: ubuntu-latest
+    # Browser tape-run remains disabled in CI; this job now covers the ESLint RuleTester suite.
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

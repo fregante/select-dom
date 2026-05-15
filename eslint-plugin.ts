@@ -14,9 +14,11 @@ const closestListener = 'CallExpression[callee.type=MemberExpression][callee.pro
 const importSource = 'select-dom';
 
 function getParentSkippingChainExpression(node: TSESTree.Node): TSESTree.Node | undefined {
-	return node.parent?.type === AST_NODE_TYPES.ChainExpression
-		? node.parent.parent
-		: node.parent;
+	if (node.parent?.type === AST_NODE_TYPES.ChainExpression) {
+		return node.parent.parent ?? undefined;
+	}
+
+	return node.parent;
 }
 
 function getMemberExpression(node: TSESTree.CallExpression): TSESTree.MemberExpression | undefined {
@@ -98,7 +100,7 @@ function getImportEdit(
 
 		if (
 			hasMatchingLocalImport
-			|| getMethodReference(sourceCode, method) !== method
+			|| hasReusableMethodReference(sourceCode, method)
 		) {
 			return;
 		}
@@ -145,6 +147,13 @@ function getImportEdit(
 		range: [insertionIndex, insertionIndex],
 		text: `${importText}\n`,
 	};
+}
+
+function hasReusableMethodReference(
+	sourceCode: TSESLint.SourceCode,
+	method: string,
+): boolean {
+	return getMethodReference(sourceCode, method) !== method;
 }
 
 function getMethodReference(
@@ -231,15 +240,16 @@ const preferSelectDom = {
 				return;
 			}
 
+			const selector = node.arguments[0];
+			if (!selector) {
+				return;
+			}
+
 			const parent = getParentSkippingChainExpression(node);
 			const isNonNull = parent?.type === AST_NODE_TYPES.TSNonNullExpression;
 			const replacement = isNonNull ? '$closest' : '$closestOptional';
 			const methodReference = getMethodReference(sourceCode, replacement);
 			const nodeToReplace = isNonNull ? parent : node;
-			const selector = node.arguments[0];
-			if (!selector) {
-				return;
-			}
 
 			context.report({
 				node,
