@@ -57,6 +57,17 @@ function getLastImportDeclaration(program: TSESTree.Program): TSESTree.ImportDec
 	return undefined;
 }
 
+function getSelectDomImport(
+	program: TSESTree.Program,
+): TSESTree.ImportDeclaration | undefined {
+	return program.body.find(
+		(statement): statement is TSESTree.ImportDeclaration =>
+			statement.type === AST_NODE_TYPES.ImportDeclaration
+			&& statement.importKind !== 'type'
+			&& statement.source.value === importSource,
+	);
+}
+
 type TextEdit = {
 	range: TSESTree.Range;
 	text: string;
@@ -76,12 +87,7 @@ function getImportEdit(
 	method: string,
 ): TextEdit | undefined {
 	const program = sourceCode.ast;
-	const selectDomImport = program.body.find(
-		statement =>
-			statement.type === AST_NODE_TYPES.ImportDeclaration
-			&& statement.importKind !== 'type'
-			&& statement.source.value === importSource,
-	);
+	const selectDomImport = getSelectDomImport(program);
 
 	if (selectDomImport?.type === AST_NODE_TYPES.ImportDeclaration) {
 		const hasMatchingLocalImport = selectDomImport.specifiers.some(
@@ -90,7 +96,10 @@ function getImportEdit(
 				&& specifier.local.name === method,
 		);
 
-		if (hasMatchingLocalImport) {
+		if (
+			hasMatchingLocalImport
+			|| getMethodReference(sourceCode, method) !== method
+		) {
 			return;
 		}
 
@@ -134,6 +143,32 @@ function getImportEdit(
 		range: [firstStatement?.range[0] ?? 0, firstStatement?.range[0] ?? 0],
 		text: `${importText}\n`,
 	};
+}
+
+function getMethodReference(
+	sourceCode: TSESLint.SourceCode,
+	method: string,
+): string {
+	const selectDomImport = getSelectDomImport(sourceCode.ast);
+	if (!selectDomImport) {
+		return method;
+	}
+
+	for (const specifier of selectDomImport.specifiers) {
+		if (
+			specifier.type === AST_NODE_TYPES.ImportSpecifier
+			&& specifier.imported.type === AST_NODE_TYPES.Identifier
+			&& specifier.imported.name === method
+		) {
+			return specifier.local.name;
+		}
+
+		if (specifier.type === AST_NODE_TYPES.ImportNamespaceSpecifier) {
+			return `${specifier.local.name}.${method}`;
+		}
+	}
+
+	return method;
 }
 
 function getFixedOutput(
@@ -197,6 +232,7 @@ const preferSelectDom = {
 			const parent = getParentSkippingChainExpression(node);
 			const isNonNull = parent?.type === AST_NODE_TYPES.TSNonNullExpression;
 			const replacement = isNonNull ? '$closest' : '$closestOptional';
+			const methodReference = getMethodReference(sourceCode, replacement);
 			const nodeToReplace = isNonNull ? parent : node;
 			const selector = node.arguments[0];
 			if (!selector) {
@@ -212,7 +248,7 @@ const preferSelectDom = {
 					const output = getFixedOutput(
 						sourceCode,
 						nodeToReplace,
-						`${replacement}(${sourceCode.getText(selector)}, ${objectText})`,
+						`${methodReference}(${sourceCode.getText(selector)}, ${objectText})`,
 						replacement,
 					);
 
@@ -252,6 +288,7 @@ const preferSelectDom = {
 
 			const {name: method} = property;
 			const replacement = method === 'querySelectorAll' ? '$$' : '$';
+			const methodReference = getMethodReference(sourceCode, replacement);
 			const callArguments = node.arguments.map(argument => sourceCode.getText(argument));
 			if (!getGlobalDocumentScope(sourceCode, node, object)) {
 				callArguments.push(sourceCode.getText(object));
@@ -265,7 +302,7 @@ const preferSelectDom = {
 					const output = getFixedOutput(
 						sourceCode,
 						node,
-						`${replacement}(${callArguments.join(', ')})`,
+						`${methodReference}(${callArguments.join(', ')})`,
 						replacement,
 					);
 

@@ -46,7 +46,12 @@ ruleTester.run('select-dom/prefer', selectDom.rules.prefer, {
 		{
 			code: 'import * as selectDom from \'select-dom\';\ndocument.querySelector(\'.item\');',
 			errors: [{messageId: 'useSelectDom'}],
-			output: 'import * as selectDom from \'select-dom\';\nimport {$} from \'select-dom\';\n$(\'.item\');',
+			output: 'import * as selectDom from \'select-dom\';\nselectDom.$(\'.item\');',
+		},
+		{
+			code: 'import {$ as select$} from \'select-dom\';\ndocument.querySelector(\'.item\');',
+			errors: [{messageId: 'useSelectDom'}],
+			output: 'import {$ as select$} from \'select-dom\';\nselect$(\'.item\');',
 		},
 		{
 			code: 'const document = root;\ndocument.querySelector(\'.item\');',
