@@ -48,15 +48,13 @@ function getGlobalDocumentScope(
 }
 
 function getLastImportDeclaration(program: TSESTree.Program): TSESTree.ImportDeclaration | undefined {
-	let lastImportDeclaration: TSESTree.ImportDeclaration | undefined;
-
-	for (const statement of program.body) {
+	for (const statement of [...program.body].reverse()) {
 		if (statement.type === AST_NODE_TYPES.ImportDeclaration) {
-			lastImportDeclaration = statement;
+			return statement;
 		}
 	}
 
-	return lastImportDeclaration;
+	return undefined;
 }
 
 type TextEdit = {
@@ -162,8 +160,7 @@ function getFixedOutput(
 	return applyTextEdits(sourceCode.text, edits);
 }
 
-const preferSelectDom: TSESLint.RuleModule<MessageIds, Options> = {
-	defaultOptions: [{}],
+const preferSelectDom = {
 	meta: {
 		type: 'suggestion',
 		fixable: 'code',
@@ -182,7 +179,7 @@ const preferSelectDom: TSESLint.RuleModule<MessageIds, Options> = {
 			},
 		],
 	},
-	create(context) {
+	create(context: Readonly<TSESLint.RuleContext<MessageIds, Options>>) {
 		const {sourceCode} = context;
 		const [{allowReadabilityExceptions = false} = {}] = context.options;
 		const listeners: TSESLint.RuleListener = {};
@@ -285,7 +282,7 @@ const preferSelectDom: TSESLint.RuleModule<MessageIds, Options> = {
 
 const plugin: {
 	rules: {
-		prefer: unknown;
+		prefer: typeof preferSelectDom;
 	};
 } = {
 	rules: {
