@@ -38,7 +38,8 @@
 	"scripts": {
 		"build": "tsc",
 		"prepack": "tsc --sourceMap false",
-		"test": "tsc && tsd && xo && npm run test:tape",
+		"test": "tsc && tsd && xo && npm run test:eslint-plugin && npm run test:tape",
+		"test:eslint-plugin": "node --test eslint-plugin.test.js",
 		"test:tape": "browserify -p esmify test.js | tape-run",
 		"watch": "tsc --watch"
 	},

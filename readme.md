@@ -27,7 +27,7 @@ import {
 } from 'select-dom';
 ```
 
-The package also includes an ESLint plugin entry point at `select-dom/eslint-plugin`.
+The package also includes an ESLint plugin entry point at `select-dom/eslint-plugin`; [read documentation](#eslint).
 
 ## API
 
@@ -136,7 +136,7 @@ countElements('a');
 
 ## ESLint
 
-`select-dom/eslint-plugin` includes the `select-dom/prefer-select-dom` rule, which autofixes `.querySelector()`, `.querySelectorAll()`, and `.closest()` calls to the matching `select-dom` helpers.
+`select-dom/eslint-plugin` includes the `select-dom/prefer` rule, which autofixes `.querySelector()`, `.querySelectorAll()`, and `.closest()` calls to the matching `select-dom` helpers.
 
 ```js
 import selectDom from 'select-dom/eslint-plugin';
@@ -146,9 +146,7 @@ export default [
 		plugins: {
 			'select-dom': selectDom,
 		},
-		rules: {
-			'select-dom/prefer-select-dom': 'error',
-		},
+		extends: ['select-dom/prefer'],
 	},
 ];
 ```
@@ -163,8 +161,9 @@ export default [
 		plugins: {
 			'select-dom': selectDom,
 		},
+		extends: ['select-dom/prefer'],
 		rules: {
-			'select-dom/prefer-select-dom': ['error', {
+			'select-dom/prefer': ['error', {
 				allowReadabilityExceptions: true,
 			}],
 		},
