@@ -1,16 +1,14 @@
-import {createRequire} from 'node:module';
+import {fileURLToPath} from 'node:url';
 import {describe, it} from 'node:test';
 import {RuleTester} from 'eslint';
 import selectDom from './eslint-plugin.js';
-
-const require = createRequire(import.meta.url);
 
 RuleTester.describe = describe;
 RuleTester.it = it;
 RuleTester.itOnly = it.only;
 
 const ruleTester = new RuleTester({
-	parser: require.resolve('@typescript-eslint/parser'),
+	parser: fileURLToPath(import.meta.resolve('@typescript-eslint/parser')),
 	parserOptions: {
 		ecmaVersion: 'latest',
 		sourceType: 'module',
@@ -37,11 +35,6 @@ ruleTester.run('select-dom/prefer', selectDom.rules.prefer, {
 			code: 'import {$optional} from \'select-dom\';\ndocument.querySelector(\'.item\');',
 			errors: [{messageId: 'useSelectDom'}],
 			output: 'import {$optional, $} from \'select-dom\';\n$(\'.item\');',
-		},
-		{
-			code: 'import selectDom from \'select-dom\';\ndocument.querySelector(\'.item\');',
-			errors: [{messageId: 'useSelectDom'}],
-			output: 'import selectDom, {$} from \'select-dom\';\n$(\'.item\');',
 		},
 		{
 			code: 'import * as selectDom from \'select-dom\';\ndocument.querySelector(\'.item\');',

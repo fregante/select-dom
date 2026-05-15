@@ -49,9 +49,11 @@
 		]
 	},
 	"dependencies": {
+		"@typescript-eslint/utils": "^6.21.0",
 		"typed-query-selector": "^2.11.0"
 	},
 	"devDependencies": {
+		"@typescript-eslint/parser": "^6.21.0",
 		"@sindresorhus/tsconfig": "^5.0.0",
 		"browserify": "^17.0.0",
 		"esmify": "^2.1.1",
