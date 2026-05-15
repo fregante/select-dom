@@ -329,11 +329,7 @@ const preferSelectDom = {
 	},
 };
 
-const plugin: {
-	rules: {
-		prefer: typeof preferSelectDom;
-	};
-} = {
+const plugin = {
 	rules: {
 		prefer: preferSelectDom,
 	},
